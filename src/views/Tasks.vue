@@ -16,6 +16,7 @@ import { Component, Vue } from 'vue-property-decorator';
 /* Table cols */
 const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline'];
 
+/* Task interface */
 interface Task{
   name: any,
   description: any,

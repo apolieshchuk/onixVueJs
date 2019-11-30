@@ -79,11 +79,11 @@ export default class Activity extends Vue {
 
   // methods
   // eslint-disable-next-line class-methods-use-this
-  onImgClick(index) {
+  onImgClick(index:number) {
     // this.$emit('clicked-img', index);
     eventBus.$emit('clicked-img', index);
     // this.$eventHub.$emit('clicked-img', index);
-    window.console.log('Clicked in Activity!');
+    // window.console.log('Clicked in Activity!');
   }
 }
 
