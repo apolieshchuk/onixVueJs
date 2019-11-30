@@ -1,24 +1,40 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home,
+    path: '/tasks',
+    name: 'Tasks',
+    component: () => import('@/views/Tasks.vue'),
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/kanban',
+    name: 'Kanban',
+    // component: () => import('@/views/Activity.vue'),
+  },
+  {
+    path: '/activity',
+    name: 'Activity',
+    component: () => import('@/views/Activity.vue'),
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    // component: () => import('@/views/Activity.vue'),
+  },
+  {
+    path: '/files',
+    name: 'Files',
+    // component: () => import('@/views/Activity.vue'),
+  },
+  {
+    path: '/',
+    redirect: '/tasks',
   },
 ];
+
 
 const router = new VueRouter({
   routes,

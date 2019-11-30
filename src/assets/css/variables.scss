@@ -1,0 +1,20 @@
+$debug: false;
+$contactsDiametr : 30px;
+$messageIcoWidth: 35px;
+$messageTimeWidth: 65px;
+$messageSepWidth: 65px;
+
+
+
+@mixin offButtonEffects{
+  border: none;
+  outline: none;
+  background: none;
+}
+
+@mixin centeringDivInside{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
