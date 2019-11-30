@@ -38,6 +38,7 @@ import img4 from '@/assets/img/nature-4.jpg';
 import img5 from '@/assets/img/cont1.png';
 import img6 from '@/assets/img/cont2.jpg';
 import img7 from '@/assets/img/cont3.jpg';
+import eventBus from '@/main';
 
 
 /* type of icons */
@@ -70,16 +71,20 @@ const messageObjects = [
   createMessageObject('have fun! It is all right!!!', 'Ivan Ivanov ', '20:33 PM', okIco),
 ];
 
+
 @Component
 export default class Activity extends Vue {
   // data
   messageObjects = messageObjects;
 
   // methods
-  // onImgClick(index) {
-  // this.$eventHub.$emit('clicked-img', index);
-  // window.console.log('Clicked in Activity!');
-  // }
+  // eslint-disable-next-line class-methods-use-this
+  onImgClick(index) {
+    // this.$emit('clicked-img', index);
+    eventBus.$emit('clicked-img', index);
+    // this.$eventHub.$emit('clicked-img', index);
+    window.console.log('Clicked in Activity!');
+  }
 }
 
 </script>

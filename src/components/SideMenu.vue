@@ -32,9 +32,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import ava from '@/assets/img/ava.jpg';
+import eventBus from '@/main';
 
 
-@Component
+@Component({
+  mounted() {
+    eventBus.$on('clicked-img', this.changeNotif);
+  },
+})
 export default class SideMenu extends Vue {
   // initial data
   completedTasks: number = 372;
