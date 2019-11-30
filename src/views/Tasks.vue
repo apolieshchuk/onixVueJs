@@ -16,14 +16,17 @@ import { Component, Vue } from 'vue-property-decorator';
 /* Table cols */
 const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline'];
 
+interface Task{
+  name: any,
+  description: any,
+  deadline: any
+}
+
 /* Function for creating task object */
-const createTaskObj = function (task, description, deadline) {
-  return {
-    Task: task,
-    Description: description,
-    Deadline: deadline,
-  };
-};
+function createTaskObj(name:string, description:string, deadline:string): Task {
+  return { name, description, deadline };
+}
+
 
 /* Create task objects */
 const taskObjects = [
