@@ -40,35 +40,69 @@ import img6 from '@/assets/img/cont2.jpg';
 import img7 from '@/assets/img/cont3.jpg';
 import eventBus from '@/main';
 
-
 /* type of icons */
 const okIco = 'ok-ico';
 const msgIco = 'msg-ico';
 const uploadIco = 'upload-ico';
 
-/* Function for create message object */
-const createMessageObject = (msg, user = null, time = null, ico = null, photos = null) => ({
-  msg, user, time, ico, photos,
-});
+/* Message interface */
+interface Message{
+  msg: string,
+  date?: boolean; // date, sys, common
+  user?: string,
+  time?: string,
+  ico?: string,
+  photos?: any[],
+}
 
 /* Photo names */
 const photos = [img1, img2, img3, img4];
 
 /* MessageObjects */
-const messageObjects = [
+const messageObjects: Message[] = [
   { msg: '17.11.2019', date: true },
-  createMessageObject('mark as done Listing on Product Hunt so that we can reach as many potential users',
-    'Anton Polieschuk', '12:40 PM', okIco),
-  createMessageObject('commented on Account for teams and personal in bottom style',
-    'Vasya Pupkin', '17:40 PM', msgIco),
-  createMessageObject('During a project build, it is necessary to evaluate the product design and development'
-        + ' against project requirements and outcomes'),
-  createMessageObject('uploaded 4 files on An option to search in current projects or in all projects',
-    'Oksana Sergeevna', '19:28 PM', uploadIco, photos),
-  createMessageObject('have fun! It is all right!!!', 'Ivan Ivanov ', '20:33 PM', okIco),
-  createMessageObject('write something', 'Ivan Ivanov ', '20:33 PM', msgIco),
-  createMessageObject('load some photo', 'Ivan Ivanov ', '20:33 PM', uploadIco, [img5, img6, img7]),
-  createMessageObject('have fun! It is all right!!!', 'Ivan Ivanov ', '20:33 PM', okIco),
+  {
+    msg: 'mark as done Listing on Product Hunt so that we can reach as many potential users',
+    user: 'Anton Polieschuk',
+    time: '12:40 PM',
+    ico: okIco,
+  },
+  {
+    msg: 'commented on Account for teams and personal in bottom style',
+    user: 'Vasya Pupkin',
+    time: '17:40 PM',
+    ico: msgIco,
+  },
+  {
+    msg: 'During a project build, it is necessary to evaluate the product'
+    + ' design and development against project requirements and outcomes',
+  },
+  {
+    msg: 'uploaded 4 files on An option to search in current projects or in all projects',
+    user: 'Oksana Sergeevna',
+    time: '19:28 PM',
+    ico: uploadIco,
+    photos,
+  },
+  {
+    msg: 'feeling good! Its okey!',
+    user: 'Ivan Ivanov',
+    time: '19:45 PM',
+    ico: okIco,
+  },
+  {
+    msg: 'write some msg',
+    user: 'Ivan Ivanov',
+    time: '20:28 PM',
+    ico: msgIco,
+  },
+  {
+    msg: 'load some photo',
+    user: 'Ivan Ivanov',
+    time: '20:48 PM',
+    ico: uploadIco,
+    photos: [img5, img6, img7],
+  },
 ];
 
 

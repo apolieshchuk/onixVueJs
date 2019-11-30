@@ -18,9 +18,9 @@ const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline'];
 
 /* Task interface */
 interface Task{
-  name: any,
-  description: any,
-  deadline: any
+  name: string,
+  description: string,
+  deadline: string
 }
 
 /* Function for creating task object */
