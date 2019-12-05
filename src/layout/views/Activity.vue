@@ -124,8 +124,10 @@ export default class Activity extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import "../assets/css/variables";
-  $pathToImg: '../assets/img/';
+  //@import "../../assets/css/variables.css";
+  /*@import "../../assets/css/variables.css";*/
+  //@import "../../assets/css/variables.scss";
+  //$pathToImg: '../../assets/img/';
 
   .activity-wrapper{
     background-color: white;

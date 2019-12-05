@@ -7,9 +7,7 @@
           .dots3
       .header-controls.flex
         .contacts.flex
-          img(src='../assets/img/cont1.png' alt='')
-          img(src='../assets/img/cont2.jpg' alt='')
-          img(src='../assets/img/cont3.jpg' alt='')
+          img(v-for="(cont,index) in contacts" :key="index" :src="cont")
         .communication.flex
           button.share Share
           button.chat.flex Chat
@@ -21,6 +19,11 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
+import cont1 from '@/assets/img/cont1.png';
+import cont2 from '@/assets/img/cont2.jpg';
+import cont3 from '@/assets/img/cont3.jpg';
+
+const contacts = [cont1, cont2, cont3];
 
 
 @Component({
@@ -33,6 +36,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 export default class Header extends Vue {
   activeRoute = null;
 
+  contacts = contacts;
+
   mounted() {
     this.activeRoute = this.$route.fullPath;
   }
@@ -40,8 +45,7 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import "../assets/css/variables.scss";
-  $pathToImg: '../assets/img/';
+
 
   .wrapper{
     flex-direction: column;

@@ -31,8 +31,8 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 
-import ava from '@/assets/img/ava.jpg';
-import eventBus from '@/main';
+import ava from '../../assets/img/ava.jpg';
+import eventBus from '../../main';
 
 
 @Component({
@@ -70,8 +70,6 @@ export default class SideMenu extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import "../assets/css/variables.scss";
-  $pathToImg: '../assets/img/';
 
   .side-menu {
     flex-direction: column;

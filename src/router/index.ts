@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/tasks',
     name: 'Tasks',
-    component: () => import('@/views/Tasks.vue'),
+    component: () => import('@/layout/views/Tasks.vue'),
   },
   {
     path: '/kanban',
@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/activity',
     name: 'Activity',
-    component: () => import('@/views/Activity.vue'),
+    component: () => import('@/layout/views/Activity.vue'),
   },
   {
     path: '/calendar',
