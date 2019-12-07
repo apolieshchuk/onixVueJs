@@ -7,31 +7,70 @@ const routes = [
   {
     path: '/tasks',
     name: 'Tasks',
-    component: () => import('@/layout/views/Tasks.vue'),
+    component: () => import('@/components/layout/Layout.vue'),
+    redirect: '/tasks',
+    children: [
+      {
+        path: '/',
+        component: () => import('@/components/layout/views/Tasks.vue'),
+      },
+    ],
   },
   {
     path: '/kanban',
     name: 'Kanban',
-    // component: () => import('@/views/Activity.vue'),
+    redirect: '/kanban',
+    component: () => import('@/components/layout/Layout.vue'),
+    children: [
+      {
+        path: '/',
+        component: () => import('@/components/layout/views/Kanban.vue'),
+      },
+    ],
   },
   {
     path: '/activity',
     name: 'Activity',
-    component: () => import('@/layout/views/Activity.vue'),
+    redirect: '/activity',
+    component: () => import('@/components/layout/Layout.vue'),
+    children: [
+      {
+        path: '/',
+        component: () => import('@/components/layout/views/Activity.vue'),
+      },
+    ],
   },
   {
     path: '/calendar',
     name: 'Calendar',
-    // component: () => import('@/views/Activity.vue'),
+    redirect: '/calendar',
+    component: () => import('@/components/layout/Layout.vue'),
+    children: [
+      {
+        path: '/',
+        component: () => import('@/components/layout/views/Calendar.vue'),
+      },
+    ],
   },
   {
     path: '/files',
     name: 'Files',
-    // component: () => import('@/views/Activity.vue'),
+    redirect: '/files',
+    component: () => import('@/components/layout/Layout.vue'),
+    children: [
+      {
+        path: '/',
+        component: () => import('@/components/layout/views/Files.vue'),
+      },
+    ],
   },
   {
     path: '/',
     redirect: '/tasks',
+  },
+  {
+    path: '*',
+    component: () => import('@/components/NotFound.vue'),
   },
 ];
 

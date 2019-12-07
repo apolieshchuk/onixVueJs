@@ -31,14 +31,14 @@ import { Component, Vue } from 'vue-property-decorator';
 
 
 /* Uploaded photos */
-import img1 from '@/assets/img/nature-1.jpg';
-import img2 from '@/assets/img/nature-2.jpg';
-import img3 from '@/assets/img/nature-3.jpg';
-import img4 from '@/assets/img/nature-4.jpg';
-import img5 from '@/assets/img/cont1.png';
-import img6 from '@/assets/img/cont2.jpg';
-import img7 from '@/assets/img/cont3.jpg';
-import eventBus from '@/main';
+import img1 from '../../../assets/img/nature-1.jpg';
+import img2 from '../../../assets/img/nature-2.jpg';
+import img3 from '../../../assets/img/nature-3.jpg';
+import img4 from '../../../assets/img/nature-4.jpg';
+import img5 from '../../../assets/img/cont1.png';
+import img6 from '../../../assets/img/cont2.jpg';
+import img7 from '../../../assets/img/cont3.jpg';
+import eventBus from '../../../main';
 
 /* type of icons */
 const okIco = 'ok-ico';
@@ -114,20 +114,13 @@ export default class Activity extends Vue {
   // methods
   // eslint-disable-next-line class-methods-use-this
   onImgClick(index:number) {
-    // this.$emit('clicked-img', index);
     eventBus.$emit('clicked-img', index);
-    // this.$eventHub.$emit('clicked-img', index);
-    // window.console.log('Clicked in Activity!');
   }
 }
 
 </script>
 
 <style lang="scss" scoped>
-  //@import "../../assets/css/variables.css";
-  /*@import "../../assets/css/variables.css";*/
-  //@import "../../assets/css/variables.scss";
-  //$pathToImg: '../../assets/img/';
 
   .activity-wrapper{
     background-color: white;

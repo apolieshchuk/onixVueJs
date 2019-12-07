@@ -19,10 +19,11 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import cont1 from '@/assets/img/cont1.png';
-import cont2 from '@/assets/img/cont2.jpg';
-import cont3 from '@/assets/img/cont3.jpg';
+import cont1 from '../../../assets/img/cont1.png';
+import cont2 from '../../../assets/img/cont2.jpg';
+import cont3 from '../../../assets/img/cont3.jpg';
 
+const navItems: string[] = ['Tasks', 'Kanban', 'Activity', 'Calendar', 'Files'];
 const contacts = [cont1, cont2, cont3];
 
 
@@ -33,10 +34,13 @@ const contacts = [cont1, cont2, cont3];
     },
   },
 })
+
 export default class Header extends Vue {
   activeRoute = null;
 
   contacts = contacts;
+
+  navItems = navItems;
 
   mounted() {
     this.activeRoute = this.$route.fullPath;

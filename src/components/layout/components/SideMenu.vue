@@ -15,7 +15,7 @@
       button.complited-tasks-but(@click='doTask')
         p {{completedTasks}}
         p Completed Tasks
-      button.open-tasks-but
+      button.open-tasks-but(@click='goTasks')
         p {{openTasks}}
         p Open Tasks
     .menu-nav.flex
@@ -31,8 +31,8 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 
-import ava from '../../assets/img/ava.jpg';
-import eventBus from '../../main';
+import ava from '../../../assets/img/ava.jpg';
+import eventBus from '../../../main';
 
 
 @Component({
@@ -60,6 +60,10 @@ export default class SideMenu extends Vue {
         this.openTasks -= 1;
       }
     }
+  }
+
+  goTasks() {
+    this.$router.push('/tasks');
   }
 
   changeNotif(index:number) {
