@@ -63,7 +63,9 @@ export default class SideMenu extends Vue {
   }
 
   goTasks() {
-    this.$router.push('/tasks');
+    if (this.openTasks > 0) {
+      this.$router.push('/tasks');
+    }
   }
 
   changeNotif(index:number) {
