@@ -9,9 +9,9 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
-import TheContent from './components/TheContent/TheContent.vue';
-import TheHeader from './components/TheHeader.vue';
-import TheSideMenu from './components/TheSideMenu.vue';
+import TheContent from './TheContent.vue';
+import TheHeader from './TheHeader.vue';
+import TheSideMenu from './TheSideMenu.vue';
 
 @Component({
   components: {

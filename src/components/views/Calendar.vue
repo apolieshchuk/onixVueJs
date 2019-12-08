@@ -5,10 +5,11 @@
 
 <script lang="ts">
 
-import comingImg from '../../../../../assets/img/coming-soon.png';
+import comingImg from '../../assets/img/coming-soon.png';
+// const comingImg = require('../../assets/img/coming-soon.png');
 
 export default {
-  name: 'Kanban',
+  name: 'Calendar',
   data() {
     return {
       comingImg,

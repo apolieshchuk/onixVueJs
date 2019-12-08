@@ -31,14 +31,14 @@ import { Component, Vue } from 'vue-property-decorator';
 
 
 /* Uploaded photos */
-import img1 from '@/assets/img/nature-1.jpg';
-import img2 from '@/assets/img/nature-2.jpg';
-import img3 from '@/assets/img/nature-3.jpg';
-import img4 from '@/assets/img/nature-4.jpg';
-import img5 from '@/assets/img/cont1.png';
-import img6 from '@/assets/img/cont2.jpg';
-import img7 from '@/assets/img/cont3.jpg';
-import eventBus from '@/main';
+import img1 from '../../assets/img/nature-1.jpg';
+import img2 from '../../assets/img/nature-2.jpg';
+import img3 from '../../assets/img/nature-3.jpg';
+import img4 from '../../assets/img/nature-4.jpg';
+import img5 from '../../assets/img/cont1.png';
+import img6 from '../../assets/img/cont2.jpg';
+import img7 from '../../assets/img/cont3.jpg';
+import eventBus from '../../main';
 
 /* type of icons */
 const okIco = 'ok-ico';
@@ -168,28 +168,28 @@ export default class Activity extends Vue {
         .ok-ico {
           background-color: #CEF9C6;
           &:after {
-            content: url('../../../../../assets/img/Icon@3x.svg');
+            content: url('../../assets/img/Icon@3x.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../../../../assets/img/message.svg');
+            content: url('../../assets/img/message.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../../../../assets/img/message.svg');
+            content: url('../../assets/img/message.svg');
           }
         }
 
         .upload-ico {
           background-color: #E3EFFF;
           &:after {
-            content: url('../../../../../assets/img/download.svg');
+            content: url('../../assets/img/download.svg');
           }
         }
       }

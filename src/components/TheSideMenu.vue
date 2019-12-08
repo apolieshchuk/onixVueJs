@@ -31,8 +31,8 @@
 
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
-import ava from '@/assets/img/ava.jpg';
-import eventBus from '@/main';
+import ava from '../assets/img/ava.jpg';
+import eventBus from '../main';
 
 
 @Component
@@ -104,7 +104,7 @@ export default class TheSideMenu extends Vue {
         align-items: center;
         &:before {
           margin-right: 15px;
-          content: url('../../../assets/img/Logo@3x.svg');
+          content: url('../assets/img/Logo@3x.svg');
         }
       }
       p {
@@ -120,7 +120,7 @@ export default class TheSideMenu extends Vue {
         @include offButtonEffects;
         //margin-left: 200px;
         &:after {
-          content: url('../../../assets/img/Search@3x.svg');
+          content: url('../assets/img/Search@3x.svg');
           cursor: pointer;
         }
       }

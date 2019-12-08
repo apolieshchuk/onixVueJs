@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import eventBus from '@/main';
+import eventBus from '../../main';
 
 /* Table cols */
 const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline'];
