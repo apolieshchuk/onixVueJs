@@ -19,9 +19,9 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import cont1 from '../../../assets/img/cont1.png';
-import cont2 from '../../../assets/img/cont2.jpg';
-import cont3 from '../../../assets/img/cont3.jpg';
+import cont1 from '@/assets/img/cont1.png';
+import cont2 from '@/assets/img/cont2.jpg';
+import cont3 from '@/assets/img/cont3.jpg';
 
 const contacts = [cont1, cont2, cont3];
 
@@ -72,7 +72,7 @@ export default class TheHeader extends Vue {
       }
       &:before{
          content: "";
-         background: url($pathToImg + "Shapes@2x.png");
+         background: url('../../../assets/img/Shapes@2x.png');
          background-size: 40px 40px;
          background-color: #FFC200;
          min-width: 40px;
@@ -127,7 +127,7 @@ export default class TheHeader extends Vue {
         width: 81px;
         margin-left: 17px;
       &:before{
-         content: url($pathToImg + "Combined Shape@1x.svg");
+         content: url('../../../assets/img/Combined Shape@1x.svg');
          margin-right: 5px;
        }
       }

@@ -29,28 +29,30 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 
-import ava from '../../../assets/img/ava.jpg';
-import eventBus from '../../../main';
+import ava from '@/assets/img/ava.jpg';
+import eventBus from '@/main';
 
 
-@Component({
-  mounted() {
-    eventBus.$on('clicked-img', this.changeNotif);
-  },
-})
+@Component
 export default class TheSideMenu extends Vue {
   // initial data
   completedTasks: number = 372;
 
-  openTasks: number = 11;
+  openTasks: number = 999;
 
   userName: string = 'Anton Polieshchuk';
 
   userAva = ava;
 
   notification: number = 0;
+
+  // mounted
+  mounted() {
+    eventBus.$on('clicked-img', this.changeNotif);
+    eventBus.$on('open-tasks', this.getOpenTasks);
+  }
 
   // methods
   doTask() {
@@ -70,6 +72,10 @@ export default class TheSideMenu extends Vue {
 
   changeNotif(index:number) {
     this.notification = index;
+  }
+
+  getOpenTasks(tasks:number) {
+    this.openTasks = tasks;
   }
 }
 
@@ -98,7 +104,7 @@ export default class TheSideMenu extends Vue {
         align-items: center;
         &:before {
           margin-right: 15px;
-          content: url($pathToImg + "Logo@3x.svg");
+          content: url('../../../assets/img/Logo@3x.svg');
         }
       }
       p {
@@ -114,7 +120,7 @@ export default class TheSideMenu extends Vue {
         @include offButtonEffects;
         //margin-left: 200px;
         &:after {
-          content: url($pathToImg +"Search@3x.svg");
+          content: url('../../../assets/img/Search@3x.svg');
           cursor: pointer;
         }
       }

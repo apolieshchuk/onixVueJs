@@ -5,12 +5,12 @@ const routes = [
     {
         path: '/tasks',
         name: 'Tasks',
-        component: () => import('@/components/layout/TheLayout.vue'),
+        component: () => import('@/components/TheLayout/TheLayout.vue'),
         redirect: '/tasks',
         children: [
             {
                 path: '/',
-                component: () => import('@/components/layout/views/Tasks.vue'),
+                component: () => import('@/components/TheLayout/components/TheContent/views/Tasks.vue'),
             },
         ],
     },
@@ -18,11 +18,11 @@ const routes = [
         path: '/kanban',
         name: 'Kanban',
         redirect: '/kanban',
-        component: () => import('@/components/layout/TheLayout.vue'),
+        component: () => import('@/components/TheLayout/TheLayout.vue'),
         children: [
             {
                 path: '/',
-                component: () => import('@/components/layout/views/Kanban.vue'),
+                component: () => import('@/components/TheLayout/components/TheContent/views/Kanban.vue'),
             },
         ],
     },
@@ -30,11 +30,11 @@ const routes = [
         path: '/activity',
         name: 'Activity',
         redirect: '/activity',
-        component: () => import('@/components/layout/TheLayout.vue'),
+        component: () => import('@/components/TheLayout/TheLayout.vue'),
         children: [
             {
                 path: '/',
-                component: () => import('@/components/layout/views/Activity.vue'),
+                component: () => import('@/components/TheLayout/components/TheContent/views/Activity.vue'),
             },
         ],
     },
@@ -42,11 +42,11 @@ const routes = [
         path: '/calendar',
         name: 'Calendar',
         redirect: '/calendar',
-        component: () => import('@/components/layout/TheLayout.vue'),
+        component: () => import('@/components/TheLayout/TheLayout.vue'),
         children: [
             {
                 path: '/',
-                component: () => import('@/components/layout/views/Calendar.vue'),
+                component: () => import('@/components/TheLayout/components/TheContent/views/Calendar.vue'),
             },
         ],
     },
@@ -54,11 +54,11 @@ const routes = [
         path: '/files',
         name: 'Files',
         redirect: '/files',
-        component: () => import('@/components/layout/TheLayout.vue'),
+        component: () => import('@/components/TheLayout/TheLayout.vue'),
         children: [
             {
                 path: '/',
-                component: () => import('@/components/layout/views/Files.vue'),
+                component: () => import('@/components/TheLayout/components/TheContent/views/Files.vue'),
             },
         ],
     },

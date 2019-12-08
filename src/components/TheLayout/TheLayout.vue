@@ -9,7 +9,7 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
-import TheContent from './components/TheContent.vue';
+import TheContent from './components/TheContent/TheContent.vue';
 import TheHeader from './components/TheHeader.vue';
 import TheSideMenu from './components/TheSideMenu.vue';
 
@@ -23,10 +23,6 @@ export default class Layout extends Vue {}
 </script>
 
 <style lang="scss">
-
-  /*@import "../assets/css/variables.scss";*/
-
-  /*@import "../assets/css/variables";*/
 
   .container-right{
     flex-direction: column;

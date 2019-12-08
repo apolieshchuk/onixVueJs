@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import eventBus from '@/main';
 
 /* Table cols */
 const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline'];
@@ -44,6 +45,11 @@ export default class Tasks extends Vue {
   taskObjects = taskObjects;
 
   tableCols = tableCols;
+
+  // created
+  mounted() {
+    eventBus.$emit('open-tasks', this.taskObjects.length);
+  }
 }
 
 </script>
