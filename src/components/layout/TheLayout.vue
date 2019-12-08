@@ -1,21 +1,21 @@
 <template lang="pug">
   .container-main.flex
-    SideMenu
+    TheSideMenu
     .container-right.flex
-      Header
-      Content
+      TheHeader
+      TheContent
 </template>
 
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
-import Content from './components/Content.vue';
-import Header from './components/Header.vue';
-import SideMenu from './components/SideMenu.vue';
+import TheContent from './components/TheContent.vue';
+import TheHeader from './components/TheHeader.vue';
+import TheSideMenu from './components/TheSideMenu.vue';
 
 @Component({
   components: {
-    Content, Header, SideMenu,
+    TheContent, TheHeader, TheSideMenu,
   },
 })
 export default class Layout extends Vue {}

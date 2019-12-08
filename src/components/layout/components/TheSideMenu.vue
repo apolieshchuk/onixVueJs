@@ -40,7 +40,7 @@ import eventBus from '../../../main';
     eventBus.$on('clicked-img', this.changeNotif);
   },
 })
-export default class SideMenu extends Vue {
+export default class TheSideMenu extends Vue {
   // initial data
   completedTasks: number = 372;
 

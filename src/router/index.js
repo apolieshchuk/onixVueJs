@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/tasks',
         name: 'Tasks',
-        component: () => import('@/components/layout/Layout.vue'),
+        component: () => import('@/components/layout/TheLayout.vue'),
         redirect: '/tasks',
         children: [
             {
@@ -18,7 +18,7 @@ const routes = [
         path: '/kanban',
         name: 'Kanban',
         redirect: '/kanban',
-        component: () => import('@/components/layout/Layout.vue'),
+        component: () => import('@/components/layout/TheLayout.vue'),
         children: [
             {
                 path: '/',
@@ -30,7 +30,7 @@ const routes = [
         path: '/activity',
         name: 'Activity',
         redirect: '/activity',
-        component: () => import('@/components/layout/Layout.vue'),
+        component: () => import('@/components/layout/TheLayout.vue'),
         children: [
             {
                 path: '/',
@@ -42,7 +42,7 @@ const routes = [
         path: '/calendar',
         name: 'Calendar',
         redirect: '/calendar',
-        component: () => import('@/components/layout/Layout.vue'),
+        component: () => import('@/components/layout/TheLayout.vue'),
         children: [
             {
                 path: '/',
@@ -54,7 +54,7 @@ const routes = [
         path: '/files',
         name: 'Files',
         redirect: '/files',
-        component: () => import('@/components/layout/Layout.vue'),
+        component: () => import('@/components/layout/TheLayout.vue'),
         children: [
             {
                 path: '/',

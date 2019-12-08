@@ -5,7 +5,7 @@
 
 <script>
 export default {
-  name: 'Content',
+  name: 'TheContent',
 };
 </script>
 

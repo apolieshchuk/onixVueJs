@@ -34,7 +34,7 @@ const contacts = [cont1, cont2, cont3];
   },
 })
 
-export default class Header extends Vue {
+export default class TheHeader extends Vue {
   activeRoute = null;
 
   contacts = contacts;
