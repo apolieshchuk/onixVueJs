@@ -3,7 +3,7 @@
     thead.thead-dark
       th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
     tbody
-      tr(v-for='(task,i) in taskObjects' v-bind:key='i')
+      tr(v-for='(task,i) in tasks' v-bind:key='i')
         th(scope='row')
           input(type='checkbox')
         td(v-for='(col,index) in Object.values(task)' v-bind:key='index') {{col}}
@@ -30,7 +30,7 @@ function createTaskObj(name:string, description:string, deadline:string): Task {
 
 
 /* Create task objects */
-const taskObjects = [
+const tasks = [
   createTaskObj('Breakfast', 'Have breakfast', '17.11, 9:00 am'),
   createTaskObj('Vue-programming', 'Do some programming in Vue.js', '17.11, 11:00 am'),
   createTaskObj('Shopping', 'Go shopping with my wife', '17.11, 13:00 am'),
@@ -44,7 +44,13 @@ const taskObjects = [
 export default class Tasks extends Vue {
   tableCols = tableCols;
 
-  taskObjects = taskObjects;
+  get tasks() {
+    return this.$store.state.tasks;
+  }
+
+  created() {
+    this.$store.commit('initTasks', tasks);
+  }
 }
 
 </script>
