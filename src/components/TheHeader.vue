@@ -26,16 +26,14 @@ import cont3 from '../assets/img/cont3.jpg';
 const contacts = [cont1, cont2, cont3];
 
 
-@Component({
-  watch: {
-    $route(route) {
-      this.activeRoute = route.fullPath;
-    },
-  },
-})
-
+@Component
 export default class TheHeader extends Vue {
-  activeRoute = null;
+  @Watch('$route')
+  onRouteChange(route: any) {
+    this.activeRoute = route.fullPath;
+  }
+
+  activeRoute = '';
 
   contacts = contacts;
 
