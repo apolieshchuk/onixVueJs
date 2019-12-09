@@ -112,9 +112,8 @@ export default class Activity extends Vue {
   messageObjects = messageObjects;
 
   // methods
-  // eslint-disable-next-line class-methods-use-this
   onImgClick(index:number) {
-    eventBus.$emit('clicked-img', index);
+    this.$store.commit('changeClickedImg', index);
   }
 }
 

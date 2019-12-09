@@ -24,7 +24,7 @@
       a(href='#') My Tasks
       div
         a(href='#') Notifications
-        .notification-count {{notification}}
+        .notification-count {{clickedImg}}
 </template>
 
 <script lang="ts">
@@ -46,12 +46,9 @@ export default class TheSideMenu extends Vue {
 
   userAva = ava;
 
-  notification: number = 0;
-
-  // mounted
-  mounted() {
-    eventBus.$on('clicked-img', this.changeNotif);
-    eventBus.$on('open-tasks', this.getOpenTasks);
+  // computed
+  get clickedImg() {
+    return this.$store.state.clickedImg;
   }
 
   // methods
@@ -68,10 +65,6 @@ export default class TheSideMenu extends Vue {
     if (this.openTasks > 0) {
       this.$router.push('/tasks');
     }
-  }
-
-  changeNotif(index:number) {
-    this.notification = index;
   }
 
   getOpenTasks(tasks:number) {
