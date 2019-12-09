@@ -13,12 +13,13 @@
           button.chat.flex Chat
     nav.navigation.flex
       router-link(v-for="(route,index) in $router.options.routes" :key="index"
-            :to='route' v-if="route.hasOwnProperty('name')"
-            :class="{'active-item':activeRoute === route.path}") {{route.name}}
+       :to='route' v-if="route.hasOwnProperty('name')"
+       :class="{'active-item': activeRoute === route.path}") {{route.name}}
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
+
 import cont1 from '../assets/img/cont1.png';
 import cont2 from '../assets/img/cont2.jpg';
 import cont3 from '../assets/img/cont3.jpg';
@@ -32,6 +33,7 @@ export default class TheHeader extends Vue {
   onRouteChange(route: any) {
     this.activeRoute = route.fullPath;
   }
+
 
   activeRoute = '';
 
