@@ -20,11 +20,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
-import cont1 from '../assets/img/cont1.png';
-import cont2 from '../assets/img/cont2.jpg';
-import cont3 from '../assets/img/cont3.jpg';
-
-const contacts = [cont1, cont2, cont3];
+const contacts = ['/assets/img/cont1.png', '/assets/img/cont2.jpg', '/assets/img/cont3.jpg'];
 
 
 @Component
@@ -33,7 +29,6 @@ export default class TheHeader extends Vue {
   onRouteChange(route: any) {
     this.activeRoute = route.fullPath;
   }
-
 
   activeRoute = '';
 
@@ -46,7 +41,6 @@ export default class TheHeader extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 
   .wrapper{
     flex-direction: column;
@@ -72,7 +66,7 @@ export default class TheHeader extends Vue {
       }
       &:before{
          content: "";
-         background: url('../assets/img/Shapes@2x.png');
+         background: url('/assets/img/Shapes@2x.png');
          background-size: 40px 40px;
          background-color: #FFC200;
          min-width: 40px;
@@ -127,7 +121,7 @@ export default class TheHeader extends Vue {
         width: 81px;
         margin-left: 17px;
       &:before{
-         content: url('../assets/img/Combined Shape@1x.svg');
+         content: url('/assets/img/Combined Shape@1x.svg');
          margin-right: 5px;
        }
       }

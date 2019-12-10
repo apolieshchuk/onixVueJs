@@ -31,9 +31,6 @@
 
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
-import ava from '../assets/img/ava.jpg';
-import eventBus from '../main';
-
 
 @Component
 export default class TheSideMenu extends Vue {
@@ -44,16 +41,21 @@ export default class TheSideMenu extends Vue {
 
   userName: string = 'Anton Polieshchuk';
 
-  userAva = ava;
+  userAva = '/assets/img/ava.jpg';
 
   // computed
   get clickedImg() {
     return this.$store.state.clickedImg;
   }
 
+  // get openTasks() {
+  //   return (this.$store.state.tasks).length;
+  // }
+
   // methods
   doTask() {
     if (this.openTasks > 0) {
+      // eslint-disable-next-line no-alert
       if (window.confirm('Are you sure you want to change the number of tasks?')) {
         this.completedTasks += 1;
         this.openTasks -= 1;
@@ -97,7 +99,7 @@ export default class TheSideMenu extends Vue {
         align-items: center;
         &:before {
           margin-right: 15px;
-          content: url('../assets/img/Logo@3x.svg');
+          content: url('../../public/assets/img/Logo@3x.svg');
         }
       }
       p {
@@ -113,7 +115,7 @@ export default class TheSideMenu extends Vue {
         @include offButtonEffects;
         //margin-left: 200px;
         &:after {
-          content: url('../assets/img/Search@3x.svg');
+          content: url('../../public/assets/img/Search@3x.svg');
           cursor: pointer;
         }
       }

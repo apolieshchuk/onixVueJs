@@ -5,14 +5,11 @@
 
 <script lang="ts">
 
-import comingImg from '../../assets/img/coming-soon.png';
-// const comingImg = require('../../assets/img/coming-soon.png');
-
 export default {
   name: 'Files',
   data() {
     return {
-      comingImg,
+      comingImg: '/assets/img/coming-soon.png',
     };
   },
 };

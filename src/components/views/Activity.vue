@@ -29,17 +29,6 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 
-
-/* Uploaded photos */
-import img1 from '../../assets/img/nature-1.jpg';
-import img2 from '../../assets/img/nature-2.jpg';
-import img3 from '../../assets/img/nature-3.jpg';
-import img4 from '../../assets/img/nature-4.jpg';
-import img5 from '../../assets/img/cont1.png';
-import img6 from '../../assets/img/cont2.jpg';
-import img7 from '../../assets/img/cont3.jpg';
-import eventBus from '../../main';
-
 /* type of icons */
 const okIco = 'ok-ico';
 const msgIco = 'msg-ico';
@@ -56,7 +45,12 @@ interface Message{
 }
 
 /* Photo names */
-const photos = [img1, img2, img3, img4];
+const photos = [
+  '/assets/img/nature-1.jpg',
+  '/assets/img/nature-2.jpg',
+  '/assets/img/nature-3.jpg',
+  '/assets/img/nature-4.jpg',
+];
 
 /* MessageObjects */
 const messageObjects: Message[] = [
@@ -101,7 +95,10 @@ const messageObjects: Message[] = [
     user: 'Ivan Ivanov',
     time: '20:48 PM',
     ico: uploadIco,
-    photos: [img5, img6, img7],
+    photos: [
+      '/assets/img/nature-1.jpg',
+      '/assets/img/nature-2.jpg',
+      '/assets/img/nature-3.jpg'],
   },
 ];
 
@@ -167,28 +164,28 @@ export default class Activity extends Vue {
         .ok-ico {
           background-color: #CEF9C6;
           &:after {
-            content: url('../../assets/img/Icon@3x.svg');
+            content: url('../../../public/assets/img/Icon@3x.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../assets/img/message.svg');
+            content: url('../../../public/assets/img/message.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../assets/img/message.svg');
+            content: url('../../../public/assets/img/message.svg');
           }
         }
 
         .upload-ico {
           background-color: #E3EFFF;
           &:after {
-            content: url('../../assets/img/download.svg');
+            content: url('../../../public/assets/img/download.svg');
           }
         }
       }

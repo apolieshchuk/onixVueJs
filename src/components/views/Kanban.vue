@@ -5,13 +5,11 @@
 
 <script lang="ts">
 
-import comingImg from '../../assets/img/coming-soon.png';
-
 export default {
   name: 'Kanban',
   data() {
     return {
-      comingImg,
+      comingImg: '/assets/img/coming-soon.png',
     };
   },
 };
