@@ -10,7 +10,7 @@ module.exports = {
       scss: {
         // @/ это псевдоним к каталогу src/ поэтому предполагается,
         // что у вас в проекте есть файл `src/variables.scss`
-        prependData: '@import "@/assets/css/variables.scss";',
+        prependData: '@import "@/variables.scss";',
       },
     },
   },
