@@ -33,29 +33,21 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 
 
-@Component({
-  computed: mapGetters({
-    clickedImg: 'getClickedImg',
-  }),
-})
+@Component
 export default class TheSideMenu extends Vue {
   // initial data
-  completedTasks: number = 372;
+  openTasks: number = this.$store.getters.getTasksLength;
 
-  openTasks: number = 999;
+  completedTasks: number = 372;
 
   userName: string = 'Anton Polieshchuk';
 
   userAva = '/assets/img/ava.jpg';
 
   // computed
-  // get clickedImg() {
-  //   return this.$store.getters.getClickedImg;
-  // }
-
-  // get openTasks() {
-  //   return (this.$store.state.tasks).length;
-  // }
+  get clickedImg() {
+    return this.$store.getters.getClickedImg;
+  }
 
   // methods
   doTask() {
@@ -72,10 +64,6 @@ export default class TheSideMenu extends Vue {
     if (this.openTasks > 0) {
       this.$router.push('/tasks');
     }
-  }
-
-  getOpenTasks(tasks:number) {
-    this.openTasks = tasks;
   }
 }
 
