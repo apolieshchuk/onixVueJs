@@ -20,7 +20,10 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
-const contacts = ['/assets/img/cont1.png', '/assets/img/cont2.jpg', '/assets/img/cont3.jpg'];
+const contacts = [
+  '/assets/img/cont1.png',
+  '/assets/img/cont2.jpg',
+  '/assets/img/cont3.jpg'];
 
 
 @Component

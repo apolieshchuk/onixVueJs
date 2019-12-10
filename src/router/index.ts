@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Tasks from '@/components/views/Tasks.vue';
 
 Vue.use(VueRouter);
 
@@ -12,7 +13,7 @@ const routes = [
     children: [
       {
         path: '/',
-        component: () => import('@/components/views/Tasks.vue'),
+        component: Tasks,
       },
     ],
   },

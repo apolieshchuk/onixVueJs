@@ -24,15 +24,20 @@
       a(href='#') My Tasks
       div
         a(href='#') Notifications
-        .notification-count {{clickedImg}}
+        .notification-count {{ clickedImg }}
 </template>
 
 <script lang="ts">
 
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
 
 
-@Component
+@Component({
+  computed: mapGetters({
+    clickedImg: 'getClickedImg',
+  }),
+})
 export default class TheSideMenu extends Vue {
   // initial data
   completedTasks: number = 372;
@@ -44,9 +49,9 @@ export default class TheSideMenu extends Vue {
   userAva = '/assets/img/ava.jpg';
 
   // computed
-  get clickedImg() {
-    return this.$store.state.clickedImg;
-  }
+  // get clickedImg() {
+  //   return this.$store.getters.getClickedImg;
+  // }
 
   // get openTasks() {
   //   return (this.$store.state.tasks).length;

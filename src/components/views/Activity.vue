@@ -110,7 +110,7 @@ export default class Activity extends Vue {
 
   // methods
   onImgClick(index:number) {
-    this.$store.commit('changeClickedImg', index);
+    this.$store.dispatch('changeClickedImg', index);
   }
 }
 

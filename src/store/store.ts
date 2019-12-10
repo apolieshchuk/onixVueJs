@@ -8,6 +8,14 @@ export default new Vuex.Store({
     clickedImg: 0,
     tasks: [],
   },
+  getters: {
+    getClickedImg: state => state.clickedImg,
+  },
+  actions: {
+    changeClickedImg(context, imgIndex) {
+      context.commit('changeClickedImg', imgIndex);
+    },
+  },
   mutations: {
     changeClickedImg(state, index) {
       state.clickedImg = index;
