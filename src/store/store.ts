@@ -1,14 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Task } from '@/interfaces';
 
 Vue.use(Vuex);
-
-/* Task interface */
-interface Task{
-  name: string,
-  description: string,
-  deadline: string
-}
 
 /* Function for creating task object */
 function createTaskObj(name:string, description:string, deadline:string): Task {
