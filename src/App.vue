@@ -1,12 +1,15 @@
 <template lang="pug">
   div
-    router-view
+    TheLayout
 </template>
 
 <script lang="ts">
 
+import TheLayout from '@/components/TheLayout.vue';
+
 export default {
   name: 'App',
+  components: { TheLayout },
 };
 
 </script>

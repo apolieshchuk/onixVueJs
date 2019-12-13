@@ -1,17 +1,14 @@
 <template lang="pug">
   div
-    img(:src="comingImg")
+    ComingSoon
 </template>
 
 <script lang="ts">
+import ComingSoon from '@/components/ComingSoon.vue';
 
 export default {
   name: 'Calendar',
-  data() {
-    return {
-      comingImg: '/assets/img/coming-soon.png',
-    };
-  },
+  components: { ComingSoon },
 };
 </script>
 

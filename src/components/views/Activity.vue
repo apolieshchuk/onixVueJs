@@ -28,21 +28,12 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
+import { Message } from '@/interfaces';
 
 /* type of icons */
 const okIco = 'ok-ico';
 const msgIco = 'msg-ico';
 const uploadIco = 'upload-ico';
-
-/* Message interface */
-interface Message{
-  msg: string,
-  date?: boolean; // date, sys, common
-  user?: string,
-  time?: string,
-  ico?: string,
-  photos?: any[],
-}
 
 /* Photo names */
 const photos = [
