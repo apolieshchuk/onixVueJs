@@ -28,19 +28,29 @@ export default new Vuex.Store({
   getters: {
     getClickedImg: state => state.clickedImg,
     getTasks: state => state.tasks,
+    // getReversedTasks: state => state.tasks.slice().reverse(),
     getTasksLength: state => state.tasks.length,
   },
   actions: {
-    changeClickedImg(context, imgIndex) {
+    changeClickedImg(context, imgIndex: number) {
       context.commit('changeClickedImg', imgIndex);
+    },
+    addTask(context, task: Task) {
+      context.commit('addTask', task);
+    },
+    deleteTask(context, taskIndex:number) {
+      context.commit('deleteTask', taskIndex);
     },
   },
   mutations: {
-    changeClickedImg(state, index) {
+    changeClickedImg(state, index: number) {
       state.clickedImg = index;
     },
-    initTasks(state, payload) {
-      state.tasks = payload;
+    addTask(state, task:Task) {
+      state.tasks.unshift(task);
+    },
+    deleteTask(state, taskIndex: number) {
+      state.tasks.splice(taskIndex, 1);
     },
   },
 });

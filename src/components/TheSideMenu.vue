@@ -29,14 +29,16 @@
 
 <script lang="ts">
 
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 
 
 @Component
 export default class TheSideMenu extends Vue {
+  // watchers
+  // @Watch('openTasks')
+
   // initial data
-  openTasks: number = this.$store.getters.getTasksLength;
+  // openTasks: number = 999;
 
   completedTasks: number = 372;
 
@@ -47,6 +49,10 @@ export default class TheSideMenu extends Vue {
   // computed
   get clickedImg() {
     return this.$store.getters.getClickedImg;
+  }
+
+  get openTasks() {
+    return this.$store.getters.getTasksLength;
   }
 
   // methods

@@ -2,7 +2,7 @@
 export interface Task{
   name: string,
   description: string,
-  deadline: string
+  deadline?: string
 }
 
 /* Message interface */
