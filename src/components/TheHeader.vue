@@ -134,7 +134,7 @@ export default class TheHeader extends Vue {
 
   .navigation{
     padding-left: 30px;
-    height: 60px;
+    height: 35px;
     padding-top: 20px;
 
     a{

@@ -1,27 +1,24 @@
 <template lang="pug">
-  .wrapper.over
-    form(@submit.prevent="addTask" ref="form")
-      .form-row.mb-1
-        .col-4
-          input.form-control(type='text' placeholder='Task name'
-            v-model='formTaskName' required)
-        .col-8
-          input.form-control(type='text' placeholder='Task description'
-            v-model="formTaskDescription" required)
-      .form-row.justify-content-center
-        .col-12
-          button.btn.btn-warning.w-100(type='submit') Add Task
+  .wrapper
+    .form-wrapper.flex
+      form.content-wrapper.flex(@submit.prevent="addTask" ref="form")
+        input(type='text' placeholder='Task name'
+          v-model='formTaskName' required)
+        input(type='text' placeholder='Task description'
+          v-model="formTaskDescription" required)
+        button(type='submit') Add Task
     hr
-    .table-wrapper
-      table.table
-        thead.thead-dark
-          th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-        tbody
-          tr(v-for='(task,i) in tasks' v-bind:key='i')
-            td.text-center
-              button(@click='deleteTask(i)') Del
-            td.text-break(v-for='(col,index) in Object.values(task)'
-              v-bind:key='index') {{col}}
+    .table-wrapper-over.content-wrapper
+      .table-wrapper
+        table
+          thead
+            th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
+          tbody
+            tr(v-for='(task,i) in tasks' v-bind:key='i')
+              td
+                button(@click='deleteTask(i)') Del
+              td(v-for='(col,index) in Object.values(task)'
+                v-bind:key='index') {{col}}
 
 </template>
 
@@ -50,6 +47,7 @@ export default class Tasks extends Vue {
       const task: Task = {
         name: this.formTaskName,
         description: this.formTaskDescription,
+        deadline: '',
       };
       this.formTaskDescription = '';
       this.formTaskName = '';
@@ -65,43 +63,68 @@ export default class Tasks extends Vue {
 
 <style lang="scss" scoped>
 
+.content-wrapper{
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 .wrapper {
   width: 100%;
-  .table-wrapper{
-    overflow: auto;
-    height: 75%;
-    table {
-      table-layout: fixed;
-      font-size: 14px;
-      width: 100%;
-      thead {
-        th {
-          padding: 8px;
-          border: none;
-
-          &:nth-child(1) {
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            width: 8%;
-            text-align: center;
-          }
-          &:nth-child(2) {
-            width: 20%;
-          }
-
-          &:nth-last-child(1) {
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-          }
-          &:nth-last-child(1) {
-            width: 15%;
-          }
-        }
-      }
-      td{
-        word-wrap: break-word;
+  .form-wrapper{
+    height: 20%;
+    justify-content: center;
+    form{
+      flex-direction: column;
+      width: 20%;
+      * {
+        height: 20px;
       }
     }
   }
+  .table-wrapper-over{
+    height: 75%;
+    .table-wrapper{
+      height: 100%;
+      overflow: auto;
+      table {
+        table-layout: fixed;
+        font-size: 14px;
+        width: 100%;
+        border-collapse: collapse;
+        thead {
+          text-align: left;
+          th {
+            padding: 8px 8px 8px 1px;
+            background-color: #333333;
+            color: white;
+            &:nth-child(1) {
+              border-top-left-radius: 5px;
+              border-bottom-left-radius: 5px;
+              width: 8%;
+              text-align: center;
+            }
+            &:nth-child(2) {
+              width: 20%;
+            }
+
+            &:nth-last-child(1) {
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+            &:nth-last-child(1) {
+              width: 15%;
+            }
+          }
+        }
+        td{
+          word-wrap: break-word;
+          border-bottom: 1px solid darkgrey;
+          padding: 5px;
+        }
+      }
+    }
+  }
+
 }
 </style>

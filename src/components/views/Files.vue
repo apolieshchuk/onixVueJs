@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    ComingSoon
+  ComingSoon
 </template>
 
 <script lang="ts">

@@ -83,7 +83,7 @@ export default class TheSideMenu extends Vue {
     color: white;
     height: 100vh;
     width: 19%;
-    min-width: 270px;
+    min-width: 250px;
     /*border: 1px solid black;*/
 
     > div {
@@ -124,10 +124,11 @@ export default class TheSideMenu extends Vue {
       align-items: center;
       justify-content: space-between;
       background-color: #202020;
-      margin-right: 0;
+
       img {
         width: 20%;
         border-radius: 50%;
+        margin-right: 5px;
       }
 
       .menu-ava-name p {
