@@ -20,10 +20,12 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
-const contacts = [
-  '/assets/img/cont1.png',
-  '/assets/img/cont2.jpg',
-  '/assets/img/cont3.jpg'];
+const cont1 = require('@/assets/img/cont1.png');
+const cont2 = require('@/assets/img/cont2.jpg');
+const cont3 = require('@/assets/img/cont3.jpg');
+
+
+const contacts = [cont1, cont2, cont3];
 
 
 @Component
@@ -53,8 +55,7 @@ export default class TheHeader extends Vue {
   header{
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 30px;
-    padding-bottom: 0;
+    padding: 30px 30px 0;
 
     .header-title{
       align-items: center;
@@ -69,7 +70,7 @@ export default class TheHeader extends Vue {
       }
       &:before{
          content: "";
-         background: url('/assets/img/Shapes@2x.png');
+         background: url('../assets/img/Shapes@2x.png');
          background-size: 40px 40px;
          background-color: #FFC200;
          min-width: 40px;
@@ -84,8 +85,8 @@ export default class TheHeader extends Vue {
 
       .contacts{
         img{
-          width: $contactsDiametr;
-          height: $contactsDiametr;
+          width: $contactsDiameter;
+          height: $contactsDiameter;
           margin-right: 5px;
           border-radius: 50%;
         }
@@ -102,7 +103,7 @@ export default class TheHeader extends Vue {
       }
 
       button{
-        height: $contactsDiametr;
+        height: $contactsDiameter;
         @include offButtonEffects;
         border-radius: 15px;
         font-size: 14px;
@@ -124,7 +125,7 @@ export default class TheHeader extends Vue {
         width: 81px;
         margin-left: 17px;
       &:before{
-         content: url('/assets/img/Combined Shape@1x.svg');
+         content: url('../assets/img/Combined Shape@1x.svg');
          margin-right: 5px;
        }
       }

@@ -39,8 +39,8 @@ export default class Layout extends Vue {}
     display: flex;
   }
   .dots3-but{
-    min-width: $contactsDiametr;
-    min-height: $contactsDiametr;
+    min-width: $contactsDiameter;
+    min-height: $contactsDiameter;
     position: relative;
     left: 10px;
     border-radius: 50%;

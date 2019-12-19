@@ -34,14 +34,14 @@ import { Message } from '@/interfaces';
 const okIco = 'ok-ico';
 const msgIco = 'msg-ico';
 const uploadIco = 'upload-ico';
+const img1 = require('@/assets/img/nature-1.jpg');
+const img2 = require('@/assets/img/nature-2.jpg');
+const img3 = require('@/assets/img/nature-3.jpg');
+const img4 = require('@/assets/img/nature-4.jpg');
+
 
 /* Photo names */
-const photos = [
-  '/assets/img/nature-1.jpg',
-  '/assets/img/nature-2.jpg',
-  '/assets/img/nature-3.jpg',
-  '/assets/img/nature-4.jpg',
-];
+const photos = [img1, img2, img3, img4];
 
 /* MessageObjects */
 const messageObjects: Message[] = [
@@ -86,10 +86,7 @@ const messageObjects: Message[] = [
     user: 'Ivan Ivanov',
     time: '20:48 PM',
     ico: uploadIco,
-    photos: [
-      '/assets/img/nature-1.jpg',
-      '/assets/img/nature-2.jpg',
-      '/assets/img/nature-3.jpg'],
+    photos: [img1, img2, img3],
   },
 ];
 
@@ -155,28 +152,28 @@ export default class Activity extends Vue {
         .ok-ico {
           background-color: #CEF9C6;
           &:after {
-            content: url('../../../public/assets/img/Icon@3x.svg');
+            content: url('../../assets/img/Icon@3x.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../../public/assets/img/message.svg');
+            content: url('../../assets/img/message.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../../public/assets/img/message.svg');
+            content: url('../../assets/img/message.svg');
           }
         }
 
         .upload-ico {
           background-color: #E3EFFF;
           &:after {
-            content: url('../../../public/assets/img/download.svg');
+            content: url('../../assets/img/download.svg');
           }
         }
       }

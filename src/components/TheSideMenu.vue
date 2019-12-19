@@ -31,6 +31,8 @@
 
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
+const userAva = require('@/assets/img/ava.jpg');
+
 
 @Component
 export default class TheSideMenu extends Vue {
@@ -44,7 +46,7 @@ export default class TheSideMenu extends Vue {
 
   userName: string = 'Anton Polieshchuk';
 
-  userAva = '/assets/img/ava.jpg';
+  userAva = userAva;
 
   // computed
   get clickedImg() {
@@ -61,7 +63,7 @@ export default class TheSideMenu extends Vue {
       // eslint-disable-next-line no-alert
       if (window.confirm('Are you sure you want to change the number of tasks?')) {
         this.completedTasks += 1;
-        this.openTasks -= 1;
+        // this.openTasks -= 1;
       }
     }
   }
@@ -98,7 +100,7 @@ export default class TheSideMenu extends Vue {
         align-items: center;
         &:before {
           margin-right: 15px;
-          content: url('../../public/assets/img/Logo@3x.svg');
+          content: url('../assets/img/Logo@3x.svg');
         }
       }
       p {
@@ -114,7 +116,7 @@ export default class TheSideMenu extends Vue {
         @include offButtonEffects;
         //margin-left: 200px;
         &:after {
-          content: url('../../public/assets/img/Search@3x.svg');
+          content: url('../assets/img/Search@3x.svg');
           cursor: pointer;
         }
       }
