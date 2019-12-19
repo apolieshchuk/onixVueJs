@@ -19,7 +19,6 @@
                 button(@click='deleteTask(i)') Del
               td(v-for='(col,index) in Object.values(task)'
                 v-bind:key='index') {{col}}
-
 </template>
 
 <script lang="ts">
@@ -107,7 +106,6 @@ export default class Tasks extends Vue {
             &:nth-child(2) {
               width: 20%;
             }
-
             &:nth-last-child(1) {
               border-top-right-radius: 5px;
               border-bottom-right-radius: 5px;
@@ -125,6 +123,5 @@ export default class Tasks extends Vue {
       }
     }
   }
-
 }
 </style>
