@@ -59,9 +59,10 @@ export default class Tasks extends Vue {
       this.formTaskDescription = '';
       this.formTaskName = '';
       this.$store.dispatch('addTask', task);
-      this.$nextTick();
-      const blinkedRow = document.querySelector('.table-row:nth-child(1)');
-      blinkedRow.classList.add('blink-row');
+      this.$nextTick(() => {
+        const blinkedRow = document.querySelector('.table-row:nth-child(1)');
+        blinkedRow.classList.add('blink-row');
+      });
     }
 
     deleteTask(index: number) {
