@@ -52,7 +52,7 @@ export default new Vuex.Store({
       state.clickedImg = index;
     },
     addTask(state, task:Task) {
-      state.tasks.unshift(task);
+      state.tasks.splice(0, 0, task);
     },
     deleteTask(state, taskIndex: number) {
       state.tasks.splice(taskIndex, 1);

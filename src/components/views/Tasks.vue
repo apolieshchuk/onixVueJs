@@ -1,7 +1,7 @@
 <template lang="pug">
   .wrapper
     .form-wrapper.flex
-      form.content-wrapper.flex(@submit.prevent="addTask" ref="form")
+      form.content-wrapper.flex(@submit.prevent="addTask")
         input(type='text' placeholder='Task name'
           v-model='formTaskName' required)
         input(type='text' placeholder='Task description'
@@ -13,8 +13,8 @@
         table
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-          tbody
-            tr(v-for='(task,i) in tasks' v-bind:key='i')
+          transition-group(tag="tbody" name="blink")
+            tr(v-for='(task,i) in tasks' :key="task")
               td
                 button(@click='deleteTask(i)') Del
               td(v-for='(col,index) in Object.values(task)'
@@ -61,6 +61,22 @@ export default class Tasks extends Vue {
 </script>
 
 <style lang="scss" scoped>
+/*.table-row{*/
+/*  background-color: yellow;*/
+/*}*/
+
+.blink-enter-active,
+.blink-leave-active {
+  font-size: 10px;
+  background-color: yellow;
+  transition: all 2s;
+}
+.blink-enter,
+.blink-leave-to /* .list-leave-active до версии 2.1.8 */ {
+  background-color: red;
+  font-size: 20px;
+}
+
 
 .content-wrapper{
   background-color: white;
