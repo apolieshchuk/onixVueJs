@@ -4,9 +4,17 @@ import { Task } from '@/interfaces';
 
 Vue.use(Vuex);
 
+let taskId = 0;
+
 /* Function for creating task object */
 function createTaskObj(name:string, description:string, deadline:string): Task {
-  return { name, description, deadline };
+  taskId += 1;
+  return {
+    id: taskId,
+    name,
+    description,
+    deadline,
+  };
 }
 
 /* Create task objects */
@@ -18,23 +26,24 @@ const tasks = [
   createTaskObj('Dinner', 'Eat,eat,eat....', '17.11, 17:00 am'),
   createTaskObj('Sleep', 'Go sleep until 4 a.m.', '17.11, 19:00 am'),
   createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
+  createTaskObj('Test2', 'Description test2', '17.11, 19:00 am'),
+  createTaskObj('Test3', 'Description test3', '17.11, 19:00 am'),
+  createTaskObj('Test4', 'Description test4', '17.11, 19:00 am'),
+  createTaskObj('Test5', 'Description test6', '17.11, 19:00 am'),
+  createTaskObj('Test7', 'Description test7', '17.11, 19:00 am'),
 ];
 
 export default new Vuex.Store({
   state: {
     clickedImg: 0,
     tasks,
+    taskId,
   },
   getters: {
     getClickedImg: state => state.clickedImg,
     getTasks: state => state.tasks,
-    // getReversedTasks: state => state.tasks.slice().reverse(),
     getTasksLength: state => state.tasks.length,
+    getTaskId: state => state.taskId,
   },
   actions: {
     changeClickedImg(context, imgIndex: number) {
