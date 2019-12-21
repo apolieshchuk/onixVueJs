@@ -13,12 +13,13 @@
         table
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-          tbody(is="transition-group" name="blink")
-            tr(v-for='(task,ind) in tasks' :key="task" class="table-row")
+          tbody
+            tr.table-row(v-for='(task,i) in tasks' :key="task.id"
+              :class="{'blink-row': blinkedRow}")
               td
-                button(@click='deleteTask(ind)') Del
-              td(v-for='(col,index) in Object.values(task)'
-                v-bind:key='index') {{col}}
+                button(@click='deleteTask(i)') Del
+              td {{ task.name }}
+              td {{ task.description }}
 </template>
 
 <script lang="ts">
@@ -26,8 +27,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import { Task } from '@/interfaces';
 
+
 /* Table cols */
-const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline'];
+const tableCols: string[] = ['Status', 'Task', 'Description'];
 
 
 @Component({
@@ -42,8 +44,14 @@ export default class Tasks extends Vue {
 
     formTaskDescription: string = '';
 
+    taskId = this.$store.getters.getTaskId;
+
+    blinkedRow = false;
+
     addTask() {
+      this.taskId += 1;
       const task: Task = {
+        id: this.taskId,
         name: this.formTaskName,
         description: this.formTaskDescription,
         deadline: '',
@@ -51,32 +59,52 @@ export default class Tasks extends Vue {
       this.formTaskDescription = '';
       this.formTaskName = '';
       this.$store.dispatch('addTask', task);
+      this.$nextTick(() => {
+        const blinkedRow = document.querySelector('.table-row:nth-child(1)');
+        blinkedRow.classList.add('blink-row');
+      });
     }
 
     deleteTask(index: number) {
       this.$store.dispatch('deleteTask', index);
+    }
+
+    // lifecycle hook
+    // eslint-disable-next-line class-methods-use-this
+    mounted() {
+      const blinkedRow = document.querySelector('.table-row:nth-child(1)');
+      blinkedRow.classList.add('blink-row');
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    greet() {
+      alert('greeting!!!');
     }
 }
 
 </script>
 
 <style lang="scss" scoped>
-/*.table-row{*/
-/*  background-color: yellow;*/
+
+
+/*.blink-enter-active{*/
+/*  animation: blink 3s;*/
 /*}*/
 
-.blink-enter-active,
-.blink-leave-active {
-  font-size: 10px;
-  background-color: yellow;
-  transition: all 2s;
-}
-.blink-enter,
-.blink-leave-to /* .list-leave-active до версии 2.1.8 */ {
-  background-color: red;
-  font-size: 20px;
+/*.blink-enter!* .fade-leave-active до версии 2.1.8 *! {*/
+/*  opacity: 0;*/
+/*}*/
+.blink-row{
+  animation: blink 1s;
+  animation-iteration-count: 3;
 }
 
+@keyframes blink {
+  50% {
+    opacity: 0;
+    background-color: lightgrey;
+  }
+}
 
 .content-wrapper{
   background-color: white;
@@ -91,9 +119,10 @@ export default class Tasks extends Vue {
     justify-content: center;
     form{
       flex-direction: column;
-      width: 20%;
-      * {
-        height: 20px;
+      // width: 20%;
+      input{
+        height: 33%;
+        margin-bottom: 2px;
       }
     }
   }
@@ -125,9 +154,6 @@ export default class Tasks extends Vue {
             &:nth-last-child(1) {
               border-top-right-radius: 5px;
               border-bottom-right-radius: 5px;
-            }
-            &:nth-last-child(1) {
-              width: 15%;
             }
           }
         }
