@@ -17,12 +17,6 @@ const tasks = [
   createTaskObj('Vue-programming', 'Continue programming process', '17.11, 15:00 am'),
   createTaskObj('Dinner', 'Eat,eat,eat....', '17.11, 17:00 am'),
   createTaskObj('Sleep', 'Go sleep until 4 a.m.', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
-  createTaskObj('Test1', 'Description test1', '17.11, 19:00 am'),
 ];
 
 export default new Vuex.Store({

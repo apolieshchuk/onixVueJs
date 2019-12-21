@@ -13,10 +13,10 @@
         table
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-          transition-group(tag="tbody" name="blink")
-            tr(v-for='(task,i) in tasks' :key="task")
+          tbody(is="transition-group" name="blink")
+            tr(v-for='(task,ind) in tasks' :key="task" class="table-row")
               td
-                button(@click='deleteTask(i)') Del
+                button(@click='deleteTask(ind)') Del
               td(v-for='(col,index) in Object.values(task)'
                 v-bind:key='index') {{col}}
 </template>
