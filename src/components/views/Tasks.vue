@@ -14,7 +14,7 @@
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           tbody
-            tr.table-row(v-for='(task,i) in tasks' :key="task.id")
+            tr.table-row(v-for='(task,i) in tasks' :key="task.id" ref="table-row")
               td
                 button(@click='deleteTask(i)') Del
               td {{ task.name }}
@@ -31,11 +31,13 @@ import { Task } from '@/interfaces';
 const tableCols: string[] = ['Status', 'Task', 'Description'];
 
 
-@Component({
-  computed: mapGetters({
-    tasks: 'getTasks',
-  }),
-})
+// ({
+//   computed: mapGetters({
+//     tasks: 'getTasks',
+//   }),
+// })
+
+@Component
 export default class Tasks extends Vue {
   tableCols: string[] = tableCols;
 
@@ -44,6 +46,8 @@ export default class Tasks extends Vue {
   formTaskDescription: string = '';
 
   taskId = this.$store.getters.getTaskId;
+
+  tasks = this.$store.getters.getTasks;
 
   addTask() {
     this.taskId += 1;
@@ -59,11 +63,10 @@ export default class Tasks extends Vue {
 
     // add blinking row when add new item
     this.$nextTick(() => {
-      const blinkedRow = document.querySelector('.table-row:nth-child(1)');
-      if (blinkedRow != null) blinkedRow.classList.add('blink-row');
+      const blinkedRow = this.$refs['table-row'] as Array<any>;
+      blinkedRow[blinkedRow.length - 1].classList.add('blink-row');
     });
 
-    // const inpName = document.querySelector('form input:first-child') as HTMLElement;
     const inpName = this.$refs.inputName as HTMLElement;
     inpName.focus();
   }
@@ -73,9 +76,8 @@ export default class Tasks extends Vue {
   }
 
   // lifecycle hook
-  // eslint-disable-next-line class-methods-use-this
   mounted() {
-    const blinkedRows = document.querySelectorAll('.table-row');
+    const blinkedRows = this.$refs['table-row'] as Array<any>;
     for (let i = 0; i < blinkedRows.length; i += 1) {
       setTimeout(() => {
         blinkedRows[i].classList.add('scale-text-row');
@@ -97,7 +99,7 @@ export default class Tasks extends Vue {
   }
   @keyframes scale-text-row-animation {
     50% {
-      font-size: 1.3em;
+      font-size: 1.2em;
     }
   }
   @keyframes blink {
