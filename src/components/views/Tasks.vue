@@ -1,5 +1,5 @@
 <template lang="pug">
-  .wrapper
+  .tasks-wrapper
     .form-wrapper.flex
       form.content-wrapper.flex(@submit.prevent="addTask")
         input(type='text' placeholder='Task name'
@@ -15,20 +15,21 @@
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           tbody
             tr.table-row(v-for='(task,i) in tasks' :key="task.id" ref="table-row")
-              td
-                button(@click='deleteTask(i)') Del
+              td {{ task.status }}
               td {{ task.name }}
               td {{ task.description }}
+              td
+                button(@click='deleteTask(i)') Del
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
-import { Task } from '@/interfaces';
+import { Status, Task } from '@/interfaces';
 
 
 /* Table cols */
-const tableCols: string[] = ['Status', 'Task', 'Description'];
+const tableCols: string[] = ['Status', 'Task', 'Description', 'Del'];
 
 
 // ({
@@ -55,7 +56,7 @@ export default class Tasks extends Vue {
       id: this.taskId,
       name: this.formTaskName,
       description: this.formTaskDescription,
-      deadline: '',
+      status: Status.todo,
     };
     this.formTaskDescription = '';
     this.formTaskName = '';
@@ -81,7 +82,14 @@ export default class Tasks extends Vue {
     for (let i = 0; i < blinkedRows.length; i += 1) {
       setTimeout(() => {
         blinkedRows[i].classList.add('scale-text-row');
-      }, 1000 * i);
+      }, 100 * i);
+    }
+  }
+
+  beforeUpdate() {
+    const blinkedRows = this.$refs['table-row'] as Array<any>;
+    for (let j = 0; j <= blinkedRows.length; j += 1) {
+      blinkedRows[j].classList.remove('scale-text-row');
     }
   }
 }
@@ -108,16 +116,8 @@ export default class Tasks extends Vue {
       background-color: lightgrey;
     }
   }
-
-  .content-wrapper {
-    background-color: white;
-    border-radius: 5px;
-    padding: 5px;
-  }
-
-  .wrapper {
+  .tasks-wrapper {
     width: 100%;
-
     .form-wrapper {
       height: 20%;
       justify-content: center;
@@ -133,7 +133,7 @@ export default class Tasks extends Vue {
     }
 
     .table-wrapper-over {
-      height: 75%;
+      height: 73%;
 
       .table-wrapper {
         height: 100%;
@@ -156,7 +156,7 @@ export default class Tasks extends Vue {
               &:nth-child(1) {
                 border-top-left-radius: 5px;
                 border-bottom-left-radius: 5px;
-                width: 8%;
+                width: 12%;
                 text-align: center;
               }
 
@@ -167,6 +167,7 @@ export default class Tasks extends Vue {
               &:nth-last-child(1) {
                 border-top-right-radius: 5px;
                 border-bottom-right-radius: 5px;
+                width: 8%;
               }
             }
           }

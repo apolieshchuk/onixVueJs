@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content-wrapper.flex
+  .wrapper.flex
     router-view
 </template>
 
@@ -9,9 +9,8 @@ export default {
 };
 </script>
 
-<style scoped>
-
-  .content-wrapper{
+<style lang="scss" scoped>
+  .wrapper{
     height: 100%;
     width: 100%;
     background-color: #EAEAEA;
@@ -20,5 +19,11 @@ export default {
     overflow: auto;
     justify-content: center;
   }
-
+</style>
+<style lang="scss">
+  .content-wrapper{
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+  }
 </style>

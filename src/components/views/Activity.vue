@@ -1,5 +1,5 @@
 <template lang="pug">
-  .activity-wrapper.flex
+  .activity-wrapper.flex.content-wrapper
     .messanger-wrapper.flex
       table.messanger
         //MESSAGE
@@ -107,11 +107,8 @@ export default class Activity extends Vue {
 <style lang="scss" scoped>
 
   .activity-wrapper{
-    background-color: white;
-    border-radius: 15px;
-    height: 100%;
+    height: 97%;
     min-width: 700px;
-    padding: 5px;
   }
 
   .messanger-wrapper{
