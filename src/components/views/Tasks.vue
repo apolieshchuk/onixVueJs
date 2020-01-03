@@ -117,7 +117,6 @@ export default class Tasks extends Vue {
     }
   }
   .tasks-wrapper {
-    width: 100%;
     .form-wrapper {
       height: 20%;
       justify-content: center;
@@ -134,7 +133,6 @@ export default class Tasks extends Vue {
 
     .table-wrapper-over {
       height: 73%;
-
       .table-wrapper {
         height: 100%;
         overflow: auto;
