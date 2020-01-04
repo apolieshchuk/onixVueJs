@@ -149,28 +149,28 @@ export default class Activity extends Vue {
         .ok-ico {
           background-color: #CEF9C6;
           &:after {
-            content: url('../../assets/img/Icon@3x.svg');
+            content: url('../assets/img/Icon@3x.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../assets/img/message.svg');
+            content: url('../assets/img/message.svg');
           }
         }
 
         .msg-ico {
           background-color: #FFF8DD;
           &:after {
-            content: url('../../assets/img/message.svg');
+            content: url('../assets/img/message.svg');
           }
         }
 
         .upload-ico {
           background-color: #E3EFFF;
           &:after {
-            content: url('../../assets/img/download.svg');
+            content: url('../assets/img/download.svg');
           }
         }
       }

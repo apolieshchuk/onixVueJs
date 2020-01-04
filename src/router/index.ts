@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Tasks from '@/components/views/Tasks.vue';
+import Tasks from '@/views/Tasks.vue';
 
 Vue.use(VueRouter);
 
@@ -8,27 +8,27 @@ const routes = [
   {
     path: '/tasks',
     name: 'Tasks',
-    component: () => import('@/components/views/Tasks.vue'),
+    component: () => import('@/views/Tasks.vue'),
   },
   {
     path: '/kanban',
     name: 'Kanban',
-    component: () => import('@/components/views/Kanban.vue'),
+    component: () => import('@/views/Kanban.vue'),
   },
   {
     path: '/activity',
     name: 'Activity',
-    component: () => import('@/components/views/Activity.vue'),
+    component: () => import('@/views/Activity.vue'),
   },
   {
     path: '/calendar',
     name: 'Calendar',
-    component: () => import('@/components/views/Calendar.vue'),
+    component: () => import('@/views/Calendar.vue'),
   },
   {
     path: '/files',
     name: 'Files',
-    component: () => import('@/components/views/Files.vue'),
+    component: () => import('@/views/Files.vue'),
   },
   {
     path: '/',

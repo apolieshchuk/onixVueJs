@@ -18,6 +18,7 @@
               td {{ task.status }}
               td {{ task.name }}
               td {{ task.description }}
+              td {{ task.deadline }}
               td
                 button(@click='deleteTask(i)') Del
 </template>
@@ -29,7 +30,7 @@ import { Status, Task } from '@/interfaces';
 
 
 /* Table cols */
-const tableCols: string[] = ['Status', 'Task', 'Description', 'Del'];
+const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline', 'Del'];
 
 
 // ({
@@ -56,6 +57,7 @@ export default class Tasks extends Vue {
       id: this.taskId,
       name: this.formTaskName,
       description: this.formTaskDescription,
+      deadline: '02.02.2020',
       status: Status.todo,
     };
     this.formTaskDescription = '';
@@ -168,6 +170,9 @@ export default class Tasks extends Vue {
                 border-top-right-radius: 5px;
                 border-bottom-right-radius: 5px;
                 width: 8%;
+              }
+              &:nth-last-child(2) {
+                width: 10%;
               }
             }
           }
