@@ -18,7 +18,7 @@
               // photo upload
               .message-content-upload.flex(v-if="msg.photos")
                 img(@click="onImgClick(index)" v-for="(photo,index) in msg.photos"
-                :key="index" :src="photo" alt="")
+                  :key="index" :src="photo" alt="")
             //column-separator
             td.message-sep(v-if="msg.user")
             //time column
@@ -107,8 +107,12 @@ export default class Activity extends Vue {
 <style lang="scss" scoped>
 
   .activity-wrapper{
-    height: 97%;
+    box-sizing: border-box;
+    height: 95%;
     min-width: 700px;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .messanger-wrapper{

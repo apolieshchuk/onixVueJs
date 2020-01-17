@@ -4,10 +4,11 @@
       .table-col-head(v-for="status in tableCols") {{ status }}
     .table-body.flex
       .table-col(v-for="status in tableCols")
-        .task-card(
+        .task-card.flex(
           v-for="task in tasks"
           v-if="task.status === status"
-          ) {{task.name}} {{ task.deadline }}
+          )
+          div {{task.name}} {{ task.deadline }}
 </template>
 
 <script lang="ts">
@@ -31,7 +32,6 @@ export default class Kanban extends Vue {
   width: 100%;
   background: url("../assets/img/kanban_bg.jpg") 100% 100%;
   flex-direction: column;
-  padding-top: 0;
 }
 
 .table-head,.table-body{
@@ -61,16 +61,29 @@ export default class Kanban extends Vue {
   .table-col {
     border-radius: 5px;
     overflow: auto;
+    border: 1px solid #333333;
+    padding-top: 5px;
     .task-card{
-      overflow: hidden;
+      // @include horizontalCenteringDiv;
+      margin-left: 10px;
       background-color: #FFCC33;
       border-radius: 5px;
-      display: inline-block;
-      height: 50px;
+      min-height: 50px;
+      min-width: 200px;
       width: 80%;
-      margin-bottom: 2px;
-      padding-top: 10px;
+      margin-bottom: 7px;
+      padding: 2px;
       box-sizing: border-box;
+      justify-content: center;
+      overflow-wrap: break-word;
+      float: left;
+      &:nth-child(2n){
+        float: right;
+        margin-right: 10px;
+      }
+      div {
+        align-self: center;
+      }
     }
   }
 }

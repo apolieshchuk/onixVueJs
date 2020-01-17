@@ -14,7 +14,7 @@ export default {
     height: 100%;
     width: 100%;
     background-color: #EAEAEA;
-    padding: 20px 30px;
+    // padding: 20px 30px;
     box-sizing: border-box;
     overflow: auto;
     justify-content: center;
@@ -22,8 +22,7 @@ export default {
 </style>
 <style lang="scss">
   .content-wrapper{
-    background-color: white;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
   }
 </style>

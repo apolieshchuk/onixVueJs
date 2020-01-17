@@ -1,7 +1,7 @@
 <template lang="pug">
-  .tasks-wrapper
+  .tasks-wrapper.content-wrapper
     .form-wrapper.flex
-      form.content-wrapper.flex(@submit.prevent="addTask")
+      form.flex(@submit.prevent="addTask")
         input(type='text' placeholder='Task name'
           v-model='formTaskName' required ref="inputName")
         input(type='text' placeholder='Task description'
@@ -84,7 +84,7 @@ export default class Tasks extends Vue {
     for (let i = 0; i < blinkedRows.length; i += 1) {
       setTimeout(() => {
         blinkedRows[i].classList.add('scale-text-row');
-      }, 100 * i);
+      }, 200 * i);
     }
   }
 
@@ -109,7 +109,7 @@ export default class Tasks extends Vue {
   }
   @keyframes scale-text-row-animation {
     50% {
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
   }
   @keyframes blink {
@@ -172,7 +172,7 @@ export default class Tasks extends Vue {
                 width: 8%;
               }
               &:nth-last-child(2) {
-                width: 10%;
+                width: 13%;
               }
             }
           }
