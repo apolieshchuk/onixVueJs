@@ -1,12 +1,8 @@
 <template lang="pug">
   .tasks-wrapper.content-wrapper
-    .form-wrapper.flex
-      form.flex(@submit.prevent="addTask")
-        input(type='text' placeholder='Task name'
-          v-model='formTaskName' required ref="inputName")
-        input(type='text' placeholder='Task description'
-          v-model="formTaskDescription" required)
-        button(type='submit') Add Task
+    button.btn(type='button', @click='showModal') Add new task!
+    // modal(v-show='isModalVisible', @close='closeModal')
+    ModalWindow(v-if="isModalVisible" @close='closeModal')
     hr
     .table-wrapper-over.content-wrapper
       .table-wrapper
@@ -27,6 +23,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import { Status, Task } from '@/interfaces';
+import ModalWindow from '@/components/ModalWindow.vue';
 
 
 /* Table cols */
@@ -38,41 +35,19 @@ const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline', 'Del']
 //     tasks: 'getTasks',
 //   }),
 // })
-
-@Component
+@Component({
+  components: { ModalWindow },
+})
 export default class Tasks extends Vue {
+  isModalVisible = false;
+
   tableCols: string[] = tableCols;
-
-  formTaskName: string = '';
-
-  formTaskDescription: string = '';
-
-  taskId = this.$store.getters.getTaskId;
 
   tasks = this.$store.getters.getTasks;
 
-  addTask() {
-    this.taskId += 1;
-    const task: Task = {
-      id: this.taskId,
-      name: this.formTaskName,
-      description: this.formTaskDescription,
-      deadline: '02.02.2020',
-      status: Status.todo,
-    };
-    this.formTaskDescription = '';
-    this.formTaskName = '';
-    this.$store.dispatch('addTask', task);
+  closeModal() { this.isModalVisible = false; }
 
-    // add blinking row when add new item
-    this.$nextTick(() => {
-      const blinkedRow = this.$refs['table-row'] as Array<any>;
-      blinkedRow[blinkedRow.length - 1].classList.add('blink-row');
-    });
-
-    const inpName = this.$refs.inputName as HTMLElement;
-    inpName.focus();
-  }
+  showModal() { this.isModalVisible = true; }
 
   deleteTask(index: number) {
     this.$store.dispatch('deleteTask', index);
@@ -99,10 +74,7 @@ export default class Tasks extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  .blink-row {
-    animation: blink 1s;
-    animation-iteration-count: 3;
-  }
+
 
   .scale-text-row{
     animation: scale-text-row-animation 1s;
@@ -112,31 +84,13 @@ export default class Tasks extends Vue {
       font-size: 1.1em;
     }
   }
-  @keyframes blink {
-    50% {
-      opacity: 0;
-      background-color: lightgrey;
-    }
-  }
+
   .tasks-wrapper {
     width: 100%;
-    .form-wrapper {
-      height: 20%;
-      justify-content: center;
-
-      form {
-        flex-direction: column;
-        // width: 20%;
-        input {
-          height: 33%;
-          margin-bottom: 2px;
-        }
-      }
-    }
-
+    text-align: center;
     .table-wrapper-over {
-      height: 73%;
-
+      height: 86%;
+      background-color: white;
       .table-wrapper {
         height: 100%;
         overflow: auto;
@@ -148,8 +102,7 @@ export default class Tasks extends Vue {
           border-collapse: collapse;
 
           thead {
-            text-align: left;
-
+            text-align: center;
             th {
               padding: 8px 8px 8px 1px;
               background-color: #333333;
