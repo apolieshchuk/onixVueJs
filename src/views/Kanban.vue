@@ -4,26 +4,36 @@
       .table-col-head(v-for="status in tableCols") {{ status }}
     .table-body.flex
       .table-col(v-for="status in tableCols")
-        .task-card.flex(
-          v-for="task in tasks"
-          v-if="task.status === status"
-          )
-          div {{task.name}} {{ task.deadline }}
+        draggable.draggable(group="cards")
+          .task-card.flex(
+            v-for="task in tasks"
+            v-if="task.status === status"
+            )
+            div {{task.name}} {{ task.deadline }}
 </template>
 
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
+import draggable from 'vuedraggable';
 import { Status } from '@/interfaces';
+
 
 const statusKeys = Object.keys(Status);
 const tableCols = statusKeys.map(k => Status[k as any]).map(v => v as Status);
 
-@Component
+@Component({
+  components: { draggable },
+})
 export default class Kanban extends Vue {
   tableCols = tableCols;
 
   tasks = this.$store.getters.getTasks;
+
+  // eslint-disable-next-line class-methods-use-this
+  drag() {
+    console.log('DRAGGED!');
+  }
 }
 </script>
 
@@ -42,6 +52,9 @@ export default class Kanban extends Vue {
   text-align: center;
   width: (100% / 3);
   margin: 2px;
+  .draggable{
+    height: 100%;
+  }
 }
 
 .table-head{

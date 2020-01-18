@@ -1,6 +1,6 @@
 <template lang="pug">
   .tasks-wrapper.content-wrapper
-    button.btn(type='button', @click='showModal') Add new task!
+    button.btn-yellow(type='button', @click='showModal') Add new task
     // modal(v-show='isModalVisible', @close='closeModal')
     ModalWindow(v-if="isModalVisible" @close='closeModal')
     hr
@@ -23,7 +23,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import { Status, Task } from '@/interfaces';
-import ModalWindow from '@/components/ModalWindow.vue';
+import ModalWindow from '@/components/AddTeskModal.vue';
 
 
 /* Table cols */
@@ -72,6 +72,17 @@ export default class Tasks extends Vue {
 }
 
 </script>
+
+<style lang="scss">
+  .btn-yellow {
+    color: white;
+    font-weight: bold;
+    background: #FFCC33;
+    height: 30px;
+    border: 1px solid #FFC200;
+    border-radius: 2px;
+  }
+</style>
 
 <style lang="scss" scoped>
 
