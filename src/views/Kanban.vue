@@ -7,6 +7,7 @@ import {Status} from "@/interfaces";
       .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
         draggable.draggable(group="cards"
           :id="'drag-' + tableCols[index]"
+          :move="checkMove"
           :list="list" @add="updateTasks"
           )
           .task-card.flex(
@@ -48,15 +49,8 @@ export default class Kanban extends Vue {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  draggableOptions(status) {
-    return {
-      group: {
-        name: `${status}_cards`,
-        put(to, from) {
-          return !(to.el.id === 'draggable-todo' && from.el.id === 'draggable-done');
-        },
-      },
-    };
+  checkMove(event) {
+    return !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
   }
 }
 </script>
