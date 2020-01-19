@@ -20,7 +20,7 @@ export interface Message{
 /* Enum */
 // eslint-disable-next-line import/prefer-default-export
 export enum Status {
-  inprogress = 'in progress',
   todo = 'todo',
   done = 'done',
+  inprogress = 'in progress',
 }

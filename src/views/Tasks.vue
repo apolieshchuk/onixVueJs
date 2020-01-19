@@ -10,7 +10,7 @@
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           transition-group(name="tasks" tag="tbody")
-            tr.table-row(v-for='(task,i) in tasks' :key="task.id" ref="table-row")
+            tr.table-row.test(v-for='(task,i) in tasks' :key="task.id" ref="table-row")
               td {{ task.status }}
               td {{ task.name }}
               td {{ task.description }}
@@ -53,50 +53,34 @@ export default class Tasks extends Vue {
     this.$store.dispatch('deleteTask', index);
   }
 
-  // lifecycle hook
   mounted() {
+    this.startAnimation();
+  }
+
+  startAnimation() {
+    const speed: number = 200;
+    const animationSpeed: number = 1000; // css @keyframes scale-text-row
     const blinkedRows = this.$refs['table-row'] as Array<any>;
+
+    // add animation class
     for (let i = 0; i < blinkedRows.length; i += 1) {
       setTimeout(() => {
         blinkedRows[i].classList.add('scale-text-row');
-      }, 200 * i);
+      }, speed * i);
     }
+
+    // remove animation class
+    setTimeout(() => {
+      for (let i = 0; i < blinkedRows.length; i += 1) {
+        blinkedRows[i].classList.remove('scale-text-row');
+      }
+    }, speed * blinkedRows.length + animationSpeed);
   }
 }
 
 </script>
 
 <style lang="scss">
-  .table-row{
-    opacity: 1;
-  }
-
-  .tasks-enter-active {
-    animation: blink;
-    animation-duration: 2s;
-  }
-
-  /*.tasks-enter, .tasks-leave-to !* .list-leave-active до версии 2.1.8 *! {*/
-  /*  opacity: 0;*/
-  /*  transform: translateY(30px);*/
-  /*}*/
-  /*.tasks-enter{*/
-  /*  animation-name: blink;*/
-  /*  animation-duration: 1s;*/
-  /*}*/
-
-  /*.blink-row {*/
-  /*  animation: blink 1s;*/
-  /*  animation-iteration-count: 3;*/
-  /*}*/
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-      background-color: lightgrey;
-    }
-  }
-
   .btn-yellow {
     color: white;
     font-weight: bold;
@@ -109,10 +93,25 @@ export default class Tasks extends Vue {
 
 <style lang="scss" scoped>
 
+  .tasks-enter-active {
+    animation: blink;
+    animation-duration: 2s;
+  }
+
+  @keyframes blink {
+    33%, 66% {
+      opacity: 0;
+      background-color: lightgrey;
+    }
+    50%, 100% {
+      opacity: 1;
+    }
+  }
 
   .scale-text-row{
     animation: scale-text-row-animation 1s;
   }
+
   @keyframes scale-text-row-animation {
     50% {
       font-size: 1.1em;

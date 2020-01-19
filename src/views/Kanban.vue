@@ -1,15 +1,18 @@
+import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper.content-wrapper.flex
     .table-head.flex
       .table-col-head(v-for="status in tableCols") {{ status }}
     .table-body.flex
-      .table-col(v-for="status in tableCols" @end="updateCards($event)")
-        draggable.draggable(:options= "draggableOptions(status)" :id="'draggable-' + status")
+      .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
+        draggable.draggable(group="cards"
+          :id="'drag-' + tableCols[index]"
+          :list="list" @add="updateTasks"
+          )
           .task-card.flex(
-            v-for="task in tasks"
+            v-for="task in list"
             :id="'task-' + task.id"
-            v-if="task.status === status"
-            )
+          )
             div {{task.name}} {{ task.deadline }}
 </template>
 
@@ -31,9 +34,15 @@ export default class Kanban extends Vue {
 
   tasks = this.$store.getters.getTasks;
 
+  tasksTodo = this.$store.getters.getTasks.filter(obj => obj.status === Status.todo);
+
+  tasksDone = this.$store.getters.getTasks.filter(obj => obj.status === Status.done);
+
+  tasksInProgress = this.$store.getters.getTasks.filter(obj => obj.status === Status.inprogress);
+
   // eslint-disable-next-line class-methods-use-this
-  updateCards(event) {
-    const id = event.item.id.split('-')[1];
+  updateTasks(event) {
+    const id = event.clone.id.split('-')[1];
     const status = event.to.id.split('-')[1];
     this.$store.dispatch('updateTaskStatus', { id, status });
   }
