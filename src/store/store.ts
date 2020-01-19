@@ -4,13 +4,13 @@ import { Status, Task } from '@/interfaces';
 
 Vue.use(Vuex);
 
-let taskId = 0;
+let lastTaskId = 0;
 
 /* Function for creating task object */
 function createTaskObj(name:string, description:string, deadline:string, status:Status): Task {
-  taskId += 1;
+  lastTaskId += 1;
   return {
-    id: taskId,
+    id: lastTaskId,
     name,
     description,
     deadline,
@@ -38,13 +38,13 @@ export default new Vuex.Store({
   state: {
     clickedImg: 0,
     tasks,
-    taskId,
+    lastTaskId,
   },
   getters: {
     getClickedImg: state => state.clickedImg,
     getTasks: state => state.tasks,
     getTasksLength: state => state.tasks.length,
-    getTaskId: state => state.taskId,
+    getLastTaskId: state => state.taskId,
   },
   actions: {
     changeClickedImg(context, imgIndex: number) {
@@ -56,6 +56,9 @@ export default new Vuex.Store({
     deleteTask(context, taskIndex:number) {
       context.commit('deleteTask', taskIndex);
     },
+    updateTaskStatus(context, { id, status }) {
+      context.commit('updateTaskStatus', { id, status });
+    },
   },
   mutations: {
     changeClickedImg(state, index: number) {
@@ -63,9 +66,19 @@ export default new Vuex.Store({
     },
     addTask(state, task:Task) {
       state.tasks.splice(0, 0, task);
+      state.taskId += 1;
     },
     deleteTask(state, taskIndex: number) {
       state.tasks.splice(taskIndex, 1);
+    },
+    updateTaskStatus(state, { id, status }) {
+      for (let i = 0; i < tasks.length; i += 1) {
+        // eslint-disable-next-line eqeqeq
+        if (id == tasks[i].id) {
+          tasks[i].status = status;
+          break;
+        }
+      }
     },
   },
 });

@@ -22,8 +22,6 @@ import { Status, Task } from '@/interfaces';
 
 @Component
 export default class ModalWindow extends Vue {
-  taskId = this.$store.getters.getTaskId;
-
   formTaskName: string = '';
 
   formTaskDescription: string = '';
@@ -33,9 +31,8 @@ export default class ModalWindow extends Vue {
   }
 
   addTask() {
-    this.taskId += 1;
     const task: Task = {
-      id: this.taskId,
+      id: this.$store.getters.getLastTaskId + 1,
       name: this.formTaskName,
       description: this.formTaskDescription,
       deadline: '02.02.2020',
@@ -46,10 +43,10 @@ export default class ModalWindow extends Vue {
     this.$store.dispatch('addTask', task);
 
     // add blinking row when add new item
-    this.$nextTick(() => {
-      const blinkedRow = this.$refs['table-row'] as Array<any>;
-      blinkedRow[blinkedRow.length - 1].classList.add('blink-row');
-    });
+    // this.$nextTick(() => {
+    //   const blinkedRow = this.$refs['table-row'] as Array<any>;
+    //   blinkedRow[blinkedRow.length - 1].classList.add('blink-row');
+    // });
 
     // close modal window
     this.closeModal();
@@ -61,17 +58,7 @@ export default class ModalWindow extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.blink-row {
-  animation: blink 1s;
-  animation-iteration-count: 3;
-}
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-    background-color: lightgrey;
-  }
-}
 
 .modal-backdrop {
   position: fixed;

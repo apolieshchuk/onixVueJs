@@ -9,7 +9,7 @@
         table
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-          tbody
+          transition-group(name="tasks" tag="tbody")
             tr.table-row(v-for='(task,i) in tasks' :key="task.id" ref="table-row")
               td {{ task.status }}
               td {{ task.name }}
@@ -23,7 +23,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import { Status, Task } from '@/interfaces';
-import ModalWindow from '@/components/AddTeskModal.vue';
+import ModalWindow from '@/components/AddTaskModal.vue';
 
 
 /* Table cols */
@@ -62,18 +62,41 @@ export default class Tasks extends Vue {
       }, 200 * i);
     }
   }
-
-  beforeUpdate() {
-    const blinkedRows = this.$refs['table-row'] as Array<any>;
-    for (let j = 0; j <= blinkedRows.length; j += 1) {
-      blinkedRows[j].classList.remove('scale-text-row');
-    }
-  }
 }
 
 </script>
 
 <style lang="scss">
+  .table-row{
+    opacity: 1;
+  }
+
+  .tasks-enter-active {
+    animation: blink;
+    animation-duration: 2s;
+  }
+
+  /*.tasks-enter, .tasks-leave-to !* .list-leave-active до версии 2.1.8 *! {*/
+  /*  opacity: 0;*/
+  /*  transform: translateY(30px);*/
+  /*}*/
+  /*.tasks-enter{*/
+  /*  animation-name: blink;*/
+  /*  animation-duration: 1s;*/
+  /*}*/
+
+  /*.blink-row {*/
+  /*  animation: blink 1s;*/
+  /*  animation-iteration-count: 3;*/
+  /*}*/
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+      background-color: lightgrey;
+    }
+  }
+
   .btn-yellow {
     color: white;
     font-weight: bold;
