@@ -4,7 +4,7 @@
       .table-col-head(v-for="status in tableCols") {{ status }}
     .table-body.flex
       .table-col(v-for="status in tableCols" @end="update($event)")
-        draggable.draggable(group="cards" :id="'draggable-' + status")
+        draggable.draggable(group="cards" :id="'draggable-' + status" :move="checkMove")
           .task-card.flex(
             v-for="task in tasks"
             :id="'task-' + task.id"
@@ -36,6 +36,13 @@ export default class Kanban extends Vue {
     const id = event.item.id.split('-')[1];
     const status = event.to.id.split('-')[1];
     this.$store.dispatch('updateTaskStatus', { id, status });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  checkMove(event) {
+    console.log(event);
+    console.log('Moved');
+    return false;
   }
 }
 </script>

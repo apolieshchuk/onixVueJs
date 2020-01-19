@@ -44,7 +44,7 @@ export default new Vuex.Store({
     getClickedImg: state => state.clickedImg,
     getTasks: state => state.tasks,
     getTasksLength: state => state.tasks.length,
-    getLastTaskId: state => state.taskId,
+    getLastTaskId: state => state.lastTaskId,
   },
   actions: {
     changeClickedImg(context, imgIndex: number) {
@@ -66,7 +66,7 @@ export default new Vuex.Store({
     },
     addTask(state, task:Task) {
       state.tasks.splice(0, 0, task);
-      state.taskId += 1;
+      state.lastTaskId += 1;
     },
     deleteTask(state, taskIndex: number) {
       state.tasks.splice(taskIndex, 1);

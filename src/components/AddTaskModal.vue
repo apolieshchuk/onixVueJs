@@ -4,7 +4,7 @@
       .modal(role='dialog', aria-labelledby='modalTitle', aria-describedby='modalDescription')
         header#modalTitle.modal-header
           div Add new task
-          button.btn-close(type='button', @click='closeModal', aria-label='Close modal') x
+          button.btn-close(type='button', @click="$emit('close')", aria-label='Close modal') x
         section#modalDescription.modal-body
           .form-wrapper.flex
             form.flex(@submit.prevent="addTask")
@@ -26,13 +26,10 @@ export default class ModalWindow extends Vue {
 
   formTaskDescription: string = '';
 
-  closeModal() {
-    this.$emit('close');
-  }
-
   addTask() {
+    const id = this.$store.getters.getLastTaskId + 1;
     const task: Task = {
-      id: this.$store.getters.getLastTaskId + 1,
+      id,
       name: this.formTaskName,
       description: this.formTaskDescription,
       deadline: '02.02.2020',
@@ -49,7 +46,7 @@ export default class ModalWindow extends Vue {
     // });
 
     // close modal window
-    this.closeModal();
+    this.$emit('close');
 
     // const inpName = this.$refs.inputName as HTMLElement;
     // inpName.focus();
@@ -61,6 +58,7 @@ export default class ModalWindow extends Vue {
 
 
 .modal-backdrop {
+  z-index: 1;
   position: fixed;
   top: 0;
   bottom: 0;
