@@ -3,29 +3,13 @@
     .table-head.flex
       .table-col-head(v-for="status in tableCols") {{ status }}
     .table-body.flex
-      .table-col(@end="updateCards($event)")
-        draggable.draggable(group="todo" :move="checkMove" :id="'draggable-todo'")
+      .table-col(v-for="status in tableCols" @end="updateCards($event)")
+        draggable.draggable(:options= "draggableOptions(status)" :id="'draggable-' + status")
           .task-card.flex(
             v-for="task in tasks"
             :id="'task-' + task.id"
-            v-if="task.status === 'todo'"
+            v-if="task.status === status"
             )
-            div {{task.name}} {{ task.deadline }}
-      .table-col(@end="updateCards($event)")
-        draggable.draggable(group="done" :move="checkMove" :id="'draggable-done'")
-          .task-card.flex(
-            v-for="task in tasks"
-            :id="'task-' + task.id"
-            v-if="task.status === 'done'"
-          )
-            div {{task.name}} {{ task.deadline }}
-      .table-col(@end="updateCards($event)")
-        draggable.draggable(group="inprogress" :move="checkMove" :id="'draggable-in progress'")
-          .task-card.flex(
-            v-for="task in tasks"
-            :id="'task-' + task.id"
-            v-if="task.status === 'in progress'"
-          )
             div {{task.name}} {{ task.deadline }}
 </template>
 
@@ -55,10 +39,15 @@ export default class Kanban extends Vue {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  checkMove(event) {
-    console.log(event);
-    console.log('Moved');
-    return true;
+  draggableOptions(status) {
+    return {
+      group: {
+        name: `${status}_cards`,
+        put(to, from) {
+          return !(to.el.id === 'draggable-todo' && from.el.id === 'draggable-done');
+        },
+      },
+    };
   }
 }
 </script>
