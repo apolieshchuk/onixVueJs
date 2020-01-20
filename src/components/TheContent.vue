@@ -45,6 +45,6 @@ export default {
 <style lang="scss">
   .content-wrapper{
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px 10px 10px;
   }
 </style>

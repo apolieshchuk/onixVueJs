@@ -93,9 +93,8 @@ export default class Kanban extends Vue {
 }
 
 .table-head{
-  height: 7%;
+  height: 25px;
   .table-col-head{
-    margin-top: 0;
     background-color: #333333;
     border-radius: 3px;
     color: white;
