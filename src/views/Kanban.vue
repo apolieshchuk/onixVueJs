@@ -1,6 +1,11 @@
 import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper.content-wrapper.flex
+    TaskDetailsModal(
+      v-if="isEditModalVisible"
+      @close="isEditModalVisible = false"
+      :editedTask="editedTask"
+    )
     .table-head.flex
       .table-col-head(v-for="status in tableCols") {{ status }}
     .table-body.flex
@@ -13,6 +18,7 @@ import {Status} from "@/interfaces";
           .task-card.flex(
             v-for="task in list"
             :id="'task-' + task.id"
+            @click="editTask(task.id)"
           )
             div {{task.name}} {{ task.deadline }}
 </template>
@@ -21,25 +27,31 @@ import {Status} from "@/interfaces";
 
 import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
-import { Status } from '@/interfaces';
+import { Status, Task } from '@/interfaces';
+import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
 
 const statusKeys = Object.keys(Status);
 const tableCols = statusKeys.map(k => Status[k as any]).map(v => v as Status);
 
 @Component({
-  components: { draggable },
+  components: { TaskDetailsModal, draggable },
 })
 export default class Kanban extends Vue {
   tableCols = tableCols;
 
+  isEditModalVisible = false;
+
+  editedTask: Task;
+
   tasks = this.$store.getters.getTasks;
 
-  tasksTodo = this.$store.getters.getTasks.filter(obj => obj.status === Status.todo);
+  tasksTodo = this.$store.getters.getTasks.filter((obj: Task) => obj.status === Status.todo);
 
-  tasksDone = this.$store.getters.getTasks.filter(obj => obj.status === Status.done);
+  tasksDone = this.$store.getters.getTasks.filter((obj: Task) => obj.status === Status.done);
 
-  tasksInProgress = this.$store.getters.getTasks.filter(obj => obj.status === Status.inprogress);
+  tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
+    === Status.inprogress);
 
   // eslint-disable-next-line class-methods-use-this
   updateTasks(event) {
@@ -49,8 +61,13 @@ export default class Kanban extends Vue {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  checkMove(event) {
+  checkMove(event: any) {
     return !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
+  }
+
+  editTask(id: number) {
+    this.isEditModalVisible = true;
+    this.editedTask = this.$store.getters.getTaskById(id);
   }
 }
 </script>
@@ -95,7 +112,7 @@ export default class Kanban extends Vue {
     border: 1px solid #333333;
     padding-top: 5px;
     .task-card{
-      // @include horizontalCenteringDiv;
+      cursor: pointer;
       margin-left: 10px;
       background-color: #FFCC33;
       border-radius: 5px;

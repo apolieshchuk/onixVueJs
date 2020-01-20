@@ -11,10 +11,10 @@ function createTaskObj(name:string, description:string, deadline:string, status:
   lastTaskId += 1;
   return {
     id: lastTaskId,
+    status,
+    deadline,
     name,
     description,
-    deadline,
-    status,
   };
 }
 
@@ -45,6 +45,7 @@ export default new Vuex.Store({
     getTasks: state => state.tasks,
     getTasksLength: state => state.tasks.length,
     getLastTaskId: state => state.lastTaskId,
+    getTaskById: state => id => state.tasks.find(task => task.id === id),
   },
   actions: {
     changeClickedImg(context, imgIndex: number) {

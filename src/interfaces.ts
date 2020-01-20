@@ -2,9 +2,9 @@
 export interface Task{
   id: number,
   name: string,
+  status: Status,
   description: string,
   deadline: string,
-  status: Status,
 }
 
 /* Message interface */

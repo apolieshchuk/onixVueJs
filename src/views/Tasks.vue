@@ -1,8 +1,12 @@
 <template lang="pug">
   .tasks-wrapper.content-wrapper
-    button.btn-yellow(type='button', @click='showModal') Add new task
-    // modal(v-show='isModalVisible', @close='closeModal')
-    ModalWindow(v-if="isModalVisible" @close='closeModal')
+    button.btn-yellow(type='button', @click="isAddModalVisible = true") Add new task
+    TaskDetailsModal(
+      v-if="isEditModalVisible"
+      @close="isEditModalVisible = false"
+      :editedTask="editedTask"
+      )
+    ModalWindow(v-if="isAddModalVisible" @close="isAddModalVisible = false")
     hr
     .table-wrapper-over.content-wrapper
       .table-wrapper
@@ -10,11 +14,15 @@
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           transition-group(name="tasks" tag="tbody")
-            tr.table-row.test(v-for='(task,i) in tasks' :key="task.id" ref="table-row")
-              td {{ task.status }}
-              td {{ task.name }}
-              td {{ task.description }}
-              td {{ task.deadline }}
+            tr.table-row.test(
+              v-for='(task,i) in tasks'
+              :key="task.id"
+              ref="table-row"
+              )
+              td(@click="editTask(task.id)") {{ task.status }}
+              td(@click="editTask(task.id)") {{ task.name }}
+              td(@click="editTask(task.id)") {{ task.description }}
+              td(@click="editTask(task.id)") {{ task.deadline }}
               td
                 button(@click='deleteTask(i)') Del
 </template>
@@ -24,6 +32,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import { Status, Task } from '@/interfaces';
 import ModalWindow from '@/components/AddTaskModal.vue';
+import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
 
 /* Table cols */
@@ -36,18 +45,18 @@ const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline', 'Del']
 //   }),
 // })
 @Component({
-  components: { ModalWindow },
+  components: { TaskDetailsModal, ModalWindow },
 })
 export default class Tasks extends Vue {
-  isModalVisible = false;
+  isAddModalVisible = false;
+
+  isEditModalVisible = false;
 
   tableCols: string[] = tableCols;
 
+  editedTask: Task;
+
   tasks = this.$store.getters.getTasks;
-
-  closeModal() { this.isModalVisible = false; }
-
-  showModal() { this.isModalVisible = true; }
 
   deleteTask(index: number) {
     this.$store.dispatch('deleteTask', index);
@@ -57,39 +66,32 @@ export default class Tasks extends Vue {
     this.startAnimation();
   }
 
+  editTask(id: number) {
+    this.isEditModalVisible = true;
+    this.editedTask = this.$store.getters.getTaskById(id);
+  }
+
   startAnimation() {
     const speed: number = 200;
     const animationSpeed: number = 1000; // css @keyframes scale-text-row
     const blinkedRows = this.$refs['table-row'] as Array<any>;
 
-    // add animation class
     for (let i = 0; i < blinkedRows.length; i += 1) {
+      // add animation class
       setTimeout(() => {
         blinkedRows[i].classList.add('scale-text-row');
       }, speed * i);
-    }
 
-    // remove animation class
-    setTimeout(() => {
-      for (let i = 0; i < blinkedRows.length; i += 1) {
+      // remove animation class
+      setTimeout(() => {
         blinkedRows[i].classList.remove('scale-text-row');
-      }
-    }, speed * blinkedRows.length + animationSpeed);
+      }, speed * i + animationSpeed);
+    }
   }
 }
 
 </script>
 
-<style lang="scss">
-  .btn-yellow {
-    color: white;
-    font-weight: bold;
-    background: #FFCC33;
-    height: 30px;
-    border: 1px solid #FFC200;
-    border-radius: 2px;
-  }
-</style>
 
 <style lang="scss" scoped>
 
@@ -105,6 +107,7 @@ export default class Tasks extends Vue {
     }
     50%, 100% {
       opacity: 1;
+      background-color: white;
     }
   }
 
@@ -163,10 +166,13 @@ export default class Tasks extends Vue {
             }
           }
 
-          td {
-            word-wrap: break-word;
-            border-bottom: 1px solid darkgrey;
-            padding: 5px;
+          tr {
+            cursor: pointer;
+            td {
+              word-wrap: break-word;
+              border-bottom: 1px solid darkgrey;
+              padding: 5px;
+            }
           }
         }
       }
