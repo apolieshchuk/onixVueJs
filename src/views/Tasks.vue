@@ -124,6 +124,10 @@ export default class Tasks extends Vue {
   .tasks-wrapper {
     width: 100%;
     text-align: center;
+
+    button{
+      margin-top: 5px;
+    }
     .table-wrapper-over {
       height: 86%;
       background-color: white;
