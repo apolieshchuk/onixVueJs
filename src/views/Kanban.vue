@@ -13,20 +13,12 @@ import {Status} from "@/interfaces";
       .table-col-head
         .filter.flex
           input(v-model="filterTodo" placeholder="Name")
-          datepicker.datepicker(calendar-class="my-datepicker_calendar")
-          datepicker.datepicker(calendar-class="my-datepicker_calendar")
       .table-col-head
         .filter
           input(v-model="filterDone" placeholder="Name")
-          .datepicker-wrapper.flex
-            datepicker
-            datepicker
       .table-col-head
         .filter
           input(v-model="filterInProgress" placeholder="Name")
-          .datepicker-wrapper.flex
-            datepicker
-            datepicker
     .table-head.flex
       .table-col-head(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
     .table-body.flex
@@ -50,7 +42,7 @@ import {Status} from "@/interfaces";
 
 import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
-import datepicker from 'vuejs-datepicker';
+import VCalendar from 'v-calendar';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
@@ -59,7 +51,7 @@ const statusKeys = Object.keys(Status);
 const tableCols = statusKeys.map(k => Status[k as any]).map(v => v as Status);
 
 @Component({
-  components: { TaskDetailsModal, draggable, datepicker },
+  components: { TaskDetailsModal, draggable },
 })
 export default class Kanban extends Vue {
   tableCols = tableCols;
@@ -181,13 +173,6 @@ export default class Kanban extends Vue {
 .table-head-filter{
 
 
-}
-.datepicker >>> .my-datepicker_calendar {
-  width: 100%;
-  height: 330px;
-}
-.datepicker {
-  width: 20px;
 }
 
 .table-body{
