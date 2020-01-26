@@ -22,7 +22,7 @@
               td(@click="editTask(task.id)") {{ task.status }}
               td(@click="editTask(task.id)") {{ task.name }}
               td(@click="editTask(task.id)") {{ task.description }}
-              td(@click="editTask(task.id)") {{ task.deadline }}
+              td(@click="editTask(task.id)") {{ formattedDate(task.deadline)}}
               td
                 button(@click='deleteTask(i)') Del
 </template>
@@ -66,6 +66,11 @@ export default class Tasks extends Vue {
     this.startAnimation();
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  // formatedDate(date: Date) {
+  //   return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+  // }
+
   editTask(id: number) {
     this.isEditModalVisible = true;
     this.editedTask = this.$store.getters.getTaskById(id);
@@ -87,6 +92,11 @@ export default class Tasks extends Vue {
         blinkedRows[i].classList.remove('scale-text-row');
       }, speed * i + animationSpeed);
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  formattedDate(date: Date) {
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 }
 

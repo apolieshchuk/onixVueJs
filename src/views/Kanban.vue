@@ -1,4 +1,6 @@
 import {Status} from "@/interfaces";
+import {Status} from "@/interfaces";
+import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper.content-wrapper.flex
     TaskDetailsModal(
@@ -18,9 +20,10 @@ import {Status} from "@/interfaces";
           .task-card.flex(
             v-for="task in list"
             :id="'task-' + task.id"
+            :class="[cardStyle(task.status, task.deadline), hotCard(task.deadline)]"
             @click="editTask(task.id)"
           )
-            div {{task.name}} {{ task.deadline }}
+            div {{task.name}} {{ formattedDate(task.deadline) }}
 </template>
 
 <script lang="ts">
@@ -69,6 +72,33 @@ export default class Kanban extends Vue {
     this.isEditModalVisible = true;
     this.editedTask = this.$store.getters.getTaskById(id);
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  cardStyle(status: Status, date: Date) {
+    if (status === Status.todo || status === Status.inprogress) {
+      if (date < new Date()) return 'task-card-past';
+    }
+
+    switch (status) {
+      case Status.done: return 'task-card-done';
+      case Status.inprogress: return 'task-card-inprogress';
+      case Status.todo: return 'task-card-todo';
+      default: return null;
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  hotCard(date: Date) {
+    const diffForHot = 24;
+    const diff: number = (date.getTime() - new Date().getTime()) / 36e5;
+    if (diff < diffForHot && diff > 0) return 'hot';
+    return '';
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  formattedDate(date: Date) {
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+  }
 }
 </script>
 
@@ -113,7 +143,6 @@ export default class Kanban extends Vue {
     .task-card{
       cursor: pointer;
       margin-left: 10px;
-      background-color: #FFCC33;
       border-radius: 5px;
       min-height: 50px;
       min-width: 200px;
@@ -131,6 +160,21 @@ export default class Kanban extends Vue {
       div {
         align-self: center;
       }
+    }
+    .hot::after{
+      content: url('../assets/img/hot.svg');
+    }
+    .task-card-todo{
+      background-color: #FFCC33;
+    }
+    .task-card-done{
+      background-color: lightgreen;
+    }
+    .task-card-inprogress{
+      background-color: lightblue;
+    }
+    .task-card-past{
+      background-color: lightcoral;
     }
   }
 }
