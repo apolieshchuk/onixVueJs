@@ -54,7 +54,7 @@ export default class Tasks extends Vue {
 
   tableCols: string[] = tableCols;
 
-  editedTask: Task;
+  editedTask: Task = {} as Task;
 
   tasks = this.$store.getters.getTasks;
 

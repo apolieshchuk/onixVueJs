@@ -45,7 +45,7 @@ export default new Vuex.Store({
     getTasks: state => state.tasks,
     getTasksLength: state => state.tasks.length,
     getLastTaskId: state => state.lastTaskId,
-    getTaskById: state => id => state.tasks.find(task => task.id === id),
+    getTaskById: state => (id:number) => state.tasks.find(task => task.id === id),
   },
   actions: {
     changeClickedImg(context, imgIndex: number) {

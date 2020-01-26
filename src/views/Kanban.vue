@@ -42,7 +42,7 @@ export default class Kanban extends Vue {
 
   isEditModalVisible = false;
 
-  editedTask: Task;
+  editedTask: Task = {} as Task;
 
   tasks = this.$store.getters.getTasks;
 
@@ -53,10 +53,10 @@ export default class Kanban extends Vue {
   tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
     === Status.inprogress);
 
-  // eslint-disable-next-line class-methods-use-this
-  updateTasks(event) {
-    const id = event.clone.id.split('-')[1];
-    const status = event.to.id.split('-')[1];
+
+  updateTasks(event: any) {
+    const id: number = event.clone.id.split('-')[1];
+    const status: Status = event.to.id.split('-')[1];
     this.$store.dispatch('updateTaskStatus', { id, status });
   }
 
