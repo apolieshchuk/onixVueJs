@@ -1,6 +1,7 @@
 import {Status} from "@/interfaces";
 import {Status} from "@/interfaces";
 import {Status} from "@/interfaces";
+import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper.content-wrapper.flex
     TaskDetailsModal(
@@ -8,8 +9,26 @@ import {Status} from "@/interfaces";
       @close="isEditModalVisible = false"
       :editedTask="editedTask"
     )
+    .table-head-filter.flex
+      .table-col-head
+        .filter.flex
+          input(v-model="filterTodo" placeholder="Name")
+          datepicker.datepicker(calendar-class="my-datepicker_calendar")
+          datepicker.datepicker(calendar-class="my-datepicker_calendar")
+      .table-col-head
+        .filter
+          input(v-model="filterDone" placeholder="Name")
+          .datepicker-wrapper.flex
+            datepicker
+            datepicker
+      .table-col-head
+        .filter
+          input(v-model="filterInProgress" placeholder="Name")
+          .datepicker-wrapper.flex
+            datepicker
+            datepicker
     .table-head.flex
-      .table-col-head(v-for="status in tableCols") {{ status }}
+      .table-col-head(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
     .table-body.flex
       .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
         draggable.draggable(group="cards"
@@ -19,8 +38,9 @@ import {Status} from "@/interfaces";
           )
           .task-card.flex(
             v-for="task in list"
+            v-if="task.name.includes(filterFields(task.status), 0)"
             :id="'task-' + task.id"
-            :class="[cardStyle(task.status, task.deadline), hotCard(task.deadline)]"
+            :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
             @click="editTask(task.id)"
           )
             div {{task.name}} {{ formattedDate(task.deadline) }}
@@ -30,6 +50,7 @@ import {Status} from "@/interfaces";
 
 import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
+import datepicker from 'vuejs-datepicker';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
@@ -38,7 +59,7 @@ const statusKeys = Object.keys(Status);
 const tableCols = statusKeys.map(k => Status[k as any]).map(v => v as Status);
 
 @Component({
-  components: { TaskDetailsModal, draggable },
+  components: { TaskDetailsModal, draggable, datepicker },
 })
 export default class Kanban extends Vue {
   tableCols = tableCols;
@@ -55,6 +76,12 @@ export default class Kanban extends Vue {
 
   tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
     === Status.inprogress);
+
+  filterTodo: String = '';
+
+  filterDone: String = '';
+
+  filterInProgress: String = '';
 
 
   updateTasks(event: any) {
@@ -88,11 +115,30 @@ export default class Kanban extends Vue {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  hotCard(date: Date) {
+  hotCard(status: Status, date: Date) {
+    if (status === Status.done) return '';
     const diffForHot = 24;
     const diff: number = (date.getTime() - new Date().getTime()) / 36e5;
     if (diff < diffForHot && diff > 0) return 'hot';
     return '';
+  }
+
+  countCards(status: Status) {
+    switch (status) {
+      case Status.inprogress: return this.tasksInProgress.length;
+      case Status.todo: return this.tasksTodo.length;
+      case Status.done: return this.tasksDone.length;
+      default: return 0;
+    }
+  }
+
+  filterFields(status: Status) {
+    switch (status) {
+      case Status.inprogress: return this.filterInProgress;
+      case Status.todo: return this.filterTodo;
+      case Status.done: return this.filterDone;
+      default: return null;
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -130,6 +176,18 @@ export default class Kanban extends Vue {
     color: white;
     overflow: hidden;
   }
+}
+
+.table-head-filter{
+
+
+}
+.datepicker >>> .my-datepicker_calendar {
+  width: 100%;
+  height: 330px;
+}
+.datepicker {
+  width: 20px;
 }
 
 .table-body{

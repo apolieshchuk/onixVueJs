@@ -32,7 +32,7 @@ export default class ModalWindow extends Vue {
       id,
       name: this.formTaskName,
       description: this.formTaskDescription,
-      deadline: new Date(2020, 2, 15),
+      deadline: new Date(2020, 0, 27),
       status: Status.todo,
     };
     this.formTaskDescription = '';
