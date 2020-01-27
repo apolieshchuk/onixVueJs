@@ -16,3 +16,8 @@ $messageSepWidth: 65px;
   align-items: center;
 }
 
+@mixin horizontalCenteringDiv{
+  width: 50%;
+  margin: 0 auto;
+}
+

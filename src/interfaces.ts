@@ -2,8 +2,9 @@
 export interface Task{
   id: number,
   name: string,
-  description: string,
   status: Status,
+  description: string,
+  deadline: Date,
 }
 
 /* Message interface */
@@ -20,6 +21,6 @@ export interface Message{
 // eslint-disable-next-line import/prefer-default-export
 export enum Status {
   todo = 'todo',
-  inprogress = 'in progress',
   done = 'done',
+  inprogress = 'in progress',
 }

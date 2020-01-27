@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    img(:src="comingImg")
+  .wrapper-coming-soon
 </template>
 
 <script lang="ts">
@@ -18,8 +17,10 @@ export default {
 
 <style lang="scss" scoped>
 
-  img{
-    height: 100%;
+  .wrapper-coming-soon{
+    background: url('../assets/img/coming-soon.png') no-repeat center center;
+    height: 400px;
+    width: 500px;
   }
 
 </style>
