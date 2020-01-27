@@ -10,21 +10,13 @@ import {Status} from "@/interfaces";
       :editedTask="editedTask"
     )
     .table-head-filter.flex
-      .table-col-head
+      .table-col-head(v-for="(status,col) in tableCols")
         .filter
-          input(v-model="filterTodo" placeholder="Name")
-          input(type="date" id="filter-todo-start" name="filter-start")
-          input(type="date" id="filter-todo-finish" name="filter-finish")
-      .table-col-head
-        .filter
-          input(v-model="filterDone" placeholder="Name")
-          input(type="date" id="filter-done-start" name="filter-start")
-          input(type="date" id="filter-done-finish" name="filter-finish")
-      .table-col-head
-        .filter
-          input(v-model="filterInProgress" placeholder="Name")
-          input(type="date" id="filter-inprogress-start" name="filter-start")
-          input(type="date" id="filter-inprogress-finish" name="filter-finish")
+          input(v-model="nameFilters[col]" placeholder="Name")
+          input(type="date" v-model="startDateFilters[col]"
+            id="filter-todo-start" name="filter-start")
+          input(type="date" v-model="finishDateFilters[col]"
+            id="filter-todo-finish" name="filter-finish")
     .table-head.flex
       .table-col-head(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
     .table-body.flex
@@ -36,7 +28,7 @@ import {Status} from "@/interfaces";
           )
           .task-card.flex(
             v-for="task in list"
-            v-if="task.name.toLowerCase().includes(filterFields(task.status).toLowerCase(), 0)"
+            v-if="isActiveInFilter(task.name, task.status, task.deadline)"
             :id="'task-' + task.id"
             :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
             @click="editTask(task.id)"
@@ -53,13 +45,13 @@ import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
 
 const statusKeys = Object.keys(Status);
-const tableCols = statusKeys.map(k => Status[k as any]).map(v => v as Status);
+const statusValues = statusKeys.map(k => Status[k as any]).map(v => v as Status);
 
 @Component({
   components: { TaskDetailsModal, draggable },
 })
 export default class Kanban extends Vue {
-  tableCols = tableCols;
+  tableCols = statusValues;
 
   isEditModalVisible = false;
 
@@ -74,12 +66,11 @@ export default class Kanban extends Vue {
   tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
     === Status.inprogress);
 
-  filterTodo: String = '';
+  nameFilters: String[] = ['', '', ''];
 
-  filterDone: String = '';
+  startDateFilters: String[] = ['', '', ''];
 
-  filterInProgress: String = '';
-
+  finishDateFilters: String[] = ['', '', ''];
 
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
@@ -129,11 +120,43 @@ export default class Kanban extends Vue {
     }
   }
 
-  filterFields(status: Status) {
+  isActiveInFilter(name: string, status: Status, dateFinish: Date) {
+    // Filter by name
+    const nameFilter = this.filterNames(status).toLowerCase();
+    const filterByName: boolean = name.toLowerCase().includes(nameFilter, 0);
+    if (!filterByName) return false;
+
+    // Filter by date
+    const filterByDate: boolean = this.filterDates(dateFinish, dateFinish, status);
+    // console.log(new Date(this.filterTodoStart));
+    // console.log(new Date(this.filterTodoFinish));
+    // const filteredDateStart = new Date(this.filterTodoStart) >= date;
+    // const filteredDateFinish = new Date(this.filterTodoFinish) <= date;
+    // // eslint-disable-next-line prefer-const
+    // filterByDate = filteredDateStart && filteredDateFinish;
+
+    return filterByName && filterByDate;
+  }
+
+  filterNames(status: Status) {
+    return this.nameFilters[this.statusCol(status)];
+  }
+
+  filterDates(dateStart: Date, dateFinish: Date, status: Status) {
+    // const startFilterDate: Date = new Date(this.startDateFilters[this.statusCol(status)]);
+    const finishFilterDate: String = this.finishDateFilters[this.statusCol(status)];
+    if (finishFilterDate === '') return true;
+    // const startDateFilter: boolean = startFilterDate <= dateStart;
+    const finishDateFilter: boolean = new Date(finishFilterDate) >= dateFinish;
+    return finishDateFilter;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  statusCol(status: Status) {
     switch (status) {
-      case Status.inprogress: return this.filterInProgress;
-      case Status.todo: return this.filterTodo;
-      case Status.done: return this.filterDone;
+      case Status.todo: return 0;
+      case Status.done: return 1;
+      case Status.inprogress: return 2;
       default: return null;
     }
   }
