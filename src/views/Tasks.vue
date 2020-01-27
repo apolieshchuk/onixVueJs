@@ -12,7 +12,7 @@
       .table-wrapper
         table
           thead
-            th(scope='col' v-for='(col,index) in statusValues' :key='index') {{col}}
+            th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           transition-group(name="tasks" tag="tbody")
             tr.table-row.test(
               v-for='(task,i) in tasks'
