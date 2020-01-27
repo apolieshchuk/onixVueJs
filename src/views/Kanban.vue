@@ -1,3 +1,4 @@
+import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper
     TaskDetailsModal(
@@ -34,7 +35,7 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
 import mixins from 'vue-class-component';
 import { Status, Task } from '@/interfaces';
@@ -135,18 +136,29 @@ export default class Kanban extends mixins(MyMixin) {
   }
 
   filterDates(deadline: Date, status: Status) {
-    const startFilterDate: string = this.startDateFilters[this.statusCol(status)];
-    const finishFilterDate: string = this.finishDateFilters[this.statusCol(status)];
-    let startDateFilter: boolean;
-    let finishDateFilter: boolean;
-    // finish filter
-    if (finishFilterDate === '') finishDateFilter = true;
-    else finishDateFilter = new Date(finishFilterDate) >= deadline;
+    const startFilterString = Date.parse(this.startDateFilters[this.statusCol(status)]);
+    const finishFilterString = Date.parse(this.finishDateFilters[this.statusCol(status)]);
+
+    let isStartFilter: boolean;
+    let isFinishFilter: boolean;
 
     // start filter
-    if (startFilterDate === '') startDateFilter = true;
-    else startDateFilter = new Date(startFilterDate) <= deadline;
-    return finishDateFilter && startDateFilter;
+    if (!startFilterString) isStartFilter = true;
+    else {
+      const startFilter: Date = new Date(startFilterString);
+      startFilter.setHours(0, 0, 0);
+      isStartFilter = deadline >= startFilter;
+    }
+
+    // finish filter
+    if (!finishFilterString) isFinishFilter = true;
+    else {
+      const finishFilter: Date = new Date(finishFilterString);
+      finishFilter.setHours(0, 0, 0);
+      isFinishFilter = deadline <= finishFilter;
+    }
+
+    return isFinishFilter && isStartFilter;
   }
 
   // eslint-disable-next-line class-methods-use-this

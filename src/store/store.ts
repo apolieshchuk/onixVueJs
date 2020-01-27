@@ -23,7 +23,7 @@ function createTaskObj(name:string, description:string,
 /* Create task objects */
 const tasks = [
   createTaskObj('Breakfast', 'Have breakfast',
-    new Date(2020, 0, 28), new Date(), Status.todo),
+    new Date(2020, 0, 29), new Date(), Status.todo),
   createTaskObj('Vue-programming', 'Do some programming in Vue.js',
     new Date(2020, 0, 30), new Date(), Status.inprogress),
   createTaskObj('Shopping', 'Go shopping with my wife',
@@ -35,7 +35,7 @@ const tasks = [
   createTaskObj('Sleep', 'Go sleep until 4 a.m.',
     new Date(2020, 0, 30), new Date(), Status.todo),
   createTaskObj('Test1', 'Description test1',
-    new Date(2020, 0, 28), new Date(), Status.done),
+    new Date(2020, 0, 29), new Date(), Status.done),
   createTaskObj('Test2', 'Description test2',
     new Date(2020, 1, 23), new Date(), Status.inprogress),
   createTaskObj('Test3', 'Description test3',
@@ -45,7 +45,7 @@ const tasks = [
   createTaskObj('Test5', 'Description test6',
     new Date(2020, 0, 25), new Date(), Status.inprogress),
   createTaskObj('Test7', 'Description test7',
-    new Date(2020, 0, 28), new Date(), Status.inprogress),
+    new Date(2020, 0, 29), new Date(), Status.inprogress),
 ];
 
 export default new Vuex.Store({
