@@ -35,7 +35,7 @@ import { Status, Task } from '@/interfaces';
 
 @Component
 export default class ModalWindow extends Vue {
-  @Prop(Object) readonly editedTask: Task;
+  @Prop() editedTask!: Task;
 
   formTaskName: string = '';
 
@@ -54,12 +54,8 @@ export default class ModalWindow extends Vue {
   }
 
   editTask() {
-    if (this.taskName !== this.editedTask.name
-      || this.taskDescription !== this.editedTask.description) {
-      this.isTaskEdit = true;
-    } else {
-      this.isTaskEdit = false;
-    }
+    this.isTaskEdit = this.taskName !== this.editedTask.name
+      || this.taskDescription !== this.editedTask.description;
   }
 
   saveChanges() {

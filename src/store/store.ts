@@ -7,7 +7,7 @@ Vue.use(Vuex);
 let lastTaskId = 0;
 
 /* Function for creating task object */
-function createTaskObj(name:string, description:string, deadline:string, status:Status): Task {
+function createTaskObj(name:string, description:string, deadline: Date, status:Status): Task {
   lastTaskId += 1;
   return {
     id: lastTaskId,
@@ -20,18 +20,30 @@ function createTaskObj(name:string, description:string, deadline:string, status:
 
 /* Create task objects */
 const tasks = [
-  createTaskObj('Breakfast', 'Have breakfast', '02.02.2020', Status.todo),
-  createTaskObj('Vue-programming', 'Do some programming in Vue.js', '02.02.2020', Status.inprogress),
-  createTaskObj('Shopping', 'Go shopping with my wife', '02.02.2020', Status.todo),
-  createTaskObj('Vue-programming', 'Continue programming process', '02.02.2020', Status.inprogress),
-  createTaskObj('Dinner', 'Eat,eat,eat....', '02.02.2020', Status.todo),
-  createTaskObj('Sleep', 'Go sleep until 4 a.m.', '02.02.2020', Status.todo),
-  createTaskObj('Test1', 'Description test1', '02.02.2020', Status.done),
-  createTaskObj('Test2', 'Description test2', '02.02.2020', Status.inprogress),
-  createTaskObj('Test3', 'Description test3', '02.02.2020', Status.todo),
-  createTaskObj('Test4', 'Description test4', '02.02.2020', Status.done),
-  createTaskObj('Test5', 'Description test6', '02.02.2020', Status.done),
-  createTaskObj('Test7', 'Description test7', '02.02.2020', Status.todo),
+  createTaskObj('Breakfast', 'Have breakfast',
+    new Date(2020, 0, 28), Status.todo),
+  createTaskObj('Vue-programming', 'Do some programming in Vue.js',
+    new Date(2020, 0, 30), Status.inprogress),
+  createTaskObj('Shopping', 'Go shopping with my wife',
+    new Date(2020, 0, 25), Status.todo),
+  createTaskObj('Vue-programming', 'Continue programming process',
+    new Date(2020, 1, 25), Status.inprogress),
+  createTaskObj('Dinner', 'Eat,eat,eat....',
+    new Date(2020, 0, 23), Status.todo),
+  createTaskObj('Sleep', 'Go sleep until 4 a.m.',
+    new Date(2020, 0, 30), Status.todo),
+  createTaskObj('Test1', 'Description test1',
+    new Date(2020, 0, 28), Status.done),
+  createTaskObj('Test2', 'Description test2',
+    new Date(2020, 1, 23), Status.inprogress),
+  createTaskObj('Test3', 'Description test3',
+    new Date(2020, 2, 23), Status.todo),
+  createTaskObj('Test4', 'Description test4',
+    new Date(2020, 0, 22), Status.done),
+  createTaskObj('Test5', 'Description test6',
+    new Date(2020, 0, 25), Status.inprogress),
+  createTaskObj('Test7', 'Description test7',
+    new Date(2020, 0, 28), Status.inprogress),
 ];
 
 export default new Vuex.Store({
@@ -45,7 +57,7 @@ export default new Vuex.Store({
     getTasks: state => state.tasks,
     getTasksLength: state => state.tasks.length,
     getLastTaskId: state => state.lastTaskId,
-    getTaskById: state => id => state.tasks.find(task => task.id === id),
+    getTaskById: state => (id:number) => state.tasks.find(task => task.id === id),
   },
   actions: {
     changeClickedImg(context, imgIndex: number) {

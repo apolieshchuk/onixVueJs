@@ -1,4 +1,7 @@
 import {Status} from "@/interfaces";
+import {Status} from "@/interfaces";
+import {Status} from "@/interfaces";
+import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper.content-wrapper.flex
     TaskDetailsModal(
@@ -6,8 +9,18 @@ import {Status} from "@/interfaces";
       @close="isEditModalVisible = false"
       :editedTask="editedTask"
     )
+    .table-head-filter.flex
+      .table-col-head
+        .filter.flex
+          input(v-model="filterTodo" placeholder="Name")
+      .table-col-head
+        .filter
+          input(v-model="filterDone" placeholder="Name")
+      .table-col-head
+        .filter
+          input(v-model="filterInProgress" placeholder="Name")
     .table-head.flex
-      .table-col-head(v-for="status in tableCols") {{ status }}
+      .table-col-head(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
     .table-body.flex
       .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
         draggable.draggable(group="cards"
@@ -17,16 +30,19 @@ import {Status} from "@/interfaces";
           )
           .task-card.flex(
             v-for="task in list"
+            v-if="task.name.includes(filterFields(task.status), 0)"
             :id="'task-' + task.id"
+            :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
             @click="editTask(task.id)"
           )
-            div {{task.name}} {{ task.deadline }}
+            div {{task.name}} {{ formattedDate(task.deadline) }}
 </template>
 
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
+import VCalendar from 'v-calendar';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
@@ -42,7 +58,7 @@ export default class Kanban extends Vue {
 
   isEditModalVisible = false;
 
-  editedTask: Task;
+  editedTask: Task = {} as Task;
 
   tasks = this.$store.getters.getTasks;
 
@@ -53,10 +69,16 @@ export default class Kanban extends Vue {
   tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
     === Status.inprogress);
 
-  // eslint-disable-next-line class-methods-use-this
-  updateTasks(event) {
-    const id = event.clone.id.split('-')[1];
-    const status = event.to.id.split('-')[1];
+  filterTodo: String = '';
+
+  filterDone: String = '';
+
+  filterInProgress: String = '';
+
+
+  updateTasks(event: any) {
+    const id: number = event.clone.id.split('-')[1];
+    const status: Status = event.to.id.split('-')[1];
     this.$store.dispatch('updateTaskStatus', { id, status });
   }
 
@@ -68,6 +90,52 @@ export default class Kanban extends Vue {
   editTask(id: number) {
     this.isEditModalVisible = true;
     this.editedTask = this.$store.getters.getTaskById(id);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  cardStyle(status: Status, date: Date) {
+    if (status === Status.todo || status === Status.inprogress) {
+      if (date < new Date()) return 'task-card-past';
+    }
+
+    switch (status) {
+      case Status.done: return 'task-card-done';
+      case Status.inprogress: return 'task-card-inprogress';
+      case Status.todo: return 'task-card-todo';
+      default: return null;
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  hotCard(status: Status, date: Date) {
+    if (status === Status.done) return '';
+    const diffForHot = 24;
+    const diff: number = (date.getTime() - new Date().getTime()) / 36e5;
+    if (diff < diffForHot && diff > 0) return 'hot';
+    return '';
+  }
+
+  countCards(status: Status) {
+    switch (status) {
+      case Status.inprogress: return this.tasksInProgress.length;
+      case Status.todo: return this.tasksTodo.length;
+      case Status.done: return this.tasksDone.length;
+      default: return 0;
+    }
+  }
+
+  filterFields(status: Status) {
+    switch (status) {
+      case Status.inprogress: return this.filterInProgress;
+      case Status.todo: return this.filterTodo;
+      case Status.done: return this.filterDone;
+      default: return null;
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  formattedDate(date: Date) {
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 }
 </script>
@@ -102,6 +170,11 @@ export default class Kanban extends Vue {
   }
 }
 
+.table-head-filter{
+
+
+}
+
 .table-body{
   height: 95%;
 
@@ -113,7 +186,6 @@ export default class Kanban extends Vue {
     .task-card{
       cursor: pointer;
       margin-left: 10px;
-      background-color: #FFCC33;
       border-radius: 5px;
       min-height: 50px;
       min-width: 200px;
@@ -131,6 +203,21 @@ export default class Kanban extends Vue {
       div {
         align-self: center;
       }
+    }
+    .hot::after{
+      content: url('../assets/img/hot.svg');
+    }
+    .task-card-todo{
+      background-color: #FFCC33;
+    }
+    .task-card-done{
+      background-color: lightgreen;
+    }
+    .task-card-inprogress{
+      background-color: lightblue;
+    }
+    .task-card-past{
+      background-color: lightcoral;
     }
   }
 }
