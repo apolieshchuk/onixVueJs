@@ -22,6 +22,7 @@
               td(@click="editTask(task.id)") {{ task.status }}
               td(@click="editTask(task.id)") {{ task.name }}
               td(@click="editTask(task.id)") {{ task.description }}
+              td(@click="editTask(task.id)") {{ formattedDate(task.added) }}
               td(@click="editTask(task.id)") {{ formattedDate(task.deadline)}}
               td
                 button(@click='deleteTask(i)') Del
@@ -29,25 +30,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
+import mixins from 'vue-class-component';
 import { Status, Task } from '@/interfaces';
 import ModalWindow from '@/components/AddTaskModal.vue';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
+import MyMixin from '@/mixins';
 
 
 /* Table cols */
-const tableCols: string[] = ['Status', 'Task', 'Description', 'Deadline', 'Del'];
+const tableCols: string[] = ['Status', 'Task', 'Description', 'Start', 'Deadline', 'Del'];
 
-
-// ({
-//   computed: mapGetters({
-//     tasks: 'getTasks',
-//   }),
-// })
 @Component({
   components: { TaskDetailsModal, ModalWindow },
 })
-export default class Tasks extends Vue {
+export default class Tasks extends mixins(MyMixin) {
   isAddModalVisible = false;
 
   isEditModalVisible = false;
@@ -65,11 +61,6 @@ export default class Tasks extends Vue {
   mounted() {
     this.startAnimation();
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  // formatedDate(date: Date) {
-  //   return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
-  // }
 
   editTask(id: number) {
     this.isEditModalVisible = true;
@@ -92,11 +83,6 @@ export default class Tasks extends Vue {
         blinkedRows[i].classList.remove('scale-text-row');
       }, speed * i + animationSpeed);
     }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  formattedDate(date: Date) {
-    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 }
 
@@ -174,7 +160,7 @@ export default class Tasks extends Vue {
                 border-bottom-right-radius: 5px;
                 width: 8%;
               }
-              &:nth-last-child(2) {
+              &:nth-last-child(2), &:nth-last-child(3) {
                 width: 13%;
               }
             }

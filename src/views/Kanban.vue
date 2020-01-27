@@ -1,24 +1,20 @@
-import {Status} from "@/interfaces";
-import {Status} from "@/interfaces";
-import {Status} from "@/interfaces";
-import {Status} from "@/interfaces";
 <template lang="pug">
-  .kanban-wrapper.content-wrapper.flex
+  .kanban-wrapper
     TaskDetailsModal(
       v-if="isEditModalVisible"
       @close="isEditModalVisible = false"
       :editedTask="editedTask"
     )
-    .table-head-filter.flex
-      .table-col-head(v-for="(status,col) in tableCols")
-        .filter
+    .table-head.flex
+      .table-head-col(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
+    .table-head.flex
+      .table-head-filter(v-for="(status,col) in tableCols")
+        .filter.flex
           input(v-model="nameFilters[col]" placeholder="Name")
           input(type="date" v-model="startDateFilters[col]"
             id="filter-todo-start" name="filter-start")
           input(type="date" v-model="finishDateFilters[col]"
             id="filter-todo-finish" name="filter-finish")
-    .table-head.flex
-      .table-col-head(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
     .table-body.flex
       .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
         draggable.draggable(group="cards"
@@ -40,8 +36,10 @@ import {Status} from "@/interfaces";
 
 import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
+import mixins from 'vue-class-component';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
+import MyMixin from '@/mixins';
 
 
 const statusKeys = Object.keys(Status);
@@ -50,7 +48,7 @@ const statusValues = statusKeys.map(k => Status[k as any]).map(v => v as Status)
 @Component({
   components: { TaskDetailsModal, draggable },
 })
-export default class Kanban extends Vue {
+export default class Kanban extends mixins(MyMixin) {
   tableCols = statusValues;
 
   isEditModalVisible = false;
@@ -66,11 +64,11 @@ export default class Kanban extends Vue {
   tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
     === Status.inprogress);
 
-  nameFilters: String[] = ['', '', ''];
+  nameFilters: string[] = ['', '', ''];
 
-  startDateFilters: String[] = ['', '', ''];
+  startDateFilters: string[] = ['', '', ''];
 
-  finishDateFilters: String[] = ['', '', ''];
+  finishDateFilters: string[] = ['', '', ''];
 
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
@@ -120,20 +118,14 @@ export default class Kanban extends Vue {
     }
   }
 
-  isActiveInFilter(name: string, status: Status, dateFinish: Date) {
+  isActiveInFilter(name: string, status: Status, deadline: Date) {
     // Filter by name
     const nameFilter = this.filterNames(status).toLowerCase();
     const filterByName: boolean = name.toLowerCase().includes(nameFilter, 0);
     if (!filterByName) return false;
 
     // Filter by date
-    const filterByDate: boolean = this.filterDates(dateFinish, dateFinish, status);
-    // console.log(new Date(this.filterTodoStart));
-    // console.log(new Date(this.filterTodoFinish));
-    // const filteredDateStart = new Date(this.filterTodoStart) >= date;
-    // const filteredDateFinish = new Date(this.filterTodoFinish) <= date;
-    // // eslint-disable-next-line prefer-const
-    // filterByDate = filteredDateStart && filteredDateFinish;
+    const filterByDate: boolean = this.filterDates(deadline, status);
 
     return filterByName && filterByDate;
   }
@@ -142,13 +134,19 @@ export default class Kanban extends Vue {
     return this.nameFilters[this.statusCol(status)];
   }
 
-  filterDates(dateStart: Date, dateFinish: Date, status: Status) {
-    // const startFilterDate: Date = new Date(this.startDateFilters[this.statusCol(status)]);
-    const finishFilterDate: String = this.finishDateFilters[this.statusCol(status)];
-    if (finishFilterDate === '') return true;
-    // const startDateFilter: boolean = startFilterDate <= dateStart;
-    const finishDateFilter: boolean = new Date(finishFilterDate) >= dateFinish;
-    return finishDateFilter;
+  filterDates(deadline: Date, status: Status) {
+    const startFilterDate: string = this.startDateFilters[this.statusCol(status)];
+    const finishFilterDate: string = this.finishDateFilters[this.statusCol(status)];
+    let startDateFilter: boolean;
+    let finishDateFilter: boolean;
+    // finish filter
+    if (finishFilterDate === '') finishDateFilter = true;
+    else finishDateFilter = new Date(finishFilterDate) >= deadline;
+
+    // start filter
+    if (startFilterDate === '') startDateFilter = true;
+    else startDateFilter = new Date(startFilterDate) <= deadline;
+    return finishDateFilter && startDateFilter;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -157,13 +155,8 @@ export default class Kanban extends Vue {
       case Status.todo: return 0;
       case Status.done: return 1;
       case Status.inprogress: return 2;
-      default: return null;
+      default: return -1;
     }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  formattedDate(date: Date) {
-    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 }
 </script>
@@ -173,13 +166,14 @@ export default class Kanban extends Vue {
   width: 100%;
   background: url("../assets/img/kanban_bg.jpg") 100% 100%;
   flex-direction: column;
+  padding: 8px;
 }
 
 .table-head,.table-body{
   width: 100%;
 }
 
-.table-col,.table-col-head {
+.table-col,.table-head-col {
   text-align: center;
   width: (100% / 3);
   margin: 2px;
@@ -190,31 +184,35 @@ export default class Kanban extends Vue {
 
 .table-head{
   height: 25px;
-  .table-col-head{
+  .table-head-col{
     background-color: #333333;
     border-radius: 3px;
     color: white;
     overflow: hidden;
   }
-}
-.filter input:first-child{
-  width: 37%;
-  font-size: 11px;
-  margin-right: 5px;
-}
-[type="date"]{
-  width: 28%;
-  font-size: 10px;
-}
-.filter{
-  input{
-    height: 15px;
+  .table-head-filter{
     display: inline-block;
+    margin: 2px;
+    .filter input:first-child{
+      width: 50%;
+      font-size: 11px;
+      margin-right: 5px;
+    }
+    [type="date"]{
+      font-size: 10px;
+    }
+    .filter{
+      input{
+        height: 15px;
+        display: inline-block;
+      }
+    }
   }
 }
 
+
 .table-body{
-  height: 95%;
+  height: 90%;
 
   .table-col {
     border-radius: 5px;

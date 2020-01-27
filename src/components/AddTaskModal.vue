@@ -28,28 +28,22 @@ export default class ModalWindow extends Vue {
 
   addTask() {
     const id = this.$store.getters.getLastTaskId + 1;
+    const taskDeadline: Date = new Date();
+    taskDeadline.setDate(new Date().getDate() + 3);
     const task: Task = {
       id,
       name: this.formTaskName,
       description: this.formTaskDescription,
-      deadline: new Date(2020, 0, 27),
+      deadline: taskDeadline,
       status: Status.todo,
+      added: new Date(),
     };
     this.formTaskDescription = '';
     this.formTaskName = '';
     this.$store.dispatch('addTask', task);
 
-    // add blinking row when add new item
-    // this.$nextTick(() => {
-    //   const blinkedRow = this.$refs['table-row'] as Array<any>;
-    //   blinkedRow[blinkedRow.length - 1].classList.add('blink-row');
-    // });
-
     // close modal window
     this.$emit('close');
-
-    // const inpName = this.$refs.inputName as HTMLElement;
-    // inpName.focus();
   }
 }
 </script>
