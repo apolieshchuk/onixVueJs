@@ -36,12 +36,6 @@ const userAva = require('@/assets/img/ava.jpg');
 
 @Component
 export default class TheSideMenu extends Vue {
-  // watchers
-  // @Watch('openTasks')
-
-  // initial data
-  // openTasks: number = 999;
-
   completedTasks: number = 372;
 
   userName: string = 'Anton Polieshchuk';
@@ -63,7 +57,6 @@ export default class TheSideMenu extends Vue {
       // eslint-disable-next-line no-alert
       if (window.confirm('Are you sure you want to change the number of tasks?')) {
         this.completedTasks += 1;
-        // this.openTasks -= 1;
       }
     }
   }

@@ -77,18 +77,15 @@ export default class Kanban extends mixins(MyMixin) {
     this.$store.dispatch('updateTaskStatus', { id, status });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  checkMove(event: any) {
-    return !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
-  }
+  checkMove = (event: any) => !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
 
   editTask(id: number) {
     this.isEditModalVisible = true;
     this.editedTask = this.$store.getters.getTaskById(id);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  cardStyle(status: Status, date: Date) {
+
+  cardStyle = (status: Status, date: Date) => {
     if (status === Status.todo || status === Status.inprogress) {
       if (date < new Date()) return 'task-card-past';
     }
@@ -99,16 +96,15 @@ export default class Kanban extends mixins(MyMixin) {
       case Status.todo: return 'task-card-todo';
       default: return null;
     }
-  }
+  };
 
-  // eslint-disable-next-line class-methods-use-this
-  hotCard(status: Status, date: Date) {
+  hotCard = (status: Status, date: Date) => {
     if (status === Status.done) return '';
     const diffForHot = 24;
     const diff: number = (date.getTime() - new Date().getTime()) / 36e5;
     if (diff < diffForHot && diff > 0) return 'hot';
     return '';
-  }
+  };
 
   countCards(status: Status) {
     switch (status) {
@@ -161,8 +157,7 @@ export default class Kanban extends mixins(MyMixin) {
     return isFinishFilter && isStartFilter;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  statusCol(status: Status) {
+  statusCol = (status: Status) => {
     switch (status) {
       case Status.todo: return 0;
       case Status.done: return 1;
