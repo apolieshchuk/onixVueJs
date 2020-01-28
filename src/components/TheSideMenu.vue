@@ -84,7 +84,7 @@ export default class TheSideMenu extends Vue {
     background-color: black;
     color: white;
     height: 100vh;
-    width: 19%;
+    width: 250px;
     min-width: 250px;
     /*border: 1px solid black;*/
 

@@ -8,9 +8,12 @@
         section#modalDescription.modal-body
           table
             tbody
-              tr(v-for="key in ['id','status','deadline']")
+              tr(v-for="key in ['id','status']")
                 td {{key}}:
                 td {{editedTask[key]}}
+              tr
+                td deadline:
+                td {{formattedDate(editedTask.deadline)}}
               tr
                 td name:
                 td
@@ -31,10 +34,12 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Status, Task } from '@/interfaces';
+import mixins from 'vue-class-component';
+import { Task } from '@/interfaces';
+import MyMixin from '@/mixins';
 
 @Component
-export default class ModalWindow extends Vue {
+export default class ModalWindow extends mixins(MyMixin) {
   @Prop() editedTask!: Task;
 
   formTaskName: string = '';
@@ -48,10 +53,6 @@ export default class ModalWindow extends Vue {
   taskName: string = this.editedTask.name;
 
   taskDescription: string = this.editedTask.description;
-
-  mounted() {
-    console.log(this.editedTask);
-  }
 
   editTask() {
     this.isTaskEdit = this.taskName !== this.editedTask.name

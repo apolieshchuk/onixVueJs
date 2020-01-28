@@ -4,6 +4,7 @@ export interface Task{
   name: string,
   status: Status,
   description: string,
+  added: Date,
   deadline: Date,
 }
 
