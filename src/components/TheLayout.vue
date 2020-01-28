@@ -1,8 +1,9 @@
 <template lang="pug">
   .container-main.flex
-    TheSideMenu
+    transition(name="slideSidebar")
+      TheSideMenu(v-if="isActiveSidebar" @hideSidebar="isActiveSidebar = false")
     .container-right.flex
-      TheHeader
+      TheHeader(:isActiveSidebar = "isActiveSidebar" @showSidebar="isActiveSidebar = true")
       TheContent
 </template>
 
@@ -18,11 +19,20 @@ import TheSideMenu from './TheSideMenu.vue';
     TheContent, TheHeader, TheSideMenu,
   },
 })
-export default class Layout extends Vue {}
+export default class Layout extends Vue {
+  isActiveSidebar = true;
+
+  mounted() {
+    this.isActiveSidebar = window.screen.width >= 600;
+  }
+}
 
 </script>
 
 <style lang="scss">
+  #burger{
+    cursor: pointer;
+  }
 
   .container-right{
     flex-direction: column;
@@ -77,4 +87,19 @@ export default class Layout extends Vue {}
     background-color: inherit;
   }
 
+</style>
+
+<style lang="scss" scoped>
+  .slideSidebar-enter-active, .slideSidebar-leave-active {
+    transition: transform .2s;
+  }
+  .slideSidebar-enter, .slideSidebar-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    transform: translateX(-280px);
+  }
+
+  /*@media only screen and (max-width: 600px) {*/
+  /*  #side-menu {*/
+  /*    display: none;*/
+  /*  }*/
+  /*}*/
 </style>

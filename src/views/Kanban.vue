@@ -180,7 +180,8 @@ export default class Kanban extends mixins(MyMixin) {
   width: 100%;
 }
 
-.table-col,.table-head-col {
+.table-col,.table-head-col,
+.table-head-filter {
   text-align: center;
   width: (100% / 3);
   margin: 2px;

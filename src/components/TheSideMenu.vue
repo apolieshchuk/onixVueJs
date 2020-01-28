@@ -1,6 +1,7 @@
 <template lang="pug">
-  aside.side-menu.flex
+  aside#side-menu.flex
     .menu-title.flex
+      img#burger(:src="burgerIco" @click="$emit('hideSidebar')")
       .menu-title-name.flex
         p PROJECTUS
       button.search
@@ -32,10 +33,13 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 const userAva = require('@/assets/img/ava.jpg');
+const burgerIco = require('@/assets/img/Logo@3x.svg');
 
 
 @Component
 export default class TheSideMenu extends Vue {
+  burgerIco = burgerIco;
+
   completedTasks: number = 372;
 
   userName: string = 'Anton Polieshchuk';
@@ -57,6 +61,7 @@ export default class TheSideMenu extends Vue {
       // eslint-disable-next-line no-alert
       if (window.confirm('Are you sure you want to change the number of tasks?')) {
         this.completedTasks += 1;
+        // this.openTasks -= 1;
       }
     }
   }
@@ -72,13 +77,13 @@ export default class TheSideMenu extends Vue {
 
 <style lang="scss" scoped>
 
-  .side-menu {
+  #side-menu {
     flex-direction: column;
     background-color: black;
     color: white;
     height: 100vh;
-    width: 250px;
-    min-width: 250px;
+    width: 280px;
+    min-width: 280px;
     /*border: 1px solid black;*/
 
     > div {
@@ -91,10 +96,6 @@ export default class TheSideMenu extends Vue {
       justify-content: space-between;
       .menu-title-name {
         align-items: center;
-        &:before {
-          margin-right: 15px;
-          content: url('../assets/img/Logo@3x.svg');
-        }
       }
       p {
         position: relative;

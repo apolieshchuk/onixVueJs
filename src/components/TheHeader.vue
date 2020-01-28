@@ -2,7 +2,9 @@
   .wrapper.flex
     header.flex
       .header-title.flex
-        h2 Website Redesign
+        img#burger(v-if="!isActiveSidebar" :src="burgerIco" @click="$emit('showSidebar')")
+        .wrap.flex
+          h2 Website Redesign
         button.dots3-but.grey
           .dots3
       .header-controls.flex
@@ -18,11 +20,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import {
+  Component, Prop, Vue, Watch,
+} from 'vue-property-decorator';
 
 const cont1 = require('@/assets/img/cont1.png');
 const cont2 = require('@/assets/img/cont2.jpg');
 const cont3 = require('@/assets/img/cont3.jpg');
+const burgerIco = require('@/assets/img/Logo@3x.svg');
 
 
 const contacts = [cont1, cont2, cont3];
@@ -30,6 +35,8 @@ const contacts = [cont1, cont2, cont3];
 
 @Component
 export default class TheHeader extends Vue {
+  @Prop() isActiveSidebar!: boolean;
+
   @Watch('$route')
   onRouteChange(route: any) {
     this.activeRoute = route.fullPath;
@@ -38,6 +45,8 @@ export default class TheHeader extends Vue {
   activeRoute = '';
 
   contacts = contacts;
+
+  burgerIco = burgerIco;
 
   mounted() {
     this.activeRoute = this.$route.fullPath;
@@ -57,8 +66,20 @@ export default class TheHeader extends Vue {
     box-sizing: border-box;
     padding: 30px 30px 0;
 
+    #burger{
+      margin-right: 15px;
+    }
+
     .header-title{
       align-items: center;
+      .wrap::before {
+        content: "";
+        background: #FFC200 url('../assets/img/Shapes@2x.png') no-repeat;
+        background-size: 40px 42px;
+        min-width: 40px;
+        min-height: 42px;
+        border-radius: 20%;
+      }
       h2{
         margin: 0 10px;
         font-size: 32px;
@@ -68,15 +89,6 @@ export default class TheHeader extends Vue {
         background-color: #EAEAEA;
         left: 0;
       }
-      &:before{
-         content: "";
-         background: url('../assets/img/Shapes@2x.png');
-         background-size: 40px 40px;
-         background-color: #FFC200;
-         min-width: 40px;
-         min-height: 40px;
-         border-radius: 20%;
-       }
     }
 
     .header-controls{
@@ -153,5 +165,6 @@ export default class TheHeader extends Vue {
       }
     }
   }
+
 
 </style>
