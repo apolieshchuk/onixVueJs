@@ -157,7 +157,7 @@ export default class Kanban extends mixins(MyMixin) {
     return isFinishFilter && isStartFilter;
   }
 
-  statusCol = (status: Status) => {
+  = (status: Status) => {
     switch (status) {
       case Status.todo: return 0;
       case Status.done: return 1;
