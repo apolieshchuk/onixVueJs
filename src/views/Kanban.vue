@@ -158,6 +158,7 @@ export default class Kanban extends mixins(MyMixin) {
   }
 
   statusCol = (status: Status) => {
+
     switch (status) {
       case Status.todo: return 0;
       case Status.done: return 1;
