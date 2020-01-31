@@ -22,19 +22,17 @@
               td(@click="editTask(task.id)") {{ task.status }}
               td(@click="editTask(task.id)") {{ task.name }}
               td(@click="editTask(task.id)") {{ task.description }}
-              td(@click="editTask(task.id)") {{ formattedDate(task.added) }}
-              td(@click="editTask(task.id)") {{ formattedDate(task.deadline)}}
+              td(@click="editTask(task.id)") {{ task.added | formattedDate }}
+              td(@click="editTask(task.id)") {{ task.deadline | formattedDate}}
               td
                 button(@click='deleteTask(i)') Del
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import mixins from 'vue-class-component';
 import { Status, Task } from '@/interfaces';
 import ModalWindow from '@/components/AddTaskModal.vue';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
-import MyMixin from '@/mixins';
 
 
 /* Table cols */
@@ -43,7 +41,7 @@ const tableCols: string[] = ['Status', 'Task', 'Description', 'Start', 'Deadline
 @Component({
   components: { TaskDetailsModal, ModalWindow },
 })
-export default class Tasks extends mixins(MyMixin) {
+export default class Tasks extends Vue {
   isAddModalVisible = false;
 
   isEditModalVisible = false;

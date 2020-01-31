@@ -6,13 +6,19 @@
           div Add new task
           button.btn-close(type='button', @click="$emit('close')", aria-label='Close modal') x
         section#modalDescription.modal-body
-          .form-wrapper.flex
-            form.flex(@submit.prevent="addTask")
-              input(type='text' placeholder='Task name'
-                v-model='formTaskName' required ref="inputName")
-              input(type='text' placeholder='Task description'
-                v-model="formTaskDescription" required)
-              button.btn-yellow(type='submit') Add task
+          form.flex(@submit.prevent="addTask")
+            .form-content.flex
+              .flex.labels
+                label(for="addTaskName") Name
+                label(for="addTaskDescription") Description
+                label(for="addTaskDeadline") Deadline
+              .flex.inputs
+                input(type='text' id="addTaskName" placeholder='Task name'
+                  v-model='formTaskName' required ref="inputName")
+                input(type='text' id="addTaskDescription" placeholder='Task description'
+                  v-model="formTaskDescription" required)
+                input(type='date' id="addTaskDeadline" v-model="deadline" required)
+            button.btn-yellow(type='submit') Add task
 </template>
 
 <script lang="ts">
@@ -26,15 +32,15 @@ export default class ModalWindow extends Vue {
 
   formTaskDescription: string = '';
 
+  deadline: string = '';
+
   addTask() {
     const id = this.$store.getters.getLastTaskId + 1;
-    const taskDeadline: Date = new Date();
-    taskDeadline.setDate(new Date().getDate() + 3);
     const task: Task = {
       id,
       name: this.formTaskName,
       description: this.formTaskDescription,
-      deadline: taskDeadline,
+      deadline: new Date(this.deadline),
       status: Status.todo,
       added: new Date(),
     };
@@ -73,13 +79,9 @@ export default class ModalWindow extends Vue {
   min-width: 300px;
   margin-bottom: 120px;
 
-  .modal-header,
-  .modal-footer {
+  .modal-header {
     padding: 10px;
     display: flex;
-  }
-
-  .modal-header {
     border-bottom: 1px solid #eeeeee;
     color: #FFC200;
     justify-content: space-between;
@@ -103,14 +105,27 @@ export default class ModalWindow extends Vue {
     position: relative;
     padding: 10px;
 
-    .form-wrapper {
-      justify-content: center;
-      form {
-        flex-direction: column;
+    form {
+      flex-direction: column;
+      .form-content{
+        .labels,.inputs{
+          flex-direction: column;
+        }
+        .labels{
+          margin-right: 3px;
+          justify-content: space-around;
+          label{
+            align-self: start;
+            font-size: 14px;
+          }
+        }
         input {
-          height: 33%;
+          height: 20px;
           margin-bottom: 5px;
         }
+      }
+      button{
+        height: 30px;
       }
     }
   }

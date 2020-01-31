@@ -7,10 +7,11 @@ import {Status} from "@/interfaces";
       :editedTask="editedTask"
     )
     .filter.flex
-      input(v-model="nameFilters[col]" placeholder="Name")
-      input(type="date" v-model="startDateFilters[col]"
+      label(for="nameFilter") Filter:
+      input(v-model="nameFilter" id="nameFilter" placeholder="Name")
+      input(type="date" v-model="startDateFilter"
         id="filter-todo-start" name="filter-start")
-      input(type="date" v-model="finishDateFilters[col]"
+      input(type="date" v-model="finishDateFilter"
         id="filter-todo-finish" name="filter-finish")
     .table-head.flex
       .table-head-col(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
@@ -23,22 +24,20 @@ import {Status} from "@/interfaces";
           )
           .task-card.flex(
             v-for="task in list"
-            v-if="isActiveInFilter(task.name, task.status, task.deadline)"
+            v-if="isActiveInFilter(task.name, task.deadline)"
             :id="'task-' + task.id"
             :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
             @click="editTask(task.id)"
           )
-            div {{task.name}} {{ formattedDate(task.deadline) }}
+            div {{task.name}} {{ task.deadline | formattedDate }}
 </template>
 
 <script lang="ts">
 
-import { Component } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
-import mixins from 'vue-class-component';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
-import MyMixin from '@/mixins';
 
 
 const statusKeys = Object.keys(Status);
@@ -47,7 +46,7 @@ const statusValues = statusKeys.map(k => Status[k as any]).map(v => v as Status)
 @Component({
   components: { TaskDetailsModal, draggable },
 })
-export default class Kanban extends mixins(MyMixin) {
+export default class Kanban extends Vue {
   tableCols = statusValues;
 
   isEditModalVisible = false;
@@ -63,11 +62,11 @@ export default class Kanban extends mixins(MyMixin) {
   tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
     === Status.inprogress);
 
-  nameFilters: string[] = ['', '', ''];
+  nameFilter: string = '';
 
-  startDateFilters: string[] = ['', '', ''];
+  startDateFilter: string = '';
 
-  finishDateFilters: string[] = ['', '', ''];
+  finishDateFilter: string = '';
 
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
@@ -113,25 +112,19 @@ export default class Kanban extends mixins(MyMixin) {
     }
   }
 
-  isActiveInFilter(name: string, status: Status, deadline: Date) {
+  isActiveInFilter(name: string, deadline: Date) {
     // Filter by name
-    const nameFilter = this.filterNames(status).toLowerCase();
-    const filterByName: boolean = name.toLowerCase().includes(nameFilter, 0);
+    const filterByName: boolean = name.toLowerCase().includes(this.nameFilter.toLowerCase(), 0);
     if (!filterByName) return false;
 
     // Filter by date
-    const filterByDate: boolean = this.filterDates(deadline, status);
-
-    return filterByName && filterByDate;
+    return this.filterDate(deadline);
   }
 
-  filterNames(status: Status) {
-    return this.nameFilters[this.statusCol(status)];
-  }
 
-  filterDates(deadline: Date, status: Status) {
-    const startFilterString = Date.parse(this.startDateFilters[this.statusCol(status)]);
-    const finishFilterString = Date.parse(this.finishDateFilters[this.statusCol(status)]);
+  filterDate(deadline: Date) {
+    const startFilterString = Date.parse(this.startDateFilter);
+    const finishFilterString = Date.parse(this.finishDateFilter);
 
     let isStartFilter: boolean;
     let isFinishFilter: boolean;
@@ -147,8 +140,7 @@ export default class Kanban extends mixins(MyMixin) {
     // finish filter
     if (!finishFilterString) isFinishFilter = true;
     else {
-      console.log("Hello world ");
-      const finishFilter: Date = new Date(finishFilterString)
+      const finishFilter: Date = new Date(finishFilterString);
       finishFilter.setHours(0, 0, 0);
       isFinishFilter = deadline <= finishFilter;
     }
@@ -197,23 +189,21 @@ export default class Kanban extends mixins(MyMixin) {
     color: white;
     overflow: hidden;
   }
-  .table-head-filter{
-    display: inline-block;
-    margin: 2px;
-    .filter input:first-child{
-      width: 50%;
-      font-size: 11px;
-      margin-right: 5px;
-    }
-    [type="date"]{
-      font-size: 10px;
-    }
-    .filter{
-      input{
-        height: 15px;
-        display: inline-block;
-      }
-    }
+}
+
+.filter{
+  justify-content: center;
+  margin-bottom: 5px;
+  *{
+    margin-right: 3px;
+  }
+  label{
+    font-weight: bold;
+  }
+  input{
+    border-radius: 7px;
+    border: solid 1px black;
+    padding: 2px;
   }
 }
 

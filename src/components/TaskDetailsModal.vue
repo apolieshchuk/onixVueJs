@@ -13,7 +13,7 @@
                 td {{editedTask[key]}}
               tr
                 td deadline:
-                td {{formattedDate(editedTask.deadline)}}
+                td {{editedTask.deadline | formattedDate}}
               tr
                 td name:
                 td
@@ -34,12 +34,10 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import mixins from 'vue-class-component';
 import { Task } from '@/interfaces';
-import MyMixin from '@/mixins';
 
 @Component
-export default class ModalWindow extends mixins(MyMixin) {
+export default class ModalWindow extends Vue {
   @Prop() editedTask!: Task;
 
   formTaskName: string = '';
