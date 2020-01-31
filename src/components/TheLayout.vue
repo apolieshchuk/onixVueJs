@@ -30,7 +30,7 @@ Vue.filter('formattedDate', (date: Date) => {
 export default class Layout extends Vue {
   isActiveSidebar = true;
 
-  mounted() {
+  created() {
     this.isActiveSidebar = window.screen.width >= 600;
   }
 }
