@@ -6,16 +6,14 @@ import {Status} from "@/interfaces";
       @close="isEditModalVisible = false"
       :editedTask="editedTask"
     )
+    .filter.flex
+      input(v-model="nameFilters[col]" placeholder="Name")
+      input(type="date" v-model="startDateFilters[col]"
+        id="filter-todo-start" name="filter-start")
+      input(type="date" v-model="finishDateFilters[col]"
+        id="filter-todo-finish" name="filter-finish")
     .table-head.flex
       .table-head-col(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
-    .table-head.flex
-      .table-head-filter(v-for="(status,col) in tableCols")
-        .filter.flex
-          input(v-model="nameFilters[col]" placeholder="Name")
-          input(type="date" v-model="startDateFilters[col]"
-            id="filter-todo-start" name="filter-start")
-          input(type="date" v-model="finishDateFilters[col]"
-            id="filter-todo-finish" name="filter-finish")
     .table-body.flex
       .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
         draggable.draggable(group="cards"
@@ -149,7 +147,8 @@ export default class Kanban extends mixins(MyMixin) {
     // finish filter
     if (!finishFilterString) isFinishFilter = true;
     else {
-      const finishFilter: Date = new Date(finishFilterString);
+      console.log("Hello world ");
+      const finishFilter: Date = new Date(finishFilterString)
       finishFilter.setHours(0, 0, 0);
       isFinishFilter = deadline <= finishFilter;
     }
