@@ -53,8 +53,6 @@ export default class Kanban extends Vue {
 
   editedTask: Task = {} as Task;
 
-  tasks = this.$store.getters.getTasks;
-
   tasksTodo = this.$store.getters.getTasks.filter((obj: Task) => obj.status === Status.todo);
 
   tasksDone = this.$store.getters.getTasks.filter((obj: Task) => obj.status === Status.done);
@@ -204,6 +202,7 @@ export default class Kanban extends Vue {
     border-radius: 7px;
     border: solid 1px black;
     padding: 2px;
+    outline: none;
   }
 }
 
