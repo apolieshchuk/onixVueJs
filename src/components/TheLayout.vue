@@ -82,7 +82,6 @@ export default class Layout extends Vue {
       width: 30px;
       top: 35px;
     }
-
   }
 
   .container-right{
@@ -96,6 +95,7 @@ export default class Layout extends Vue {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
   }
+
   .flex{
     display: flex;
   }
@@ -141,6 +141,13 @@ export default class Layout extends Vue {
 </style>
 
 <style lang="scss" scoped>
+  @media screen and (max-width: 800px) {
+    .container-right{
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+
   .slideSidebar-enter-active, .slideSidebar-leave-active {
     transition: transform .2s;
   }

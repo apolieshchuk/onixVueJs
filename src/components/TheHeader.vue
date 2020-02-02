@@ -52,6 +52,14 @@ export default class TheHeader extends Vue {
 
 <style lang="scss" scoped>
 
+  @media screen and (max-width: 800px) {
+    .header-title .wrap h2 {
+      font-size: 28px;
+    }
+    .header{
+    }
+  }
+
   .wrapper{
     flex-direction: column;
     width: 100%;
