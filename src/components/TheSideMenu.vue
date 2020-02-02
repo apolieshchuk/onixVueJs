@@ -1,7 +1,6 @@
 <template lang="pug">
   aside#side-menu.flex
     .menu-title.flex
-      img#burger(:src="burgerIco" @click="$emit('hideSidebar')")
       .menu-title-name.flex
         p PROJECTUS
       button.search
@@ -29,16 +28,13 @@
 </template>
 
 <script lang="ts">
-
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 const userAva = require('@/assets/img/ava.jpg');
-const burgerIco = require('@/assets/img/Logo@3x.svg');
-
 
 @Component
 export default class TheSideMenu extends Vue {
-  burgerIco = burgerIco;
+  // @Prop() burgerIco!: string;
 
   completedTasks: number = 372;
 
@@ -104,6 +100,7 @@ export default class TheSideMenu extends Vue {
         color: #FFFFFF;
         line-height: 24px;
         margin-top: 15px;
+        margin-left: 30px;
       }
 
       .search {

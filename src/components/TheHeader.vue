@@ -2,7 +2,6 @@
   .wrapper.flex
     header.flex
       .header-title.flex
-        img#burger(v-if="!isActiveSidebar" :src="burgerIco" @click="$emit('showSidebar')")
         .wrap.flex
           h2 Website Redesign
         button.dots3-but.grey
@@ -27,7 +26,6 @@ import {
 const cont1 = require('@/assets/img/cont1.png');
 const cont2 = require('@/assets/img/cont2.jpg');
 const cont3 = require('@/assets/img/cont3.jpg');
-const burgerIco = require('@/assets/img/Logo@3x.svg');
 
 
 const contacts = [cont1, cont2, cont3];
@@ -35,7 +33,7 @@ const contacts = [cont1, cont2, cont3];
 
 @Component
 export default class TheHeader extends Vue {
-  @Prop() isActiveSidebar!: boolean;
+  // @Prop() burgerIco!: string;
 
   @Watch('$route')
   onRouteChange(route: any) {
@@ -45,8 +43,6 @@ export default class TheHeader extends Vue {
   activeRoute = '';
 
   contacts = contacts;
-
-  burgerIco = burgerIco;
 
   mounted() {
     this.activeRoute = this.$route.fullPath;
@@ -64,7 +60,7 @@ export default class TheHeader extends Vue {
   header{
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 30px 30px 0;
+    padding: 30px 45px 0;
 
     #burger{
       margin-right: 15px;
@@ -146,7 +142,7 @@ export default class TheHeader extends Vue {
   }
 
   .navigation{
-    padding-left: 30px;
+    padding-left: 45px;
     height: 35px;
     padding-top: 20px;
 
@@ -165,6 +161,4 @@ export default class TheHeader extends Vue {
       }
     }
   }
-
-
 </style>

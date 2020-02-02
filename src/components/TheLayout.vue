@@ -1,9 +1,23 @@
 <template lang="pug">
   .container-main.flex
-    transition(name="slideSidebar")
-      TheSideMenu(v-if="isActiveSidebar" @hideSidebar="isActiveSidebar = false")
+    #desktop-sidebar
+      img.burger(:src="burgerIco" @click="showDeskSidebar = !showDeskSidebar")
+      transition(name="slideSidebar")
+        TheSideMenu(
+          v-if="showDeskSidebar"
+          @burgerClicked="showDeskSidebar = !showDeskSidebar"
+          :burgerIco ="burgerIco"
+          )
+    #mobile-sidebar
+      img.burger(:src="burgerIco" @click="showMobileSidebar = !showMobileSidebar")
+      transition(name="slideSidebar")
+        TheSideMenu(
+          v-if="showMobileSidebar"
+          @burgerClicked="showMobileSidebar = !showMobileSidebar"
+          :burgerIco ="burgerIco"
+          )
     .container-right.flex
-      TheHeader(:isActiveSidebar = "isActiveSidebar" @showSidebar="isActiveSidebar = true")
+      TheHeader(:burgerIco ="burgerIco")
       TheContent
 </template>
 
@@ -13,6 +27,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import TheContent from './TheContent.vue';
 import TheHeader from './TheHeader.vue';
 import TheSideMenu from './TheSideMenu.vue';
+
+const burgerIco = require('@/assets/img/Logo@3x.svg');
 
 Vue.filter('formattedDate', (date: Date) => {
   const dayNum: number = date.getDate();
@@ -28,18 +44,45 @@ Vue.filter('formattedDate', (date: Date) => {
   },
 })
 export default class Layout extends Vue {
-  isActiveSidebar = true;
+  showDeskSidebar = true;
 
-  created() {
-    this.isActiveSidebar = window.screen.width >= 600;
-  }
+  showMobileSidebar = false;
+
+  burgerIco = burgerIco;
 }
 
 </script>
 
 <style lang="scss">
-  #burger{
+
+  .burger{
     cursor: pointer;
+    position: absolute;
+    width: 25px;
+    top: 30px;
+    left: 10px;
+  }
+
+  #mobile-sidebar {
+    display: none;
+    position: absolute;
+    top: 0;
+  }
+
+  @media screen and (max-width: 800px) {
+    #desktop-sidebar {
+      display: none;
+    }
+
+    #mobile-sidebar {
+      display: block;
+    }
+
+    .burger {
+      width: 30px;
+      top: 35px;
+    }
+
   }
 
   .container-right{
@@ -104,10 +147,4 @@ export default class Layout extends Vue {
   .slideSidebar-enter, .slideSidebar-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     transform: translateX(-280px);
   }
-
-  /*@media only screen and (max-width: 600px) {*/
-  /*  #side-menu {*/
-  /*    display: none;*/
-  /*  }*/
-  /*}*/
 </style>
