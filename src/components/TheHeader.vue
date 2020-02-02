@@ -52,27 +52,20 @@ export default class TheHeader extends Vue {
 
 <style lang="scss" scoped>
 
-  @media screen and (max-width: 800px) {
-    .header-title .wrap h2 {
-      font-size: 28px;
-    }
-    .header{
-    }
-  }
-
   .wrapper{
     flex-direction: column;
     width: 100%;
   }
 
+  .burger-box{
+    background-color: black;
+    width: 25px;
+  }
+
   header{
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 30px 45px 0;
-
-    #burger{
-      margin-right: 15px;
-    }
+    padding: 30px 25px 0;
 
     .header-title{
       align-items: center;
@@ -110,7 +103,6 @@ export default class TheHeader extends Vue {
         div{
           border-radius: 15px;
           font-size: 14px;
-        //padding: 5px 10px;
         }
       }
 
@@ -150,7 +142,7 @@ export default class TheHeader extends Vue {
   }
 
   .navigation{
-    padding-left: 45px;
+    padding-left: 25px;
     height: 35px;
     padding-top: 20px;
 
@@ -169,4 +161,25 @@ export default class TheHeader extends Vue {
       }
     }
   }
+
+  @media screen and (max-width: 800px) {
+    .header-title .wrap h2 {
+      font-size: 28px;
+    }
+    header{
+      padding-top: 5px;
+      padding-left: 70px;
+      width: 100vw;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      .header-title{
+        width: 100vw;
+        margin-bottom: 10px;
+      }
+    }
+    .navigation a{
+      margin-right: 20px;
+    }
+  }
+
 </style>

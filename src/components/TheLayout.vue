@@ -3,19 +3,11 @@
     #desktop-sidebar
       img.burger(:src="burgerIco" @click="showDeskSidebar = !showDeskSidebar")
       transition(name="slideSidebar")
-        TheSideMenu(
-          v-if="showDeskSidebar"
-          @burgerClicked="showDeskSidebar = !showDeskSidebar"
-          :burgerIco ="burgerIco"
-          )
+        TheSideMenu(v-if="showDeskSidebar")
     #mobile-sidebar
       img.burger(:src="burgerIco" @click="showMobileSidebar = !showMobileSidebar")
       transition(name="slideSidebar")
-        TheSideMenu(
-          v-if="showMobileSidebar"
-          @burgerClicked="showMobileSidebar = !showMobileSidebar"
-          :burgerIco ="burgerIco"
-          )
+        TheSideMenu(v-if="showMobileSidebar")
     .container-right.flex
       TheHeader(:burgerIco ="burgerIco")
       TheContent
@@ -67,21 +59,6 @@ export default class Layout extends Vue {
     display: none;
     position: absolute;
     top: 0;
-  }
-
-  @media screen and (max-width: 800px) {
-    #desktop-sidebar {
-      display: none;
-    }
-
-    #mobile-sidebar {
-      display: block;
-    }
-
-    .burger {
-      width: 30px;
-      top: 35px;
-    }
   }
 
   .container-right{
@@ -138,20 +115,35 @@ export default class Layout extends Vue {
     background-color: inherit;
   }
 
+  @media screen and (max-width: 800px) {
+    #desktop-sidebar {
+      display: none;
+    }
+
+    #mobile-sidebar {
+      display: block;
+    }
+
+    .burger {
+      width: 30px;
+      top: 35px;
+    }
+  }
 </style>
 
 <style lang="scss" scoped>
-  @media screen and (max-width: 800px) {
-    .container-right{
-      width: 100vw;
-      height: 100vh;
-    }
-  }
 
   .slideSidebar-enter-active, .slideSidebar-leave-active {
     transition: transform .2s;
   }
   .slideSidebar-enter, .slideSidebar-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     transform: translateX(-280px);
+  }
+
+  @media screen and (max-width: 800px) {
+    .container-right{
+      width: 100vw;
+      height: 100vh;
+    }
   }
 </style>
