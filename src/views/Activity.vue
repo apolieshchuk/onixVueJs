@@ -233,6 +233,9 @@ export default class Activity extends Vue {
           min-width: 20px;
         }
         .message-content{
+          &.info{
+            padding: 10px;
+          }
           .message-content-upload{
             flex-wrap: wrap;
             > img {

@@ -249,6 +249,9 @@ export default class Kanban extends Vue {
 
 @media screen and (max-width: $mobileWidth) {
   .kanban-wrapper{
+    .filter{
+      margin-left: 5px;
+    }
     .table{
       .table-head, .table-body{
         font-size: 12px;
