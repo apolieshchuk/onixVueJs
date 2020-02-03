@@ -1,4 +1,3 @@
-import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper
     TaskDetailsModal(
@@ -14,7 +13,9 @@ import {Status} from "@/interfaces";
       input(type="date" v-model="finishDateFilter"
         id="filter-todo-finish" name="filter-finish")
     .table-head.flex
-      .table-head-col(v-for="status in tableCols") {{ status }} ( {{ countCards(status) }} cards )
+      .table-head-col(v-for="status in tableCols") {{ status }} ({{ countCards(status) }}
+        span  cards
+        span )
     .table-body.flex
       .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
         draggable.draggable(group="cards"
@@ -169,14 +170,10 @@ export default class Kanban extends Vue {
   width: 100%;
 }
 
-.table-col,.table-head-col,
-.table-head-filter {
+.table-col,.table-head-col{
   text-align: center;
   width: (100% / 3);
   margin: 2px;
-  .draggable{
-    height: 100%;
-  }
 }
 
 .table-head{
@@ -206,7 +203,6 @@ export default class Kanban extends Vue {
   }
 }
 
-
 .table-body{
   height: 90%;
 
@@ -215,6 +211,9 @@ export default class Kanban extends Vue {
     overflow: auto;
     border: 1px solid #333333;
     padding-top: 5px;
+    .draggable{
+      height: 100%;
+    }
     .task-card{
       cursor: pointer;
       margin-left: 10px;
@@ -250,6 +249,29 @@ export default class Kanban extends Vue {
     }
     .task-card-past{
       background-color: lightcoral;
+    }
+  }
+}
+
+@media screen and (max-width: $mobileWidth) {
+  .kanban-wrapper{
+    box-sizing: border-box;
+    padding-top: 0;
+    .filter{
+      padding: 3px;
+      margin-bottom: 0;
+    }
+    .table-head, .table-body{
+      font-size: 12px;
+    }
+    .table-head-col span:first-child{
+      display: none;
+    }
+    .table-body{
+      height: 88%;
+      .table-col .task-card{
+        min-width: 20px;
+      }
     }
   }
 }

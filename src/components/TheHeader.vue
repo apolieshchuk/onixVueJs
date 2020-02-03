@@ -2,7 +2,6 @@
   .wrapper.flex
     header.flex
       .header-title.flex
-        img#burger(:src='burgerIco' @click="$emit('burgerClicked')")
         .wrap.flex
           h2 Website Redesign
         button.dots3-but.grey
@@ -28,8 +27,6 @@ const cont1 = require('@/assets/img/cont1.png');
 const cont2 = require('@/assets/img/cont2.jpg');
 const cont3 = require('@/assets/img/cont3.jpg');
 
-const burgerIco = require('@/assets/img/burger.svg');
-
 const contacts = [cont1, cont2, cont3];
 
 
@@ -43,8 +40,6 @@ export default class TheHeader extends Vue {
   }
 
   activeRoute = '';
-
-  burgerIco = burgerIco;
 
   contacts = contacts;
 
@@ -69,10 +64,6 @@ export default class TheHeader extends Vue {
     .header-title{
       align-items: center;
 
-      #burger{
-        display: none;
-      }
-
       .wrap::before {
         content: "";
         background: #FFC200 url('../assets/img/Shapes@2x.png') no-repeat;
@@ -80,10 +71,11 @@ export default class TheHeader extends Vue {
         min-width: 40px;
         min-height: 42px;
         border-radius: 20%;
+        margin-right: 10px;
       }
 
       h2{
-        margin: 0 10px;
+        margin: 0 10px 0 0;
         font-size: 32px;
         white-space: nowrap;
       }
@@ -168,29 +160,63 @@ export default class TheHeader extends Vue {
     }
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: $mobileWidth) {
     .header-title .wrap h2 {
-      font-size: 28px;
+      font-size: 23px;
     }
     header{
-      padding-top: 5px;
-      padding-left: 70px;
-      width: 100vw;
+      width: 100%;
       flex-wrap: wrap;
-      justify-content: space-around;
-
+      justify-content: center;
+      padding: 5px 0 0 0;
       .header-title{
         width: 100vw;
-        margin-bottom: 10px;
-
-        #burger{
-          display: block;
-          margin-right: 10px;
+        margin-bottom: 5px;
+        justify-content: center;
+        h2{
+          margin-right: 5px;
+        }
+        .wrap::before {
+          height: 25px;
+          background-size: 25px 25px;
+          min-width: 25px;
+          min-height: 25px;
+          margin-right: 5px;
+        }
+        .dots3-but{
+          min-width: 20px;
+          min-height: 20px;
+          .dots3{
+            width: 3px;
+            height: 3px;
+            &::after {
+              left: 5px;
+            }
+            &::before{
+              left: -5px;
+            }
+          }
+        }
+      }
+      button{
+        width: 10px;
+      }
+      .header-controls{
+        .communication{
+          margin-left: 5px;
+          .chat{
+            margin-left: 5px;
+          }
         }
       }
     }
-    .navigation a{
-      margin-right: 20px;
+    .navigation {
+      padding: 10px 0 0;
+      justify-content: center;
+      a{
+        margin-right: 10px;
+        font-size: 15px;
+      }
     }
   }
 

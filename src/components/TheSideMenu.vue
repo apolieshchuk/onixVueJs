@@ -203,7 +203,7 @@ export default class TheSideMenu extends Vue {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: $mobileWidth) {
   #side-menu .close-button{
     display: block;
   }

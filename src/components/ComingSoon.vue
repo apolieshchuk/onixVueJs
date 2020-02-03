@@ -1,5 +1,6 @@
 <template lang="pug">
-  .wrapper-coming-soon
+  .wrapper-coming-soon.flex
+    img(:src="comingImg")
 </template>
 
 <script lang="ts">
@@ -18,9 +19,19 @@ export default {
 <style lang="scss" scoped>
 
   .wrapper-coming-soon{
-    background: url('../assets/img/coming-soon.png') no-repeat center center;
-    height: 400px;
-    width: 500px;
+    height: 100%;
+    img{
+      align-self: center;
+      height: 100%;
+      width: 650px;
+    }
+  }
+
+  @media screen and (max-width: $mobileWidth) {
+    .wrapper-coming-soon img {
+      height: 250px;
+      width: 350px;
+    }
   }
 
 </style>

@@ -25,7 +25,7 @@
               td(@click="editTask(task.id)") {{ task.added | formattedDate }}
               td(@click="editTask(task.id)") {{ task.deadline | formattedDate}}
               td
-                button(@click='deleteTask(i)') Del
+                img(@click='deleteTask(i)' :src="closeIco")
 </template>
 
 <script lang="ts">
@@ -34,6 +34,7 @@ import { Status, Task } from '@/interfaces';
 import ModalWindow from '@/components/AddTaskModal.vue';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 
+const closeIco = require('@/assets/img/close.svg');
 
 /* Table cols */
 const tableCols: string[] = ['Status', 'Task', 'Description', 'Start', 'Deadline', 'Del'];
@@ -49,6 +50,8 @@ export default class Tasks extends Vue {
   tableCols: string[] = tableCols;
 
   editedTask: Task = {} as Task;
+
+  closeIco = closeIco;
 
   tasks = this.$store.getters.getTasks;
 
@@ -85,7 +88,6 @@ export default class Tasks extends Vue {
 }
 
 </script>
-
 
 <style lang="scss" scoped>
 
@@ -173,6 +175,17 @@ export default class Tasks extends Vue {
             }
           }
         }
+      }
+    }
+  }
+
+  @media screen and (max-width: $mobileWidth) {
+    .table-wrapper{
+      thead, td{
+        font-size: 8px;
+      }
+      td img{
+        width: 10px;
       }
     }
   }

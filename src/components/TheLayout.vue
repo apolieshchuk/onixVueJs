@@ -3,6 +3,7 @@
     #desktop-sidebar
       transition(name="slideSidebar")
         TheSideMenu(v-if="isActiveSidebar" @closeClicked="isActiveSidebar=!isActiveSidebar")
+    img#burger(:src='burgerIco' @click="isActiveSidebar=!isActiveSidebar")
     #mobile-sidebar
       transition(name="slideSidebar")
         TheSideMenu(v-if="!isActiveSidebar" @closeClicked="isActiveSidebar=!isActiveSidebar")
@@ -17,6 +18,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import TheContent from './TheContent.vue';
 import TheHeader from './TheHeader.vue';
 import TheSideMenu from './TheSideMenu.vue';
+
+const burgerIco = require('@/assets/img/burger.svg');
 
 Vue.filter('formattedDate', (date: Date) => {
   const dayNum: number = date.getDate();
@@ -33,6 +36,8 @@ Vue.filter('formattedDate', (date: Date) => {
 })
 export default class Layout extends Vue {
   isActiveSidebar = true;
+
+  burgerIco = burgerIco;
 }
 
 </script>
@@ -98,6 +103,10 @@ export default class Layout extends Vue {
     transform: translateX(-280px);
   }
 
+  #burger{
+    display: none;
+  }
+
   #mobile-sidebar {
     display: none;
     position: absolute;
@@ -111,18 +120,28 @@ export default class Layout extends Vue {
     /*overflow: hidden;*/
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: $mobileWidth) {
     #desktop-sidebar {
       display: none;
     }
 
     #mobile-sidebar {
       display: block;
+      z-index: 1;
     }
 
     .container-right{
       width: 100vw;
       height: 100vh;
     }
+
+    #burger{
+      display: block;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+    }
+
   }
 </style>
