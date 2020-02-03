@@ -1,5 +1,5 @@
 <template lang="pug">
-  .wrapper.flex
+  .header-wrapper.flex
     header.flex
       .header-title.flex
         .wrap.flex
@@ -51,7 +51,7 @@ export default class TheHeader extends Vue {
 
 <style lang="scss" scoped>
 
-  .wrapper{
+  .header-wrapper {
     flex-direction: column;
     width: 100%;
   }

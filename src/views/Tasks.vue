@@ -180,12 +180,24 @@ export default class Tasks extends Vue {
   }
 
   @media screen and (max-width: $mobileWidth) {
-    .table-wrapper{
-      thead, td{
-        font-size: 8px;
-      }
-      td img{
-        width: 10px;
+    .tasks-wrapper {
+      .table-wrapper-over{
+        .table-wrapper{
+          thead, td{
+            font-size: 8px;
+          }
+          td img{
+            width: 10px;
+          }
+          table thead th{
+            &:nth-child(1){
+              width: 15%;
+            }
+            &:nth-last-child(2), &:nth-last-child(3) {
+              width: 10%;
+            }
+          }
+        }
       }
     }
   }

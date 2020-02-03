@@ -43,12 +43,10 @@ export default class Layout extends Vue {
 </script>
 
 <style lang="scss">
-
   body{
     margin: 0;
     font-family: 'Open Sans', sans-serif;
   }
-
   .flex{
     display: flex;
   }
@@ -90,8 +88,6 @@ export default class Layout extends Vue {
     left: -8px;
     background-color: inherit;
   }
-
-
 </style>
 
 <style lang="scss" scoped>
@@ -103,6 +99,10 @@ export default class Layout extends Vue {
     transform: translateX(-280px);
   }
 
+  .container-main{
+    height: 100vh;
+  }
+
   #burger{
     display: none;
   }
@@ -110,13 +110,18 @@ export default class Layout extends Vue {
   #mobile-sidebar {
     display: none;
     position: absolute;
+    height: 100%;
     top: 0;
+  }
+
+  #desktop-sidebar {
+    height: 100%;
   }
 
   .container-right{
     flex-direction: column;
     flex-grow: 1;
-    height: 100vh;
+    height: 100%;
     /*overflow: hidden;*/
   }
 
