@@ -124,7 +124,7 @@ export default class Activity extends Vue {
     width: 100%;
     border-collapse: separate;
     border-spacing: 10px;
-
+    font-size: 14px;
     .message {
 
       > td {
@@ -134,7 +134,6 @@ export default class Activity extends Vue {
       .date {
         margin-top: 0;
         opacity: 0.5;
-        font-size: 14px;
         color: #131313;
       }
 
@@ -178,7 +177,6 @@ export default class Activity extends Vue {
         }
       }
       .message-content {
-        font-size: 15px;
         color: #131313;
         line-height: 20px;
         min-width: 100px;
@@ -206,17 +204,45 @@ export default class Activity extends Vue {
         }
       }
       .message-sep {
-       min-width: $messageSepWidth;
+        min-width: $messageSepWidth;
       }
       .message-time {
         min-width: $messageTimeWidth;
         vertical-align: top;
         text-align: right;
         opacity: 0.7;
-        font-size: 14px;
         color: #131313;
       }
     }
   }
 
+  @media screen and (max-width: $mobileWidth) {
+    .activity-wrapper{
+      min-width: 0;
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+    .messanger{
+      border-spacing: 5px;
+      font-size: 10px;
+      .message{
+        .message-sep{
+          min-width: 30px;
+        }
+        .message-time{
+          min-width: 20px;
+        }
+        .message-content{
+          .message-content-upload{
+            flex-wrap: wrap;
+            > img {
+              width: 50px;
+              margin: 2px;
+              border-radius: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
 </style>
