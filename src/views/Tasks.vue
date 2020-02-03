@@ -1,5 +1,5 @@
 <template lang="pug">
-  .tasks-wrapper.content-wrapper
+  .tasks-wrapper
     button.btn-yellow(type='button', @click="isAddModalVisible = true") Add new task
     TaskDetailsModal(
       v-if="isEditModalVisible"
@@ -8,7 +8,7 @@
       )
     ModalWindow(v-if="isAddModalVisible" @close="isAddModalVisible = false")
     hr
-    .table-wrapper-over.content-wrapper
+    .table-wrapper-over
       .table-wrapper
         table
           thead
@@ -118,19 +118,20 @@ export default class Tasks extends Vue {
   }
 
   .tasks-wrapper {
-    width: 100%;
     text-align: center;
-
+    padding: 5px;
     button{
       margin-top: 5px;
     }
     .table-wrapper-over {
       height: 86%;
       background-color: white;
+      padding: 5px;
+      border-radius: 5px;
+      box-sizing: border-box;
       .table-wrapper {
         height: 100%;
         overflow: auto;
-
         table {
           table-layout: fixed;
           font-size: 14px;

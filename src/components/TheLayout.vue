@@ -135,10 +135,10 @@ export default class Layout extends Vue {
       z-index: 1;
     }
 
-    .container-right{
-      width: 100vw;
-      height: 100vh;
-    }
+    /*.container-right{*/
+    /*  width: 100vw;*/
+    /*  height: 100vh;*/
+    /*}*/
 
     #burger{
       display: block;

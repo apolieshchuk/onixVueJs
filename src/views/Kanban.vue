@@ -12,25 +12,26 @@
         id="filter-todo-start" name="filter-start")
       input(type="date" v-model="finishDateFilter"
         id="filter-todo-finish" name="filter-finish")
-    .table-head.flex
-      .table-head-col(v-for="status in tableCols") {{ status }} ({{ countCards(status) }}
-        span  cards
-        span )
-    .table-body.flex
-      .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
-        draggable.draggable(group="cards"
-          :id="'drag-' + tableCols[index]"
-          :move="checkMove"
-          :list="list" @add="updateTasks"
-          )
-          .task-card.flex(
-            v-for="task in list"
-            v-if="isActiveInFilter(task.name, task.deadline)"
-            :id="'task-' + task.id"
-            :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
-            @click="editTask(task.id)"
-          )
-            div {{task.name}} {{ task.deadline | formattedDate }}
+    .table
+      .table-head.flex
+        .table-head-col(v-for="status in tableCols") {{ status }} ({{ countCards(status) }}
+          span  cards
+          span )
+      .table-body.flex
+        .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
+          draggable.draggable(group="cards"
+            :id="'drag-' + tableCols[index]"
+            :move="checkMove"
+            :list="list" @add="updateTasks"
+            )
+            .task-card.flex(
+              v-for="task in list"
+              v-if="isActiveInFilter(task.name, task.deadline)"
+              :id="'task-' + task.id"
+              :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
+              @click="editTask(task.id)"
+            )
+              div {{task.name}} {{ task.deadline | formattedDate }}
 </template>
 
 <script lang="ts">
@@ -160,98 +161,92 @@ export default class Kanban extends Vue {
 
 <style lang="scss" scoped>
 .kanban-wrapper{
-  width: 100%;
   background: url("../assets/img/kanban_bg.jpg") 100% 100%;
   flex-direction: column;
-  padding: 8px;
-}
-
-.table-head,.table-body{
-  width: 100%;
-}
-
-.table-col,.table-head-col{
-  text-align: center;
-  width: (100% / 3);
-  margin: 2px;
-}
-
-.table-head{
-  height: 25px;
-  .table-head-col{
-    background-color: #333333;
-    border-radius: 3px;
-    color: white;
-    overflow: hidden;
-  }
-}
-
-.filter{
-  justify-content: center;
-  margin-bottom: 5px;
-  *{
-    margin-right: 3px;
-  }
-  label{
-    font-weight: bold;
-  }
-  input{
-    border-radius: 7px;
-    border: solid 1px black;
-    padding: 2px;
-    outline: none;
-  }
-}
-
-.table-body{
-  height: 90%;
-
-  .table-col {
-    border-radius: 5px;
-    overflow: auto;
-    border: 1px solid #333333;
-    padding-top: 5px;
-    .draggable{
-      height: 100%;
+  padding: 5px;
+  .filter{
+    justify-content: center;
+    height: $kanbanFilterHeight;
+    margin-bottom: 3px;
+    *{
+      margin-right: 3px;
     }
-    .task-card{
-      cursor: pointer;
-      margin-left: 10px;
-      border-radius: 5px;
-      min-height: 50px;
-      min-width: 200px;
-      width: 80%;
-      margin-bottom: 7px;
+    label{
+      font-weight: bold;
+    }
+    input{
+      border-radius: 7px;
+      border: solid 1px black;
       padding: 2px;
-      box-sizing: border-box;
-      justify-content: center;
-      overflow-wrap: break-word;
-      float: left;
-      &:nth-child(2n){
-        float: right;
-        margin-right: 10px;
+      outline: none;
+    }
+  }
+  .table{
+    height: $kanbanTableHeight;
+    .table-col,.table-head-col{
+      text-align: center;
+      width: (100% / 3);
+      margin: 2px;
+    }
+    .table-head{
+      height: $kanbanTableHeadHeight;
+      .table-head-col{
+        background-color: #333333;
+        border-radius: 3px;
+        color: white;
       }
-      div {
-        align-self: center;
+    }
+    .table-body{
+      height: $kanbanTableBodyHeight;
+      .table-col {
+        border-radius: 5px;
+        overflow: auto;
+        border: 1px solid #333333;
+        padding-top: 5px;
+        .draggable{
+          height: 100%;
+        }
+        .task-card{
+          cursor: pointer;
+          margin-left: 10px;
+          border-radius: 5px;
+          min-height: 50px;
+          min-width: 200px;
+          width: 80%;
+          margin-bottom: 7px;
+          padding: 2px;
+          box-sizing: border-box;
+          justify-content: center;
+          overflow-wrap: break-word;
+          float: left;
+          &:nth-child(2n){
+            float: right;
+            margin-right: 10px;
+          }
+          div {
+            align-self: center;
+          }
+        }
+        .hot::after{
+          content: url('../assets/img/hot.svg');
+        }
+        .task-card-todo{
+          background-color: #FFCC33;
+        }
+        .task-card-done{
+          background-color: lightgreen;
+        }
+        .task-card-inprogress{
+          background-color: lightblue;
+        }
+        .task-card-past{
+          background-color: lightcoral;
+        }
       }
-    }
-    .hot::after{
-      content: url('../assets/img/hot.svg');
-    }
-    .task-card-todo{
-      background-color: #FFCC33;
-    }
-    .task-card-done{
-      background-color: lightgreen;
-    }
-    .task-card-inprogress{
-      background-color: lightblue;
-    }
-    .task-card-past{
-      background-color: lightcoral;
     }
   }
 }
+
 
 @media screen and (max-width: $mobileWidth) {
   .kanban-wrapper{
@@ -261,16 +256,18 @@ export default class Kanban extends Vue {
       padding: 3px;
       margin-bottom: 0;
     }
-    .table-head, .table-body{
-      font-size: 12px;
-    }
-    .table-head-col span:first-child{
-      display: none;
-    }
-    .table-body{
-      height: 88%;
-      .table-col .task-card{
-        min-width: 20px;
+    .table{
+      .table-head, .table-body{
+        font-size: 12px;
+      }
+      .table-head-col span:first-child{
+        display: none;
+      }
+      .table-body{
+        height: 88%;
+        .table-col .task-card{
+          min-width: 20px;
+        }
       }
     }
   }

@@ -2,8 +2,7 @@
   .header-wrapper.flex
     header.flex
       .header-title.flex
-        .wrap.flex
-          h2 Website Redesign
+        h2 Website Redesign
         button.dots3-but.grey
           .dots3
       .header-controls.flex
@@ -52,30 +51,32 @@ export default class TheHeader extends Vue {
 <style lang="scss" scoped>
 
   .header-wrapper {
+    box-sizing: border-box;
     flex-direction: column;
     width: 100%;
+    height: $headerHeight;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   header{
+    height: $headerTitleHeight;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 30px 25px 0;
-
     .header-title{
       align-items: center;
-
-      .wrap::before {
+      &:before {
         content: "";
+        height: $headerLogoHeight;
         background: #FFC200 url('../assets/img/Shapes@2x.png') no-repeat;
-        background-size: 40px 42px;
-        min-width: 40px;
-        min-height: 42px;
+        background-size: $headerLogoHeight $headerLogoHeight;
+        min-width: $headerLogoHeight;
+        min-height: $headerLogoHeight;
         border-radius: 20%;
         margin-right: 10px;
       }
-
       h2{
-        margin: 0 10px 0 0;
+        margin-right: 10px;
         font-size: 32px;
         white-space: nowrap;
       }
@@ -85,7 +86,6 @@ export default class TheHeader extends Vue {
         left: 0;
       }
     }
-
     .header-controls{
       align-items: center;
       justify-content: space-between;
@@ -136,19 +136,15 @@ export default class TheHeader extends Vue {
        }
       }
     }
-
   }
 
   .navigation{
-    padding-left: 25px;
-    height: 35px;
-    padding-top: 20px;
-
+    height: $headerNavHeight;
     a{
       text-decoration: none;
       color: #131313;
       opacity: 0.7;
-      margin-right: 27px;
+      margin-right: 25px;
       font-size: 16px;
 
       &.active-item{
@@ -165,13 +161,9 @@ export default class TheHeader extends Vue {
       font-size: 23px;
     }
     header{
-      width: 100%;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 5px 0 0 0;
       .header-title{
-        width: 100vw;
-        margin-bottom: 5px;
         justify-content: center;
         h2{
           margin-right: 5px;
@@ -211,7 +203,6 @@ export default class TheHeader extends Vue {
       }
     }
     .navigation {
-      padding: 10px 0 0;
       justify-content: center;
       a{
         margin-right: 10px;
