@@ -33,11 +33,14 @@ export default {
 
 <style lang="scss" scoped>
   .content-wrapper{
-    height: $contentHeight;
-    width: 100%;
+    height: 100%;
     background-color: #EAEAEA;
     box-sizing: border-box;
     overflow: auto;
     justify-content: center;
+  }
+  @media screen and (max-width: $mobileWidth) {
+    .content-wrapper{
+    }
   }
 </style>

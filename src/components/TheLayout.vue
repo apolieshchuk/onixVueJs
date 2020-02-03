@@ -101,6 +101,7 @@ export default class Layout extends Vue {
 
   .container-main{
     height: 100vh;
+    width: 100vw;
   }
 
   #burger{
@@ -110,19 +111,12 @@ export default class Layout extends Vue {
   #mobile-sidebar {
     display: none;
     position: absolute;
-    height: 100%;
     top: 0;
-  }
-
-  #desktop-sidebar {
-    height: 100%;
   }
 
   .container-right{
     flex-direction: column;
-    flex-grow: 1;
-    height: 100%;
-    /*overflow: hidden;*/
+    width: 100%;
   }
 
   @media screen and (max-width: $mobileWidth) {

@@ -1,28 +1,20 @@
 //Main
 $debug: false;
-$mobileWidth: 700px;
+$mobileWidth: 800px;
+$mobileSizing: 5%;
 
 // Header
-$headerHeight: 23%;
+$headerHeight: 120px;
 $contactsDiameter: 30px;
 $headerLogoHeight: 40px;
-$headerTitleHeight: 75%;
-$headerNavHeight: 100% - $headerTitleHeight;
+
+//Task.vue
+
 
 //Activity.vue
 $messageIcoWidth: 35px;
 $messageTimeWidth: 65px;
 $messageSepWidth: 65px;
-
-//Content.vue
-$contentHeight: 100% - $headerHeight;
-
-// Kanban.vue
-$kanbanFilterHeight: 5%;
-$kanbanTableHeight: 100% - $kanbanFilterHeight;
-$kanbanTableHeadHeight: 6%;
-$kanbanTableBodyHeight: 100% - $kanbanTableHeadHeight;
-
 
 @mixin offButtonEffects{
   border: none;

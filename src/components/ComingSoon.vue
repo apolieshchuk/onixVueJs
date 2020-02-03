@@ -22,7 +22,7 @@ export default {
     height: 100%;
     img{
       align-self: center;
-      height: 100%;
+      height: 550px;
       width: 650px;
     }
   }

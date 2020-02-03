@@ -1,5 +1,5 @@
 <template lang="pug">
-  .kanban-wrapper
+  .kanban-wrapper.flex
     TaskDetailsModal(
       v-if="isEditModalVisible"
       @close="isEditModalVisible = false"
@@ -12,7 +12,7 @@
         id="filter-todo-start" name="filter-start")
       input(type="date" v-model="finishDateFilter"
         id="filter-todo-finish" name="filter-finish")
-    .table
+    .table.flex
       .table-head.flex
         .table-head-col(v-for="status in tableCols") {{ status }} ({{ countCards(status) }}
           span  cards
@@ -163,11 +163,11 @@ export default class Kanban extends Vue {
 .kanban-wrapper{
   background: url("../assets/img/kanban_bg.jpg") 100% 100%;
   flex-direction: column;
-  padding: 5px;
+  width: 100%;
   .filter{
     justify-content: center;
-    height: $kanbanFilterHeight;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     *{
       margin-right: 3px;
     }
@@ -182,14 +182,14 @@ export default class Kanban extends Vue {
     }
   }
   .table{
-    height: $kanbanTableHeight;
+    flex-direction: column;
+    flex-grow: 1;
     .table-col,.table-head-col{
       text-align: center;
       width: (100% / 3);
       margin: 2px;
     }
     .table-head{
-      height: $kanbanTableHeadHeight;
       .table-head-col{
         background-color: #333333;
         border-radius: 3px;
@@ -197,7 +197,7 @@ export default class Kanban extends Vue {
       }
     }
     .table-body{
-      height: $kanbanTableBodyHeight;
+      flex-grow: 1;
       .table-col {
         border-radius: 5px;
         overflow: auto;
@@ -247,15 +247,8 @@ export default class Kanban extends Vue {
   }
 }
 
-
 @media screen and (max-width: $mobileWidth) {
   .kanban-wrapper{
-    box-sizing: border-box;
-    padding-top: 0;
-    .filter{
-      padding: 3px;
-      margin-bottom: 0;
-    }
     .table{
       .table-head, .table-body{
         font-size: 12px;
