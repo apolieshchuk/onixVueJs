@@ -1,15 +1,13 @@
 <template lang="pug">
   .container-main.flex
     #desktop-sidebar
-      img.burger(:src="burgerIco" @click="showDeskSidebar = !showDeskSidebar")
       transition(name="slideSidebar")
-        TheSideMenu(v-if="showDeskSidebar")
+        TheSideMenu(v-if="isActiveSidebar" @closeClicked="isActiveSidebar=!isActiveSidebar")
     #mobile-sidebar
-      img.burger(:src="burgerIco" @click="showMobileSidebar = !showMobileSidebar")
       transition(name="slideSidebar")
-        TheSideMenu(v-if="showMobileSidebar")
+        TheSideMenu(v-if="!isActiveSidebar" @closeClicked="isActiveSidebar=!isActiveSidebar")
     .container-right.flex
-      TheHeader(:burgerIco ="burgerIco")
+      TheHeader(@burgerClicked="isActiveSidebar = !isActiveSidebar")
       TheContent
 </template>
 
@@ -19,8 +17,6 @@ import { Component, Vue } from 'vue-property-decorator';
 import TheContent from './TheContent.vue';
 import TheHeader from './TheHeader.vue';
 import TheSideMenu from './TheSideMenu.vue';
-
-const burgerIco = require('@/assets/img/Logo@3x.svg');
 
 Vue.filter('formattedDate', (date: Date) => {
   const dayNum: number = date.getDate();
@@ -36,37 +32,12 @@ Vue.filter('formattedDate', (date: Date) => {
   },
 })
 export default class Layout extends Vue {
-  showDeskSidebar = true;
-
-  showMobileSidebar = false;
-
-  burgerIco = burgerIco;
+  isActiveSidebar = true;
 }
 
 </script>
 
 <style lang="scss">
-
-  .burger{
-    cursor: pointer;
-    position: absolute;
-    width: 25px;
-    top: 30px;
-    left: 10px;
-  }
-
-  #mobile-sidebar {
-    display: none;
-    position: absolute;
-    top: 0;
-  }
-
-  .container-right{
-    flex-direction: column;
-    flex-grow: 1;
-    height: 100vh;
-    /*overflow: hidden;*/
-  }
 
   body{
     margin: 0;
@@ -115,20 +86,7 @@ export default class Layout extends Vue {
     background-color: inherit;
   }
 
-  @media screen and (max-width: 800px) {
-    #desktop-sidebar {
-      display: none;
-    }
 
-    #mobile-sidebar {
-      display: block;
-    }
-
-    .burger {
-      width: 30px;
-      top: 35px;
-    }
-  }
 </style>
 
 <style lang="scss" scoped>
@@ -140,7 +98,28 @@ export default class Layout extends Vue {
     transform: translateX(-280px);
   }
 
+  #mobile-sidebar {
+    display: none;
+    position: absolute;
+    top: 0;
+  }
+
+  .container-right{
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100vh;
+    /*overflow: hidden;*/
+  }
+
   @media screen and (max-width: 800px) {
+    #desktop-sidebar {
+      display: none;
+    }
+
+    #mobile-sidebar {
+      display: block;
+    }
+
     .container-right{
       width: 100vw;
       height: 100vh;

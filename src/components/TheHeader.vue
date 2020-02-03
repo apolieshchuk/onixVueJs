@@ -2,6 +2,7 @@
   .wrapper.flex
     header.flex
       .header-title.flex
+        img#burger(:src='burgerIco' @click="$emit('burgerClicked')")
         .wrap.flex
           h2 Website Redesign
         button.dots3-but.grey
@@ -27,6 +28,7 @@ const cont1 = require('@/assets/img/cont1.png');
 const cont2 = require('@/assets/img/cont2.jpg');
 const cont3 = require('@/assets/img/cont3.jpg');
 
+const burgerIco = require('@/assets/img/burger.svg');
 
 const contacts = [cont1, cont2, cont3];
 
@@ -41,6 +43,8 @@ export default class TheHeader extends Vue {
   }
 
   activeRoute = '';
+
+  burgerIco = burgerIco;
 
   contacts = contacts;
 
@@ -57,11 +61,6 @@ export default class TheHeader extends Vue {
     width: 100%;
   }
 
-  .burger-box{
-    background-color: black;
-    width: 25px;
-  }
-
   header{
     justify-content: space-between;
     box-sizing: border-box;
@@ -69,6 +68,11 @@ export default class TheHeader extends Vue {
 
     .header-title{
       align-items: center;
+
+      #burger{
+        display: none;
+      }
+
       .wrap::before {
         content: "";
         background: #FFC200 url('../assets/img/Shapes@2x.png') no-repeat;
@@ -77,11 +81,13 @@ export default class TheHeader extends Vue {
         min-height: 42px;
         border-radius: 20%;
       }
+
       h2{
         margin: 0 10px;
         font-size: 32px;
         white-space: nowrap;
       }
+
       .dots3-but.grey{
         background-color: #EAEAEA;
         left: 0;
@@ -172,9 +178,15 @@ export default class TheHeader extends Vue {
       width: 100vw;
       flex-wrap: wrap;
       justify-content: space-around;
+
       .header-title{
         width: 100vw;
         margin-bottom: 10px;
+
+        #burger{
+          display: block;
+          margin-right: 10px;
+        }
       }
     }
     .navigation a{
