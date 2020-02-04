@@ -185,7 +185,7 @@ export default class Tasks extends Vue {
       .table-wrapper-over{
         .table-wrapper{
           thead, td{
-            font-size: 8px;
+            font-size: 9px;
           }
           td img{
             width: 10px;

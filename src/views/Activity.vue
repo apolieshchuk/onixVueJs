@@ -224,7 +224,7 @@ export default class Activity extends Vue {
     }
     .messanger{
       border-spacing: 5px;
-      font-size: 10px;
+      font-size: 11px;
       .message{
         .message-sep{
           min-width: 30px;
