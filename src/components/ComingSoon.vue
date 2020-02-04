@@ -22,8 +22,8 @@ export default {
     height: 100%;
     img{
       align-self: center;
-      height: 550px;
-      width: 650px;
+      height: 300px;
+      width: 400px;
     }
   }
 
