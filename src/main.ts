@@ -11,12 +11,10 @@ export default eventBus;
 
 
 Vue.filter('formattedDate', (dateStr: string) => {
-  const date: Date = new Date(dateStr);
-  const dayNum: number = date.getDate();
-  const day: string = dayNum < 10 ? `0${dayNum}` : dayNum.toString();
-  const monthNum: number = (date.getMonth() + 1);
-  const month: string = monthNum < 10 ? `0${monthNum}` : monthNum.toString();
-  return `${day}.${month}.${date.getFullYear()}`;
+  const date = new Date(dateStr);
+  const formattedDate: string[] = date.toJSON().slice(0, 10).split('-');
+  const separator = '/';
+  return formattedDate[2] + separator + formattedDate[1] + separator + formattedDate[0];
 });
 
 new Vue({

@@ -18,7 +18,7 @@
           span  cards
           span )
       .table-body.flex
-        .table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
+        .table-col.flex(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
           draggable.draggable(group="cards"
             :id="'drag-' + tableCols[index]"
             :move="checkMove"
@@ -181,7 +181,6 @@ export default class Kanban extends Vue {
   }
   .table{
     flex-direction: column;
-    flex-grow: 1;
     .table-col,.table-head-col{
       text-align: center;
       width: (100% / 3);
@@ -195,13 +194,13 @@ export default class Kanban extends Vue {
       }
     }
     .table-body{
-      flex-grow: 1;
       .table-col {
+        flex-direction: column;
         border-radius: 5px;
-        overflow: auto;
         border: 1px solid #333333;
         padding-top: 5px;
         .draggable{
+          flex-direction: column;
           height: 100%;
         }
         .task-card{

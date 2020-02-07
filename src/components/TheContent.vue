@@ -33,9 +33,10 @@ export default {
 
 <style lang="scss" scoped>
   .content-wrapper{
-    height: 100%;
     background-color: #EAEAEA;
     box-sizing: border-box;
+    height: auto;
+    flex-grow: 0;
     overflow: auto;
     justify-content: center;
   }
