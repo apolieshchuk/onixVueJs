@@ -55,11 +55,11 @@ export default class Kanban extends Vue {
 
   editedTask: Task = {} as Task;
 
-  tasksTodo = this.$store.getters.getTasks.filter((obj: Task) => obj.status === Status.todo);
+  tasksTodo = this.$store.getters.TASKS.filter((obj: Task) => obj.status === Status.todo);
 
-  tasksDone = this.$store.getters.getTasks.filter((obj: Task) => obj.status === Status.done);
+  tasksDone = this.$store.getters.TASKS.filter((obj: Task) => obj.status === Status.done);
 
-  tasksInProgress = this.$store.getters.getTasks.filter((obj: Task) => obj.status
+  tasksInProgress = this.$store.getters.TASKS.filter((obj: Task) => obj.status
     === Status.inprogress);
 
   nameFilter: string = '';
@@ -71,18 +71,20 @@ export default class Kanban extends Vue {
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
     const status: Status = event.to.id.split('-')[1];
-    this.$store.dispatch('updateTaskStatus', { id, status });
+    this.$store.commit('UPDATE_TASK_STATUS', { id, status });
   }
 
   checkMove = (event: any) => !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
 
   editTask(id: number) {
     this.isEditModalVisible = true;
-    this.editedTask = this.$store.getters.getTaskById(id);
+    this.editedTask = this.$store.getters.TASK_BY_ID(id);
   }
 
-
   cardStyle = (status: Status, date: Date) => {
+    // eslint-disable-next-line no-param-reassign
+    date = new Date(date); // for vuex_persist
+
     if (status === Status.todo || status === Status.inprogress) {
       if (date < new Date()) return 'task-card-past';
     }
@@ -96,6 +98,9 @@ export default class Kanban extends Vue {
   };
 
   hotCard = (status: Status, date: Date) => {
+    // eslint-disable-next-line no-param-reassign
+    date = new Date(date); // for vuex_persist
+
     if (status === Status.done) return '';
     const diffForHot = 24;
     const diff: number = (date.getTime() - new Date().getTime()) / 36e5;
@@ -112,7 +117,8 @@ export default class Kanban extends Vue {
     }
   }
 
-  isActiveInFilter(name: string, deadline: Date) {
+  isActiveInFilter(name: string, date: Date) {
+    const deadline: Date = new Date(date); // for vuex_persist
     // Filter by name
     const filterByName: boolean = name.toLowerCase().includes(this.nameFilter.toLowerCase(), 0);
     if (!filterByName) return false;
@@ -121,8 +127,9 @@ export default class Kanban extends Vue {
     return this.filterDate(deadline);
   }
 
+  filterDate(date: Date) {
+    const deadline: Date = new Date(date); // for vuex_persist
 
-  filterDate(deadline: Date) {
     const startFilterString = Date.parse(this.startDateFilter);
     const finishFilterString = Date.parse(this.finishDateFilter);
 
@@ -146,15 +153,6 @@ export default class Kanban extends Vue {
     }
 
     return isFinishFilter && isStartFilter;
-  }
-
-  statusCol = (status: Status) => {
-    switch (status) {
-      case Status.todo: return 0;
-      case Status.done: return 1;
-      case Status.inprogress: return 2;
-      default: return -1;
-    }
   }
 }
 </script>

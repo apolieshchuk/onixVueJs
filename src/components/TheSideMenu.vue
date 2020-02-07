@@ -52,11 +52,11 @@ export default class TheSideMenu extends Vue {
 
   // computed
   get clickedImg() {
-    return this.$store.getters.getClickedImg;
+    return this.$store.getters.CLICKED_IMG;
   }
 
   get openTasks() {
-    return this.$store.getters.getTasksLength;
+    return this.$store.getters.TASKS_LENGTH;
   }
 
   // methods

@@ -53,10 +53,10 @@ export default class Tasks extends Vue {
 
   closeIco = closeIco;
 
-  tasks = this.$store.getters.getTasks;
+  tasks = this.$store.getters.TASKS;
 
   deleteTask(index: number) {
-    this.$store.dispatch('deleteTask', index);
+    this.$store.commit('DELETE_TASK', index);
   }
 
   mounted() {
@@ -65,7 +65,7 @@ export default class Tasks extends Vue {
 
   editTask(id: number) {
     this.isEditModalVisible = true;
-    this.editedTask = this.$store.getters.getTaskById(id);
+    this.editedTask = this.$store.getters.TASK_BY_ID(id);
   }
 
   startAnimation() {

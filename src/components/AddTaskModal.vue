@@ -17,7 +17,8 @@
                   v-model='formTaskName' required ref="inputName")
                 input(type='text' id="addTaskDescription" placeholder='Task description'
                   v-model="formTaskDescription" required)
-                input(type='date' id="addTaskDeadline" v-model="deadline" required)
+                input(type='date' :min="currentDate()"
+                  id="addTaskDeadline" v-model="deadline" required)
             button.btn-yellow(type='submit') Add task
 </template>
 
@@ -26,7 +27,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Status, Task } from '@/interfaces';
 
-@Component
+  @Component
 export default class ModalWindow extends Vue {
   formTaskName: string = '';
 
@@ -35,7 +36,7 @@ export default class ModalWindow extends Vue {
   deadline: string = '';
 
   addTask() {
-    const id = this.$store.getters.getLastTaskId + 1;
+    const id = this.$store.getters.TASK_ID + 1;
     const task: Task = {
       id,
       name: this.formTaskName,
@@ -46,11 +47,13 @@ export default class ModalWindow extends Vue {
     };
     this.formTaskDescription = '';
     this.formTaskName = '';
-    this.$store.dispatch('addTask', task);
+    this.$store.commit('ADD_TASK', task);
 
     // close modal window
     this.$emit('close');
   }
+
+  currentDate = () => new Date().toJSON().slice(0, 10)
 }
 </script>
 
