@@ -35,9 +35,8 @@ export default {
   .content-wrapper{
     background-color: #EAEAEA;
     box-sizing: border-box;
-    height: auto;
-    flex-grow: 0;
     overflow: auto;
+    height: 100%;
     justify-content: center;
   }
   @media screen and (max-width: $mobileWidth) {

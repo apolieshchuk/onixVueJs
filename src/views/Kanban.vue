@@ -18,20 +18,20 @@
           span  cards
           span )
       .table-body.flex
-        .table-col.flex(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]")
-          draggable.draggable(group="cards"
-            :id="'drag-' + tableCols[index]"
-            :move="checkMove"
-            :list="list" @add="updateTasks"
-            )
-            .task-card.flex(
-              v-for="task in list"
-              v-if="isActiveInFilter(task.name, task.deadline)"
-              :id="'task-' + task.id"
-              :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
-              @click="editTask(task.id)"
-            )
-              div {{task.name}} {{ task.deadline | formattedDate }}
+        draggable.table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]"
+          group="cards"
+          :id="'drag-' + tableCols[index]"
+          :move="checkMove"
+          :list="list" @add="updateTasks"
+          )
+          .task-card.flex(
+            v-for="task in list"
+            v-if="isActiveInFilter(task.name, task.deadline)"
+            :id="'task-' + task.id"
+            :class="[cardStyle(task.status, task.deadline), hotCard(task.status,task.deadline)]"
+            @click="editTask(task.id)"
+          )
+            div {{task.name}} {{ task.deadline | formattedDate }}
 </template>
 
 <script lang="ts">
@@ -162,6 +162,7 @@ export default class Kanban extends Vue {
   background: url("../assets/img/kanban_bg.jpg") 100% 100%;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   .filter{
     justify-content: center;
     margin-bottom: 5px;
@@ -179,8 +180,10 @@ export default class Kanban extends Vue {
       outline: none;
     }
   }
-  .table{
+  .table{ // DONT TOUCH THIS FLEXBOXESS SCROLL!!
     flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
     .table-col,.table-head-col{
       text-align: center;
       width: (100% / 3);
@@ -194,15 +197,14 @@ export default class Kanban extends Vue {
       }
     }
     .table-body{
+      flex: 1 1 auto;
+      height: 94%;
+      overflow-y: auto;
       .table-col {
-        flex-direction: column;
+        overflow-y: auto;
         border-radius: 5px;
         border: 1px solid #333333;
         padding-top: 5px;
-        .draggable{
-          flex-direction: column;
-          height: 100%;
-        }
         .task-card{
           cursor: pointer;
           margin-left: 10px;
@@ -257,7 +259,6 @@ export default class Kanban extends Vue {
         display: none;
       }
       .table-body{
-        height: 88%;
         .table-col .task-card{
           min-width: 20px;
         }
