@@ -17,7 +17,7 @@
             tr.table-row.test(
               v-for='(task,i) in tasks'
               :key="task.id"
-              ref="table-row"
+              ref="tableRow"
               )
               td(@click="editTask(task.id)") {{ task.status }}
               td(@click="editTask(task.id)") {{ task.name }}
@@ -71,7 +71,7 @@ export default class Tasks extends Vue {
   startAnimation() {
     const speed: number = 200;
     const animationSpeed: number = 1000; // css @keyframes scale-text-row
-    const blinkedRows = this.$refs['table-row'] as Array<any>;
+    const blinkedRows = this.$refs.tableRow as Array<any>;
 
     for (let i = 0; i < blinkedRows.length; i += 1) {
       // add animation class

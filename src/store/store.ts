@@ -1,8 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VuexPersist from 'vuex-persist';
 import { Status, Task } from '@/interfaces';
 
 Vue.use(Vuex);
+
+const vuexPersist = new VuexPersist({
+  storage: window.localStorage,
+});
 
 let lastTaskId = 0;
 
@@ -49,48 +54,49 @@ const tasks = [
 ];
 
 export default new Vuex.Store({
+  plugins: [vuexPersist.plugin],
   state: {
     clickedImg: 0,
     tasks,
     lastTaskId,
   },
   getters: {
-    getClickedImg: state => state.clickedImg,
-    getTasks: state => state.tasks,
-    getTasksLength: state => state.tasks.length,
-    getLastTaskId: state => state.lastTaskId,
-    getTaskById: state => (id:number) => state.tasks.find(task => task.id === id),
+    getClickedImg: (state: any) => state.clickedImg,
+    getTasks: (state: any) => state.tasks,
+    getTasksLength: (state: any) => state.tasks.length,
+    getLastTaskId: (state: any) => state.lastTaskId,
+    getTaskById: (state: any) => (id:number) => state.tasks.find((task: Task) => task.id === id),
   },
   actions: {
-    changeClickedImg(context, imgIndex: number) {
+    changeClickedImg(context: any, imgIndex: number) {
       context.commit('changeClickedImg', imgIndex);
     },
-    addTask(context, task: Task) {
+    addTask(context: any, task: Task) {
       context.commit('addTask', task);
     },
-    deleteTask(context, taskIndex:number) {
+    deleteTask(context: any, taskIndex:number) {
       context.commit('deleteTask', taskIndex);
     },
-    updateTaskStatus(context, { id, status }) {
+    updateTaskStatus(context: any, { id, status }) {
       context.commit('updateTaskStatus', { id, status });
     },
   },
   mutations: {
-    changeClickedImg(state, index: number) {
+    changeClickedImg(state: any, index: number) {
       state.clickedImg = index;
     },
-    addTask(state, task:Task) {
+    addTask(state: any, task:Task) {
       state.tasks.splice(0, 0, task);
       state.lastTaskId += 1;
     },
-    deleteTask(state, taskIndex: number) {
+    deleteTask(state: any, taskIndex: number) {
       state.tasks.splice(taskIndex, 1);
     },
-    updateTaskStatus(state, { id, status }) {
-      for (let i = 0; i < tasks.length; i += 1) {
+    updateTaskStatus(state: any, { id, status }) {
+      for (let i = 0; i < this.tasks.length; i += 1) {
         // eslint-disable-next-line eqeqeq
-        if (id == tasks[i].id) {
-          tasks[i].status = status;
+        if (id == this.tasks[i].id) {
+          this.tasks[i].status = status;
           break;
         }
       }

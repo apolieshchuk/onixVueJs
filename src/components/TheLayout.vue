@@ -21,14 +21,6 @@ import TheSideMenu from './TheSideMenu.vue';
 
 const burgerIco = require('@/assets/img/burger.svg');
 
-Vue.filter('formattedDate', (date: Date) => {
-  const dayNum: number = date.getDate();
-  const day: string = dayNum < 10 ? `0${dayNum}` : dayNum.toString();
-  const monthNum: number = (date.getMonth() + 1);
-  const month: string = monthNum < 10 ? `0${monthNum}` : monthNum.toString();
-  return `${day}.${month}.${date.getFullYear()}`;
-});
-
 @Component({
   components: {
     TheContent, TheHeader, TheSideMenu,
