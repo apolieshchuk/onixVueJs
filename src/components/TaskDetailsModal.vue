@@ -25,8 +25,8 @@
                   span(v-if="!isEditable") {{ editedTask.description }}
                   textarea.area-description(v-else v-model="taskDescription" @input="editTask")
         footer.modal-footer
-          button.btn-yellow(v-if="!isEditable" @click="isEditable=true") Edit
-          button.btn-cancel(v-else @click="$emit('close')") Cancel
+          button.btn-yellow(v-if="!isEditable && isEditEnabled" @click="isEditable=true") Edit
+          button.btn-cancel(v-if="isEditEnabled && isEditable" @click="$emit('close')") Cancel
           transition(name="fade")
             button.btn-yellow(v-if="isTaskEdit" @click="saveChanges") Save
 </template>
@@ -39,6 +39,8 @@ import { Task } from '@/interfaces';
 @Component
 export default class ModalWindow extends Vue {
   @Prop() editedTask!: Task;
+
+  @Prop({ default: true }) isEditEnabled!: boolean;
 
   formTaskName: string = '';
 

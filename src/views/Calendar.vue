@@ -1,6 +1,9 @@
 <template lang="pug">
   .calendar-wrapper
-    TaskDetailsModal(v-if="isModalActive" :editedTask="editedTask" @close="isModalActive = false")
+    TaskDetailsModal(v-if="isModalActive"
+      :editedTask="editedTask"
+      :isEditEnabled="false"
+      @close="isModalActive = false")
     fullCalendar(:events="fcEvents()" locale="en" @eventClick="taskClicked")
 </template>
 
