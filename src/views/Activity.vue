@@ -29,6 +29,7 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 import { Message } from '@/interfaces';
+import { vxm } from '@/store/store';
 
 /* type of icons */
 const okIco = 'ok-ico';
@@ -96,9 +97,11 @@ export default class Activity extends Vue {
   // data
   messageObjects = messageObjects;
 
+  myStore = vxm.myStore;
+
   // methods
   onImgClick(index:number) {
-    this.$store.commit('SET_CLICKED_IMG', index);
+    this.myStore.CLICKED_IMG = index;
   }
 }
 

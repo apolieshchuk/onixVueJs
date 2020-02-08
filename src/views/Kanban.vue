@@ -19,6 +19,7 @@
           span )
       .table-body.flex
         draggable.table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]"
+          :key="index"
           group="cards"
           :id="'drag-' + tableCols[index]"
           :move="checkMove"
@@ -40,7 +41,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
-
+import { vxm } from '@/store/store';
 
 const statusKeys = Object.keys(Status);
 const statusValues = statusKeys.map(k => Status[k as any]).map(v => v as Status);
@@ -53,14 +54,15 @@ export default class Kanban extends Vue {
 
   isEditModalVisible = false;
 
-  editedTask: Task = {} as Task;
+  editedTask: Task | undefined = {} as Task;
 
-  tasksTodo = this.$store.getters.TASKS.filter((obj: Task) => obj.status === Status.todo);
+  myStore = vxm.myStore;
 
-  tasksDone = this.$store.getters.TASKS.filter((obj: Task) => obj.status === Status.done);
+  tasksTodo = this.myStore.TASKS.filter((obj: Task) => obj.status === Status.todo);
 
-  tasksInProgress = this.$store.getters.TASKS.filter((obj: Task) => obj.status
-    === Status.inprogress);
+  tasksDone = this.myStore.TASKS.filter((obj: Task) => obj.status === Status.done);
+
+  tasksInProgress = this.myStore.TASKS.filter((obj: Task) => obj.status === Status.inprogress);
 
   nameFilter: string = '';
 
@@ -71,14 +73,15 @@ export default class Kanban extends Vue {
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
     const status: Status = event.to.id.split('-')[1];
-    this.$store.commit('UPDATE_TASK_STATUS', { id, status });
+    const payload = { id, status };
+    this.myStore.UPDATE_TASK_STATUS(payload);
   }
 
   checkMove = (event: any) => !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
 
   editTask(id: number) {
     this.isEditModalVisible = true;
-    this.editedTask = this.$store.getters.TASK_BY_ID(id);
+    this.editedTask = this.myStore.TASK_BY_ID(id);
   }
 
   cardStyle = (status: Status, date: Date) => {

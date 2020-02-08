@@ -15,7 +15,7 @@
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           transition-group(name="tasks" tag="tbody")
             tr.table-row.test(
-              v-for='(task,i) in tasks'
+              v-for='(task,i) in myStore.TASKS'
               :key="task.id"
               ref="tableRow"
               )
@@ -25,7 +25,7 @@
               td(@click="editTask(task.id)") {{ task.added | formattedDate }}
               td(@click="editTask(task.id)") {{ task.deadline | formattedDate}}
               td
-                img(@click='deleteTask(i)' :src="closeIco")
+                img(@click='myStore.DELETE_TASK(i)' :src="closeIco")
 </template>
 
 <script lang="ts">
@@ -33,6 +33,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Status, Task } from '@/interfaces';
 import ModalWindow from '@/components/AddTaskModal.vue';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
+import { vxm } from '@/store/store';
 
 const closeIco = require('@/assets/img/close.svg');
 
@@ -43,21 +44,17 @@ const tableCols: string[] = ['Status', 'Task', 'Description', 'Start', 'Deadline
   components: { TaskDetailsModal, ModalWindow },
 })
 export default class Tasks extends Vue {
-  isAddModalVisible = false;
+  isAddModalVisible: boolean = false;
 
-  isEditModalVisible = false;
+  isEditModalVisible: boolean = false;
 
   tableCols: string[] = tableCols;
 
-  editedTask: Task = {} as Task;
+  editedTask: Task | undefined = {} as Task;
 
   closeIco = closeIco;
 
-  tasks = this.$store.getters.TASKS;
-
-  deleteTask(index: number) {
-    this.$store.commit('DELETE_TASK', index);
-  }
+  myStore = vxm.myStore;
 
   mounted() {
     this.startAnimation();
@@ -65,7 +62,7 @@ export default class Tasks extends Vue {
 
   editTask(id: number) {
     this.isEditModalVisible = true;
-    this.editedTask = this.$store.getters.TASK_BY_ID(id);
+    this.editedTask = this.myStore.TASK_BY_ID(id);
   }
 
   startAnimation() {
