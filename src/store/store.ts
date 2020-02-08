@@ -1,6 +1,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import {
+  action,
   createModule, createProxy, extractVuexModule, mutation,
 } from 'vuex-class-component/js';
 import VuexPersist from 'vuex-persist';
@@ -21,13 +22,15 @@ const vuexPersist = new VuexPersist({
 Vue.use(Vuex);
 
 export class MyStore extends VuexModule {
-  private tasks: Task[] = tasks;
+  private firstInit = true;
 
-  private messageObjects: Message[] = messageObjects;
+  private tasks: Task[] = [];
+
+  private messageObjects: Message[] = [];
 
   private clickedImg: number = 0;
 
-  private taskId = tasks.length + 1;
+  private taskId = this.tasks.length + 1;
 
   get MESSAGE_OBJECTS(): Message[] {
     return this.messageObjects;
@@ -73,6 +76,14 @@ export class MyStore extends VuexModule {
         this.tasks[i].status = payload.status;
         break;
       }
+    }
+  }
+
+  @action async doFirstInit() {
+    if (this.firstInit) {
+      this.tasks = tasks;
+      this.messageObjects = messageObjects;
+      this.firstInit = false;
     }
   }
 }

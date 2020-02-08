@@ -1,6 +1,6 @@
 import { Status, Task } from '@/interfaces';
 
-let taskId = 0;
+let taskId = -1;
 
 /* Function for creating task object */
 function createTaskObj(name:string, description:string,

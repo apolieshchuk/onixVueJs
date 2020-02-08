@@ -69,6 +69,7 @@ export default class Tasks extends Vue {
     const speed: number = 200;
     const animationSpeed: number = 1000; // css @keyframes scale-text-row
     const blinkedRows = this.$refs.tableRow as Array<any>;
+    if (blinkedRows === undefined) return;
 
     for (let i = 0; i < blinkedRows.length; i += 1) {
       // add animation class

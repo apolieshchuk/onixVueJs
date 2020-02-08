@@ -38,7 +38,7 @@ export default class ModalWindow extends Vue {
 
   addTask() {
     const task: Task = {
-      id: vxm.myStore.TASK_ID + 1,
+      id: vxm.myStore.TASK_ID,
       name: this.formTaskName,
       description: this.formTaskDescription,
       deadline: new Date(this.deadline),

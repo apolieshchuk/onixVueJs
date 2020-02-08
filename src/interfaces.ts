@@ -22,7 +22,8 @@ export interface Message{
 export interface CalendarEvent{
   title: string,
   start: string,
-  end: string
+  end: string,
+  id: number,
 }
 
 /* Enum */

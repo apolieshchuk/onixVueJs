@@ -1,14 +1,9 @@
 import Vue from 'vue';
 import App from '@/App.vue';
 import router from '@/router';
-import { store } from './store/store';
+import { store, vxm } from './store/store';
 
 Vue.config.productionTip = false;
-
-/* Create $eventBus */
-const eventBus = new Vue();
-export default eventBus;
-
 
 Vue.filter('formattedDate', (dateRaw: Date) => {
   const date = new Date(dateRaw);
@@ -22,3 +17,5 @@ new Vue({
   router,
   render: h => h(App),
 }).$mount('#app');
+
+vxm.myStore.doFirstInit();
