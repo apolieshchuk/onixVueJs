@@ -18,6 +18,13 @@ export interface Message{
   photos?: any[],
 }
 
+/* Calendar event interface */
+export interface CalendarEvent{
+  title: string,
+  start: string,
+  end: string
+}
+
 /* Enum */
 export enum Status {
   todo = 'todo',

@@ -18,6 +18,8 @@ const vuexPersist = new VuexPersist({
   storage: window.localStorage,
 });
 
+Vue.use(Vuex);
+
 export class MyStore extends VuexModule {
   private tasks: Task[] = tasks;
 
