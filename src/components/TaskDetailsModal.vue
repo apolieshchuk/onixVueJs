@@ -58,7 +58,7 @@ export default class ModalWindow extends Vue {
   }
 
   saveChanges() {
-    this.editedTask.name = this.taskName;
+    this.editedTask.name = this.taskName; /* I think this is bad idea. replace by mutation */
     this.editedTask.description = this.taskDescription;
     this.$emit('close');
   }

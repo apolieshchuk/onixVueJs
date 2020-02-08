@@ -18,7 +18,7 @@
         p {{completedTasks}}
         p Completed Tasks
       button.open-tasks-but(@click='goTasks')
-        p {{openTasks}}
+        p {{ myStore.TASKS_LENGTH }}
         p Open Tasks
     .menu-nav.flex
       span MENU
@@ -26,11 +26,12 @@
       a(href='#') My Tasks
       div
         a(href='#') Notifications
-        .notification-count {{ clickedImg }}
+        .notification-count {{ myStore.CLICKED_IMG }}
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { vxm } from '@/store/store';
 
 const userAva = require('@/assets/img/ava.jpg');
 const logoIco = require('@/assets/img/Logo@3x.svg');
@@ -50,18 +51,11 @@ export default class TheSideMenu extends Vue {
 
   closeIco = closeIco;
 
-  // computed
-  get clickedImg() {
-    return this.$store.getters.CLICKED_IMG;
-  }
-
-  get openTasks() {
-    return this.$store.getters.TASKS_LENGTH;
-  }
+  myStore = vxm.myStore;
 
   // methods
   doTask() {
-    if (this.openTasks > 0) {
+    if (this.myStore.TASKS_LENGTH > 0) {
       // eslint-disable-next-line no-alert
       if (window.confirm('Are you sure you want to change the number of tasks?')) {
         this.completedTasks += 1;
@@ -71,7 +65,7 @@ export default class TheSideMenu extends Vue {
   }
 
   goTasks() {
-    if (this.openTasks > 0) {
+    if (this.myStore.TASKS_LENGTH > 0) {
       this.$router.push('/tasks');
     }
   }

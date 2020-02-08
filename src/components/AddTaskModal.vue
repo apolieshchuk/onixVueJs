@@ -26,6 +26,7 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 import { Status, Task } from '@/interfaces';
+import { vxm } from '@/store/store';
 
   @Component
 export default class ModalWindow extends Vue {
@@ -36,9 +37,8 @@ export default class ModalWindow extends Vue {
   deadline: string = '';
 
   addTask() {
-    const id = this.$store.getters.TASK_ID + 1;
     const task: Task = {
-      id,
+      id: vxm.myStore.TASK_ID + 1,
       name: this.formTaskName,
       description: this.formTaskDescription,
       deadline: new Date(this.deadline),
@@ -47,7 +47,7 @@ export default class ModalWindow extends Vue {
     };
     this.formTaskDescription = '';
     this.formTaskName = '';
-    this.$store.commit('ADD_TASK', task);
+    vxm.myStore.ADD_TASK(task);
 
     // close modal window
     this.$emit('close');

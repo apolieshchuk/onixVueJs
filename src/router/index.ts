@@ -1,8 +1,5 @@
-import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Tasks from '@/views/Tasks.vue';
-
-Vue.use(VueRouter);
 
 const routes = [
   {
