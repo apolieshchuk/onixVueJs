@@ -11,7 +11,7 @@ const img4 = require('@/assets/img/nature-4.jpg');
 
 
 /* Photo names */
-const photos = [img1, img2, img3, img4];
+export const activityPhotos = [img1, img2, img3, img4];
 
 /* MessageObjects */
 const messageObjects: Message[] = [
@@ -37,7 +37,7 @@ const messageObjects: Message[] = [
     user: 'Oksana Sergeevna',
     time: '19:28 PM',
     ico: uploadIco,
-    photos,
+    photos: activityPhotos,
   },
   {
     msg: 'feeling good! Its okey!',

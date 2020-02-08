@@ -7,7 +7,7 @@ import {
 import VuexPersist from 'vuex-persist';
 import { Message, Status, Task } from '@/interfaces';
 import tasks from './tasks';
-import messageObjects from './activity';
+import messageObjects, { activityPhotos as photos } from './activity';
 
 const VuexModule = createModule({
   namespaced: 'user',
@@ -32,8 +32,14 @@ export class MyStore extends VuexModule {
 
   private taskId = this.tasks.length + 1;
 
+  private activityPhotos: any[] = photos;
+
   get MESSAGE_OBJECTS(): Message[] {
     return this.messageObjects;
+  }
+
+  get ACTIVITY_PHOTOS(): any[] {
+    return this.activityPhotos;
   }
 
   get CLICKED_IMG(): number {
