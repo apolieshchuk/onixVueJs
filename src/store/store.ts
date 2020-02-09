@@ -4,10 +4,11 @@ import {
   action,
   createModule, createProxy, extractVuexModule, mutation,
 } from 'vuex-class-component/js';
-import VuexPersist from 'vuex-persist';
 import { Message, Status, Task } from '@/interfaces';
-import tasks from './tasks';
 import messageObjects, { activityPhotos as photos } from './activity';
+import * as api from '@/service/tasksApi';
+
+const axios = require('axios').default;
 
 const VuexModule = createModule({
   namespaced: 'user',
@@ -15,18 +16,12 @@ const VuexModule = createModule({
   target: 'nuxt',
 });
 
-const vuexPersist = new VuexPersist({
-  storage: window.localStorage,
-});
-
 Vue.use(Vuex);
 
 export class MyStore extends VuexModule {
-  private firstInit = true;
+  private tasks: any = [];
 
-  private tasks: Task[] = [];
-
-  private messageObjects: Message[] = [];
+  private messageObjects: Message[] = messageObjects;
 
   private clickedImg: number = 0;
 
@@ -66,7 +61,7 @@ export class MyStore extends VuexModule {
     return (id:number) => this.tasks.find((task: Task) => task.id === id);
   }
 
-  @mutation ADD_TASK(task:Task) {
+  @mutation ADD_TASK(task: Task) {
     this.tasks.splice(0, 0, task);
     this.taskId += 1;
   }
@@ -85,12 +80,16 @@ export class MyStore extends VuexModule {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   @action async doFirstInit() {
-    if (this.firstInit) {
-      this.tasks = tasks;
-      this.messageObjects = messageObjects;
-      this.firstInit = false;
-    }
+    console.log('vuex first init call');
+    const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks');
+    console.log(data);
+    // api.getTasks()
+    //   .then((res) => {
+    //     this.tasks = res;
+    //   })
+    //   .catch(error => error);
   }
 }
 
@@ -98,7 +97,6 @@ export const store = new Vuex.Store({
   modules: {
     ...extractVuexModule(MyStore),
   },
-  plugins: [vuexPersist.plugin],
 });
 
 // Creating proxies.
