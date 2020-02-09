@@ -25,7 +25,7 @@
               td(@click="editTask(task.id)") {{ task.added | formattedDate }}
               td(@click="editTask(task.id)") {{ task.deadline | formattedDate}}
               td
-                img(@click='myStore.DELETE_TASK(i)' :src="closeIco")
+                img(@click='myStore.DELETE_TASK(task.id)' :src="closeIco")
 </template>
 
 <script lang="ts">

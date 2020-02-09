@@ -61,30 +61,27 @@ export class MyStore extends VuexModule {
     return (id:number) => this.tasks.find((task: Task) => task.id === id);
   }
 
-  @mutation ADD_TASK(task: Task) {
-    this.tasks.splice(0, 0, task);
-    this.taskId += 1;
+  // eslint-disable-next-line class-methods-use-this
+  @action async ADD_TASK(task: Task) {
+    console.log(await api.addTask(task));
+    this.tasks = await api.getTasks();
   }
 
-  @mutation DELETE_TASK(index: number) {
-    this.tasks.splice(index, 1);
+  @action async DELETE_TASK(id: number) {
+    console.log(await api.deleteTask(id));
+    this.tasks = await api.getTasks();
   }
 
-  @mutation UPDATE_TASK_STATUS(payload: any) {
-    for (let i = 0; i < this.tasks.length; i += 1) {
-      // eslint-disable-next-line eqeqeq
-      if (payload.id == this.tasks[i].id) {
-        this.tasks[i].status = payload.status;
-        break;
-      }
-    }
+  @action async UPDATE_TASK_STATUS(payload: any) {
+    console.log(await api.changeTaskStatus(payload));
+    this.tasks = await api.getTasks();
   }
 
   // eslint-disable-next-line class-methods-use-this
   @action async doFirstInit() {
     console.log('vuex first init call');
-    const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks');
-    console.log(data);
+    // const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks');
+    this.tasks = await api.getTasks();
     // api.getTasks()
     //   .then((res) => {
     //     this.tasks = res;

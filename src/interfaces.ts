@@ -27,10 +27,9 @@ export interface CalendarEvent{
 }
 
 /* Enum */
+// eslint-disable-next-line import/prefer-default-export
 export enum Status {
   todo = 'todo',
   done = 'done',
   inprogress = 'in progress',
 }
-
-export default Status;
