@@ -20,14 +20,16 @@ export const deleteTask = async (id: number) => {
 
 export const addTask = async (task: Task) => {
   const { data } = await axios.post('https://tasker.getsandbox.com:443/task-add', task, {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: {},
+    data: {},
   });
   return data;
 };
 
-export const changeTaskStatus = async (payload: any) => {
-  const { data } = await axios.put('https://tasker.getsandbox.com:443/task-change-status', payload, {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+export const changeTaskStatus = async (id: number, status: Status) => {
+  const { data } = await axios.put('https://tasker.getsandbox.com:443/task-change-status', { id, status }, {
+    headers: {},
+    data: {},
   });
   return data;
 };

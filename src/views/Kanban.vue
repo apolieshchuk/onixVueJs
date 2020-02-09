@@ -58,12 +58,6 @@ export default class Kanban extends Vue {
 
   myStore = vxm.myStore;
 
-  tasksTodo = this.myStore.TASKS.filter((obj: Task) => obj.status === Status.todo);
-
-  tasksDone = this.myStore.TASKS.filter((obj: Task) => obj.status === Status.done);
-
-  tasksInProgress = this.myStore.TASKS.filter((obj: Task) => obj.status === Status.inprogress);
-
   nameFilter: string = '';
 
   startDateFilter: string = '';
@@ -156,6 +150,18 @@ export default class Kanban extends Vue {
     }
 
     return isFinishFilter && isStartFilter;
+  }
+
+  get tasksTodo() {
+    return this.myStore.TASKS.filter((obj: Task) => obj.status === Status.todo);
+  }
+
+  get tasksDone() {
+    return this.myStore.TASKS.filter((obj: Task) => obj.status === Status.done);
+  }
+
+  get tasksInProgress() {
+    return this.myStore.TASKS.filter((obj: Task) => obj.status === Status.inprogress);
   }
 }
 </script>

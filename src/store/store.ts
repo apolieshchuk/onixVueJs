@@ -73,20 +73,14 @@ export class MyStore extends VuexModule {
   }
 
   @action async UPDATE_TASK_STATUS(payload: any) {
-    console.log(await api.changeTaskStatus(payload));
+    console.log(await api.changeTaskStatus(payload.id, payload.status));
     this.tasks = await api.getTasks();
   }
 
   // eslint-disable-next-line class-methods-use-this
   @action async doFirstInit() {
     console.log('vuex first init call');
-    // const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks');
     this.tasks = await api.getTasks();
-    // api.getTasks()
-    //   .then((res) => {
-    //     this.tasks = res;
-    //   })
-    //   .catch(error => error);
   }
 }
 

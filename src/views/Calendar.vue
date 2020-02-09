@@ -35,7 +35,7 @@ export default class Calendar extends Vue {
     const events: CalendarEvent[] = [];
 
     for (let i = 0; i < this.myStore.TASKS_LENGTH; i += 1) {
-      const task: Task = this.myStore.TASKS[i];
+      const task: any = this.myStore.TASKS[i];
       events.push({
         title: task.name,
         start: new Date(task.deadline).toJSON().slice(0, 10),
