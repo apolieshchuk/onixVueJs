@@ -34,7 +34,6 @@ import { Status, Task } from '@/interfaces';
 import ModalWindow from '@/components/AddTaskModal.vue';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 import { vxm } from '@/store/store';
-import * as API from '@/service/api';
 
 const closeIco = require('@/assets/img/close.svg');
 
