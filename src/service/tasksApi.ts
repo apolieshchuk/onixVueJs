@@ -3,8 +3,16 @@ import axios from '@/service/api';
 
 
 export const getTasks = async () => {
-  const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks', {
+  const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks-get', {
     headers: { 'Content-Type': 'application/json' },
+    data: {},
+  });
+  return data;
+};
+
+export const pushTasks = async (tasks: Task[]) => {
+  const { data } = axios.post('https://tasker.getsandbox.com:443/tasks-push', tasks, {
+    headers: {},
     data: {},
   });
   return data;

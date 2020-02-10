@@ -8,7 +8,6 @@ import { Message, Status, Task } from '@/interfaces';
 import messageObjects, { activityPhotos as photos } from './activity';
 import * as api from '@/service/tasksApi';
 
-const axios = require('axios').default;
 
 const VuexModule = createModule({
   namespaced: 'user',
@@ -19,6 +18,8 @@ const VuexModule = createModule({
 Vue.use(Vuex);
 
 export class MyStore extends VuexModule {
+  private firstInit: boolean = true;
+
   private tasks: any = [];
 
   private messageObjects: Message[] = messageObjects;
@@ -45,7 +46,7 @@ export class MyStore extends VuexModule {
     this.clickedImg = index;
   }
 
-  get TASKS(): Task[] {
+  get TASKS(): any {
     return this.tasks;
   }
 
@@ -61,26 +62,38 @@ export class MyStore extends VuexModule {
     return (id:number) => this.tasks.find((task: Task) => task.id === id);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  @action async ADD_TASK(task: Task) {
-    console.log(await api.addTask(task));
-    this.tasks = await api.getTasks();
+  @mutation ADD_TASK(task: Task) {
+    this.tasks.splice(0, 0, task);
+    this.taskId += 1;
+    api.pushTasks(this.tasks);
   }
 
-  @action async DELETE_TASK(id: number) {
-    console.log(await api.deleteTask(id));
-    this.tasks = await api.getTasks();
+  @mutation DELETE_TASK(id: number) {
+    for (let i = 0; i < this.tasks.length; i += 1) {
+      if (id === this.tasks[i].id) {
+        this.tasks.splice(i, 1);
+        break;
+      }
+    }
+    api.pushTasks(this.tasks);
   }
 
-  @action async UPDATE_TASK_STATUS(payload: any) {
-    console.log(await api.changeTaskStatus(payload.id, payload.status));
-    this.tasks = await api.getTasks();
+  @mutation UPDATE_TASK_STATUS(payload: any) {
+    for (let i = 0; i < this.tasks.length; i += 1) {
+      // eslint-disable-next-line eqeqeq
+      if (payload.id == this.tasks[i].id) {
+        this.tasks[i].status = payload.status;
+        break;
+      }
+    }
+    api.pushTasks(this.tasks);
   }
 
   // eslint-disable-next-line class-methods-use-this
   @action async doFirstInit() {
     console.log('vuex first init call');
     this.tasks = await api.getTasks();
+    console.log(this.tasks);
   }
 }
 
