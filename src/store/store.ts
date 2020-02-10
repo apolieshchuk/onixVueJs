@@ -80,8 +80,7 @@ export class MyStore extends VuexModule {
 
   @mutation UPDATE_TASK_STATUS(payload: any) {
     for (let i = 0; i < this.tasks.length; i += 1) {
-      // eslint-disable-next-line eqeqeq
-      if (payload.id == this.tasks[i].id) {
+      if (payload.id === this.tasks[i].id) {
         this.tasks[i].status = payload.status;
         break;
       }
@@ -89,11 +88,10 @@ export class MyStore extends VuexModule {
     api.pushTasks(this.tasks);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   @action async doFirstInit() {
-    console.log('vuex first init call');
+    // console.log('vuex first init call');
     this.tasks = await api.getTasks();
-    console.log(this.tasks);
+    // console.log(this.tasks);
   }
 }
 
