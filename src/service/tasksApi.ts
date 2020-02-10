@@ -1,6 +1,6 @@
 import { Task, Status } from '@/interfaces';
-import axios from '@/service/api';
 
+const axios = require('axios').default;
 
 export const getTasks = async () => {
   const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks-get', {

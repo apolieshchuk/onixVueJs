@@ -1,4 +1,3 @@
-const axios = require('axios').default;
 //
 // axios({
 //   method: 'post',
@@ -20,4 +19,3 @@ const axios = require('axios').default;
 //   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 //   data: {},
 // });
-export default axios;
