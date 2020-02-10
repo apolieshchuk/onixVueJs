@@ -80,7 +80,7 @@ export class MyStore extends VuexModule {
 
   @mutation UPDATE_TASK_STATUS(payload: any) {
     for (let i = 0; i < this.tasks.length; i += 1) {
-      if (payload.id === this.tasks[i].id) {
+      if (Number(payload.id) === Number(this.tasks[i].id)) {
         this.tasks[i].status = payload.status;
         break;
       }
