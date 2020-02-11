@@ -50,6 +50,11 @@
     "husky": "^4.2.1",
     "vue-template-compiler": "^2.6.11"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run build"
+    }
+  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
