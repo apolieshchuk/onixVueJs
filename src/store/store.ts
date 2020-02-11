@@ -34,7 +34,10 @@ export class MyStore extends VuexModule {
   @action async FETCH_TASKS() {
     this.tasks = await api.getTasks();
     // It's only bc education and coming deadlines for complete assignment
-    this.taskId = this.tasks.length;
+    this.tasks.forEach((task) => {
+      this.taskId = Math.max(this.taskId, Number(task.id));
+    });
+    this.taskId += 1;
   }
 
   get GET_TASKS(): Task[] {

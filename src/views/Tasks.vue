@@ -13,7 +13,7 @@
         table
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-          transition-group(name="tasks" tag="tbody")
+          transition-group(name="tasksAnim" tag="tbody" )
             tr.table-row.test(
               v-for='task in tasks'
               :key="task.id"
@@ -48,6 +48,8 @@ export default class Tasks extends Vue {
 
   isEditModalVisible = false;
 
+  isFirstInit = false;
+
   tableCols: string[] = tableCols;
 
   editedTask: Task | undefined = {} as Task;
@@ -58,7 +60,15 @@ export default class Tasks extends Vue {
 
   mounted() {
     this.store.FETCH_TASKS();
+    // console.log(`first init -${this.isFirstInit}`);
     this.startAnimation();
+  }
+
+  get animationName() {
+    if (this.isFirstInit) {
+      return 'tasksAnim';
+    }
+    return '';
   }
 
   get tasks() {
@@ -69,6 +79,13 @@ export default class Tasks extends Vue {
     this.isEditModalVisible = true;
     this.editedTask = this.store.TASK_BY_ID(id);
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // stopAnimation = (el: any, done: any) => {
+  //   console.log('event');
+  //   console.log(this.isFirstInit);
+  //   if (this.isFirstInit) done();
+  // };
 
   startAnimation() {
     const speed = 200;
@@ -95,7 +112,7 @@ export default class Tasks extends Vue {
 
 <style lang="scss" scoped>
 
-  .tasks-enter-active {
+  .tasksAnim-enter-active {
     animation: blink;
     animation-duration: 2s;
   }
