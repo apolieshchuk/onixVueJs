@@ -1,19 +1,20 @@
 import { Task } from '@/interfaces';
-
-const axios = require('axios').default;
+import axiosConfig from '@/service/api';
 
 export const getTasks = async () => {
-  const { data } = await axios.get('https://tasker.getsandbox.com:443/tasks-get', {
-    headers: { 'Content-Type': 'application/json' },
-    data: {},
+  const { data } = await axiosConfig({
+    method: 'get',
+    url: '/tasks-get',
+    data: '',
   });
   return data;
 };
 
 export const pushTasks = async (tasks: Task[]) => {
-  const { data } = await axios.post('https://tasker.getsandbox.com:443/tasks-push', JSON.stringify(tasks), {
-    headers: { 'Content-Type': 'application/json' },
-    data: {},
+  const { data } = await axiosConfig({
+    method: 'post',
+    url: '/tasks-push',
+    data: JSON.stringify(tasks),
   });
   return data;
 };
