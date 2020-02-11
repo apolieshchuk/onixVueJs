@@ -1,0 +1,35 @@
+//Main
+$debug: false;
+$mobileWidth: 800px;
+$mobileSizing: 5%;
+
+// Header
+$headerHeight: 120px;
+$contactsDiameter: 30px;
+$headerLogoHeight: 40px;
+
+//Task.vue
+
+
+//Activity.vue
+$messageIcoWidth: 35px;
+$messageTimeWidth: 65px;
+$messageSepWidth: 65px;
+
+@mixin offButtonEffects{
+  border: none;
+  outline: none;
+  background: none;
+}
+
+@mixin centeringDivInside{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin horizontalCenteringDiv{
+  width: 50%;
+  margin: 0 auto;
+}
+
