@@ -56,16 +56,13 @@ export default class Tasks extends Vue {
 
   store = vxm.myStore;
 
-  tasks: Task[] = this.store.TASKS;
-
-  // beforeMount() {
-  //   // console.log(this.store.TASKS);
-  //   // vxm.myStore.doFirstInit();
-  //   // this.tasks = this.store.TASKS;
-  // }
-
   mounted() {
+    this.store.FETCH_TASKS();
     this.startAnimation();
+  }
+
+  get tasks() {
+    return this.store.GET_TASKS;
   }
 
   editTask(id: number) {

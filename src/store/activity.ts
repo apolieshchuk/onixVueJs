@@ -14,7 +14,7 @@ const uploadIco = 'upload-ico';
 export const activityPhotos = [img1, img2, img3, img4];
 
 /* MessageObjects */
-const messageObjects: Message[] = [
+export const messageObjects: Message[] = [
   { msg: '17.11.2019', date: true },
   {
     msg: 'mark as done Listing on Product Hunt so that we can reach as many potential users',
@@ -59,5 +59,3 @@ const messageObjects: Message[] = [
     photos: [img1, img2, img3],
   },
 ];
-
-export default messageObjects;

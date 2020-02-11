@@ -2,14 +2,17 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import {
   action,
-  createModule, createProxy, extractVuexModule, mutation,
+  createModule,
+  createProxy,
+  extractVuexModule,
+  mutation,
 } from 'vuex-class-component/js';
 import { Message, Task } from '@/interfaces';
 import * as api from '@/service/tasksApi';
-import messageObjects, { activityPhotos as photos } from './activity';
+import { activityPhotos as photos, messageObjects } from './activity';
 
 
-const VuexModule = createModule({
+export const VuexModule = createModule({
   namespaced: 'user',
   strict: false,
   target: 'nuxt',
@@ -18,8 +21,6 @@ const VuexModule = createModule({
 Vue.use(Vuex);
 
 export class MyStore extends VuexModule {
-  private firstInit = true;
-
   private tasks: Task[] = [];
 
   private messageObjects: Message[] = messageObjects;
@@ -29,6 +30,14 @@ export class MyStore extends VuexModule {
   private taskId = 0;
 
   private activityPhotos: File[] = photos;
+
+  @action async FETCH_TASKS() {
+    this.tasks = await api.getTasks();
+  }
+
+  get GET_TASKS(): Task[] {
+    return this.tasks;
+  }
 
   get MESSAGE_OBJECTS(): Message[] {
     return this.messageObjects;
@@ -48,10 +57,6 @@ export class MyStore extends VuexModule {
 
   @mutation SET_TASKS(tasks: Task[]) {
     this.tasks = tasks;
-  }
-
-  get TASKS(): Task[] {
-    return this.tasks;
   }
 
   get TASKS_LENGTH(): number {
@@ -93,16 +98,6 @@ export class MyStore extends VuexModule {
     api.pushTasks(this.tasks);
   }
 
-  @action async doFirstInit() {
-    if (this.firstInit) {
-      // console.log('vuex first init call');
-      const tasks = await api.getTasks();
-      this.SET_TASKS(tasks);
-      // console.log(this.tasks);
-      this.taskId = this.tasks.length + 1;
-      // console.log(this.tasks);
-    }
-  }
 }
 
 export const store = new Vuex.Store({

@@ -63,14 +63,6 @@ export default class Kanban extends Vue {
 
   store = vxm.myStore;
 
-  // tasks: Task [] = this.store.TASKS;
-
-  // tasksTodo: Task [] = [];
-  //
-  // tasksDone: Task [] = [];
-  //
-  // tasksInProgress: Task [] = [];
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
@@ -79,16 +71,21 @@ export default class Kanban extends Vue {
     this.store.UPDATE_TASK_STATUS(payload);
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  mounted() {
+    this.store.FETCH_TASKS();
+  }
+
   get tasksTodo() {
-    return utils(this.store.TASKS, Status.todo);
+    return utils(this.store.GET_TASKS, Status.todo);
   }
 
   get tasksDone() {
-    return utils(this.store.TASKS, Status.done);
+    return utils(this.store.GET_TASKS, Status.done);
   }
 
   get tasksInProgress() {
-    return utils(this.store.TASKS, Status.inprogress);
+    return utils(this.store.GET_TASKS, Status.inprogress);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -126,7 +123,7 @@ export default class Kanban extends Vue {
     return '';
   };
 
-  countCards(status: Status) {
+  countCards(status: string) {
     switch (status) {
       case Status.inprogress: return this.tasksInProgress.length;
       case Status.todo: return this.tasksTodo.length;

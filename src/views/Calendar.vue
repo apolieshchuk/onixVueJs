@@ -21,8 +21,6 @@ import { CalendarEvent, Task } from '@/interfaces';
 export default class Calendar extends Vue {
   store = vxm.myStore;
 
-  tasks: Task[] = this.store.TASKS;
-
   isModalActive = false;
 
   editedTask: Task | undefined = {} as Task;
@@ -33,10 +31,14 @@ export default class Calendar extends Vue {
     this.isModalActive = true;
   }
 
-  // beforeMount() {
-  //   // vxm.myStore.doFirstInit();
-  //   this.tasks = this.store.TASKS;
-  // }
+  // eslint-disable-next-line class-methods-use-this
+  mounted() {
+    this.store.FETCH_TASKS();
+  }
+
+  get tasks() {
+    return this.store.GET_TASKS;
+  }
 
   fcEvents() {
     const events: CalendarEvent[] = [];
