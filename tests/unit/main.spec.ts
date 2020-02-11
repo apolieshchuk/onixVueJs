@@ -8,8 +8,13 @@ import utils from '@/service/utils';
 import { Status } from '@/interfaces';
 
 describe('Tasks.vue', () => {
-  const wrapper = shallowMount(Tasks);
-  wrapper.setData({ tasks });
+  const wrapper = mount(Tasks, {
+    computed: {
+      tasks() {
+        return tasks;
+      },
+    },
+  });
 
   it('Drawing tasks in Tasks.vue', () => {
     // eslint-disable-next-line no-unused-expressions
@@ -25,11 +30,19 @@ describe('Tasks.vue', () => {
   });
 });
 describe('Kanban.vue', () => {
-  const wrapper = shallowMount(Kanban);
-  const tasksTodo = utils(tasks, Status.todo);
-  const tasksDone = utils(tasks, Status.done);
-  const tasksInProgress = utils(tasks, Status.inprogress);
-  wrapper.setData({ tasksTodo, tasksDone, tasksInProgress });
+  const wrapper = mount(Kanban, {
+    computed: {
+      tasksTodo() {
+        return utils(tasks, Status.todo);
+      },
+      tasksDone() {
+        return utils(tasks, Status.done);
+      },
+      tasksInProgress() {
+        return utils(tasks, Status.inprogress);
+      },
+    },
+  });
 
   it('Drawing tasks in Kanban.vue', () => {
     // eslint-disable-next-line no-unused-expressions
@@ -37,8 +50,13 @@ describe('Kanban.vue', () => {
   });
 });
 describe('Calendar.vue', () => {
-  const wrapper = mount(Calendar);
-  wrapper.setData({ tasks });
+  const wrapper = mount(Calendar, {
+    computed: {
+      tasks() {
+        return tasks;
+      },
+    },
+  });
 
   it('Drawing tasks in Calendar.vue', () => {
     // eslint-disable-next-line no-unused-expressions
