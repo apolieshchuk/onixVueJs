@@ -54,14 +54,15 @@ export default class Tasks extends Vue {
 
   closeIco = closeIco;
 
-  tasks: Task[] = [];
-
   store = vxm.myStore;
 
-  beforeMount() {
-    // console.log(this.store.TASKS);
-    this.tasks = this.store.TASKS;
-  }
+  tasks: Task[] = this.store.TASKS;
+
+  // beforeMount() {
+  //   // console.log(this.store.TASKS);
+  //   // vxm.myStore.doFirstInit();
+  //   // this.tasks = this.store.TASKS;
+  // }
 
   mounted() {
     this.startAnimation();

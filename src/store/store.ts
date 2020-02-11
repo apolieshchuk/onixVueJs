@@ -26,7 +26,7 @@ export class MyStore extends VuexModule {
 
   private clickedImg = 0;
 
-  private taskId = this.tasks.length + 1;
+  private taskId = 0;
 
   private activityPhotos: File[] = photos;
 
@@ -44,6 +44,10 @@ export class MyStore extends VuexModule {
 
   set CLICKED_IMG(index: number) {
     this.clickedImg = index;
+  }
+
+  @mutation SET_TASKS(tasks: Task[]) {
+    this.tasks = tasks;
   }
 
   get TASKS(): Task[] {
@@ -90,9 +94,14 @@ export class MyStore extends VuexModule {
   }
 
   @action async doFirstInit() {
-    // console.log('vuex first init call');
-    this.tasks = await api.getTasks();
-    // console.log(this.tasks);
+    if (this.firstInit) {
+      console.log('vuex first init call');
+      const tasks = await api.getTasks();
+      this.SET_TASKS(tasks);
+      // console.log(this.tasks);
+      this.taskId = this.tasks.length + 1;
+      // console.log(this.tasks);
+    }
   }
 }
 

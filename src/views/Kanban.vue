@@ -63,7 +63,7 @@ export default class Kanban extends Vue {
 
   store = vxm.myStore;
 
-  tasks: Task [] = [];
+  tasks: Task [] = this.store.TASKS;
 
   tasksTodo: Task [] = [];
 
@@ -80,7 +80,8 @@ export default class Kanban extends Vue {
   }
 
   beforeMount() {
-    this.tasks = this.store.TASKS;
+    // vxm.myStore.doFirstInit();
+    // this.tasks = this.store.TASKS;
     this.tasksTodo = utils(this.tasks, Status.todo);
     this.tasksDone = utils(this.tasks, Status.done);
     this.tasksInProgress = utils(this.tasks, Status.inprogress);
