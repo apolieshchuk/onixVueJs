@@ -20,7 +20,7 @@ Vue.use(Vuex);
 export class MyStore extends VuexModule {
   private firstInit = true;
 
-  private tasks: any = [];
+  private tasks: Task[] = [];
 
   private messageObjects: Message[] = messageObjects;
 
@@ -28,13 +28,13 @@ export class MyStore extends VuexModule {
 
   private taskId = this.tasks.length + 1;
 
-  private activityPhotos: any[] = photos;
+  private activityPhotos: File[] = photos;
 
   get MESSAGE_OBJECTS(): Message[] {
     return this.messageObjects;
   }
 
-  get ACTIVITY_PHOTOS(): any[] {
+  get ACTIVITY_PHOTOS(): File[] {
     return this.activityPhotos;
   }
 
@@ -46,7 +46,7 @@ export class MyStore extends VuexModule {
     this.clickedImg = index;
   }
 
-  get TASKS(): any {
+  get TASKS(): Task[] {
     return this.tasks;
   }
 
@@ -78,6 +78,7 @@ export class MyStore extends VuexModule {
     api.pushTasks(this.tasks);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @mutation UPDATE_TASK_STATUS(payload: any) {
     for (let i = 0; i < this.tasks.length; i += 1) {
       if (Number(payload.id) === Number(this.tasks[i].id)) {

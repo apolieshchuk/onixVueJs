@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "chai-dom": "^1.8.1",
     "core-js": "^3.4.3",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",

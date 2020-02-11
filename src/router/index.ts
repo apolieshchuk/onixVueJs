@@ -1,6 +1,5 @@
 import VueRouter from 'vue-router';
 import Vue from 'vue';
-import Tasks from '@/views/Tasks.vue';
 
 Vue.use(VueRouter);
 

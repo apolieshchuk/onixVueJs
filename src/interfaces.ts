@@ -15,7 +15,7 @@ export interface Message{
   user?: string;
   time?: string;
   ico?: string;
-  photos?: any[];
+  photos?: File[];
 }
 
 /* Calendar event interface */

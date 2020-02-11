@@ -15,11 +15,11 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator';
+import * as burgerIco from '@/assets/img/burger.svg';
 import TheContent from './TheContent.vue';
 import TheHeader from './TheHeader.vue';
 import TheSideMenu from './TheSideMenu.vue';
 
-const burgerIco = require('@/assets/img/burger.svg');
 
 @Component({
   components: {

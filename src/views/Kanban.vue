@@ -43,8 +43,7 @@ import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 import { vxm } from '@/store/store';
 
-const statusKeys = Object.keys(Status);
-const statusValues: Status[] = Object.values(Status).filter((x) => typeof x === 'string');
+const statusValues: Status[] = Object.values(Status);
 
 @Component({
   components: { TaskDetailsModal, draggable },
@@ -56,34 +55,51 @@ export default class Kanban extends Vue {
 
   editedTask: Task | undefined = {} as Task;
 
-  myStore = vxm.myStore;
-
   nameFilter = '';
 
   startDateFilter = '';
 
   finishDateFilter = '';
 
-  t = this.myStore.TASKS;
+  tasks = vxm.myStore.TASKS;
 
-  tasksTodo = this.myStore.TASKS.filter((obj: any) => obj.status === Status.todo);
+  // tasksTodo: Task[] = this.tasks.filter((obj: Task) => obj.status === Status.todo);
+  //
+  // tasksDone: Task[] = this.tasks.filter((obj: Task) => obj.status === Status.done);
+  //
+  // tasksInProgress: Task[] = this.tasks.filter((obj: Task) => obj.status === Status.inprogress);
 
-  tasksDone = this.myStore.TASKS.filter((obj: any) => obj.status === Status.done);
-
-  tasksInProgress = this.myStore.TASKS.filter((obj: any) => obj.status === Status.inprogress);
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
     const status: Status = event.to.id.split('-')[1];
     const payload = { id, status };
-    this.myStore.UPDATE_TASK_STATUS(payload);
+    vxm.myStore.UPDATE_TASK_STATUS(payload);
   }
 
+  // created() {
+  //   this.tasksTodo = this.tasks.filter((obj: Task) => obj.status === Status.todo);
+  //   this.tasksDone = this.tasks.filter((obj: Task) => obj.status === Status.done);
+  //   this.tasksInProgress = this.tasks.filter((obj: Task) => obj.status === Status.inprogress);
+  // }
+  get tasksTodo() {
+    return this.tasks.filter((obj: Task) => obj.status === Status.todo);
+  }
+
+  get tasksDone() {
+    return this.tasks.filter((obj: Task) => obj.status === Status.done);
+  }
+
+  get tasksInProgress() {
+    return this.tasks.filter((obj: Task) => obj.status === Status.inprogress);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   checkMove = (event: any) => !(event.to.id === 'drag-todo' && event.from.id === 'drag-done');
 
   editTask(id: number) {
     this.isEditModalVisible = true;
-    this.editedTask = this.myStore.TASK_BY_ID(id);
+    this.editedTask = vxm.myStore.TASK_BY_ID(id);
   }
 
   cardStyle = (status: Status, date: Date) => {

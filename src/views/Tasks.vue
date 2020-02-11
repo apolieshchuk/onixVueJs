@@ -15,7 +15,7 @@
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           transition-group(name="tasks" tag="tbody")
             tr.table-row.test(
-              v-for='(task,i) in myStore.TASKS'
+              v-for='(task,i) in tasks'
               :key="task.id"
               ref="tableRow"
               )
@@ -56,6 +56,8 @@ export default class Tasks extends Vue {
 
   myStore = vxm.myStore;
 
+  tasks = this.myStore.TASKS;
+
   mounted() {
     this.startAnimation();
   }
@@ -68,6 +70,7 @@ export default class Tasks extends Vue {
   startAnimation() {
     const speed = 200;
     const animationSpeed = 1000; // css @keyframes scale-text-row
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const blinkedRows = this.$refs.tableRow as Array<any>;
     if (blinkedRows === undefined) return;
 

@@ -3,8 +3,8 @@ import { Status, Task } from '@/interfaces';
 let taskId = -1;
 
 /* Function for creating task object */
-function createTaskObj(name:string, description:string,
-  deadline: Date, added: Date, status:Status): Task {
+function createTaskObj(name: string, description: string,
+  deadline: Date, added: Date, status: Status): Task {
   taskId += 1;
   return {
     id: taskId,

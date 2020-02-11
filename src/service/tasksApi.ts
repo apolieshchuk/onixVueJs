@@ -1,4 +1,4 @@
-import { Task, Status } from '@/interfaces';
+import { Task } from '@/interfaces';
 
 const axios = require('axios').default;
 

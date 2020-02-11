@@ -34,6 +34,7 @@ export default class TheHeader extends Vue {
   // @Prop() burgerIco!: string;
 
   @Watch('$route')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onRouteChange(route: any) {
     this.activeRoute = route.fullPath;
   }
