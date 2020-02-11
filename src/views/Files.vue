@@ -1,7 +1,7 @@
 <template lang="pug">
   .files-wrapper.flex
     ul Files in Activity:
-      li(v-for="photo in myStore.ACTIVITY_PHOTOS") {{ photo }}
+      li(v-for="photo in store.ACTIVITY_PHOTOS") {{ photo }}
     p  for design contact Darya Ursol :)
 </template>
 
@@ -11,7 +11,7 @@ import { vxm } from '@/store/store';
 
 @Component
 export default class Files extends Vue {
-  myStore = vxm.myStore;
+  store = vxm.myStore;
 }
 </script>
 

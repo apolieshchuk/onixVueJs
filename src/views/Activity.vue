@@ -3,7 +3,7 @@
     .messanger-wrapper.flex
       table.messanger
         //MESSAGE
-        tr.message(v-for="(msg,index) in myStore.MESSAGE_OBJECTS" :key="index")
+        tr.message(v-for="(msg,index) in store.MESSAGE_OBJECTS" :key="index")
           // If date
           template(v-if="msg.date")
             td.date(colspan="2") {{msg.msg}}
@@ -33,10 +33,10 @@ import { vxm } from '@/store/store';
 
 @Component
 export default class Activity extends Vue {
-  myStore = vxm.myStore;
+  store = vxm.myStore;
 
   onImgClick(index: number) {
-    this.myStore.CLICKED_IMG = index;
+    this.store.CLICKED_IMG = index;
   }
 }
 

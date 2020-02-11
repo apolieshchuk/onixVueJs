@@ -15,7 +15,7 @@
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
           transition-group(name="tasks" tag="tbody")
             tr.table-row.test(
-              v-for='(task,i) in tasks'
+              v-for='task in tasks'
               :key="task.id"
               ref="tableRow"
               )
@@ -25,7 +25,7 @@
               td(@click="editTask(task.id)") {{ task.added | formattedDate }}
               td(@click="editTask(task.id)") {{ task.deadline | formattedDate}}
               td
-                img(@click='myStore.DELETE_TASK(task.id)' :src="closeIco")
+                img(@click='store.DELETE_TASK(task.id)' :src="closeIco")
 </template>
 
 <script lang="ts">
@@ -54,9 +54,14 @@ export default class Tasks extends Vue {
 
   closeIco = closeIco;
 
-  myStore = vxm.myStore;
+  tasks: Task[] = [];
 
-  tasks = this.myStore.TASKS;
+  store = vxm.myStore;
+
+  beforeMount() {
+    // console.log(this.store.TASKS);
+    this.tasks = this.store.TASKS;
+  }
 
   mounted() {
     this.startAnimation();
@@ -64,7 +69,7 @@ export default class Tasks extends Vue {
 
   editTask(id: number) {
     this.isEditModalVisible = true;
-    this.editedTask = this.myStore.TASK_BY_ID(id);
+    this.editedTask = this.store.TASK_BY_ID(id);
   }
 
   startAnimation() {

@@ -1,3 +1,4 @@
+import {Status} from "@/interfaces";
 <template lang="pug">
   .kanban-wrapper.flex
     TaskDetailsModal(
@@ -42,14 +43,13 @@ import draggable from 'vuedraggable';
 import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 import { vxm } from '@/store/store';
-
-const statusValues: Status[] = Object.values(Status);
+import utils from '@/service/utils';
 
 @Component({
   components: { TaskDetailsModal, draggable },
 })
 export default class Kanban extends Vue {
-  tableCols = statusValues;
+  tableCols = Object.values(Status);
 
   isEditModalVisible = false;
 
@@ -61,37 +61,29 @@ export default class Kanban extends Vue {
 
   finishDateFilter = '';
 
-  tasks = vxm.myStore.TASKS;
+  store = vxm.myStore;
 
-  // tasksTodo: Task[] = this.tasks.filter((obj: Task) => obj.status === Status.todo);
-  //
-  // tasksDone: Task[] = this.tasks.filter((obj: Task) => obj.status === Status.done);
-  //
-  // tasksInProgress: Task[] = this.tasks.filter((obj: Task) => obj.status === Status.inprogress);
+  tasks: Task [] = [];
+
+  tasksTodo: Task [] = [];
+
+  tasksDone: Task [] = [];
+
+  tasksInProgress: Task [] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   updateTasks(event: any) {
     const id: number = event.clone.id.split('-')[1];
     const status: Status = event.to.id.split('-')[1];
     const payload = { id, status };
-    vxm.myStore.UPDATE_TASK_STATUS(payload);
+    this.store.UPDATE_TASK_STATUS(payload);
   }
 
-  // created() {
-  //   this.tasksTodo = this.tasks.filter((obj: Task) => obj.status === Status.todo);
-  //   this.tasksDone = this.tasks.filter((obj: Task) => obj.status === Status.done);
-  //   this.tasksInProgress = this.tasks.filter((obj: Task) => obj.status === Status.inprogress);
-  // }
-  get tasksTodo() {
-    return this.tasks.filter((obj: Task) => obj.status === Status.todo);
-  }
-
-  get tasksDone() {
-    return this.tasks.filter((obj: Task) => obj.status === Status.done);
-  }
-
-  get tasksInProgress() {
-    return this.tasks.filter((obj: Task) => obj.status === Status.inprogress);
+  beforeMount() {
+    this.tasks = this.store.TASKS;
+    this.tasksTodo = utils(this.tasks, Status.todo);
+    this.tasksDone = utils(this.tasks, Status.done);
+    this.tasksInProgress = utils(this.tasks, Status.inprogress);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

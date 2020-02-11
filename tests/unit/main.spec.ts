@@ -4,6 +4,8 @@ import Tasks from '@/views/Tasks.vue';
 import Kanban from '@/views/Kanban.vue';
 import Calendar from '@/views/Calendar.vue';
 import tasks from '@/store/tasks';
+import utils from '@/service/utils';
+import { Status } from '@/interfaces';
 
 describe('Tasks.vue', () => {
   const wrapper = shallowMount(Tasks);
@@ -24,7 +26,10 @@ describe('Tasks.vue', () => {
 });
 describe('Kanban.vue', () => {
   const wrapper = shallowMount(Kanban);
-  wrapper.setData({ tasks });
+  const tasksTodo = utils(tasks, Status.todo);
+  const tasksDone = utils(tasks, Status.done);
+  const tasksInProgress = utils(tasks, Status.inprogress);
+  wrapper.setData({ tasksTodo, tasksDone, tasksInProgress });
 
   it('Drawing tasks in Kanban.vue', () => {
     // eslint-disable-next-line no-unused-expressions
