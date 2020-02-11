@@ -19,7 +19,7 @@ import {Status} from "@/interfaces";
           span  cards
           span )
       .table-body.flex
-        draggable.table-col(v-for="(list,index) in [tasksTodo,tasksDone,tasksInProgress]"
+        draggable.table-col(v-for="(list,index) in [tasksTodo, tasksDone, tasksInProgress]"
           :key="index"
           group="cards"
           :id="'drag-' + tableCols[index]"
@@ -63,13 +63,13 @@ export default class Kanban extends Vue {
 
   store = vxm.myStore;
 
-  tasks: Task [] = this.store.TASKS;
+  // tasks: Task [] = this.store.TASKS;
 
-  tasksTodo: Task [] = [];
-
-  tasksDone: Task [] = [];
-
-  tasksInProgress: Task [] = [];
+  // tasksTodo: Task [] = [];
+  //
+  // tasksDone: Task [] = [];
+  //
+  // tasksInProgress: Task [] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,class-methods-use-this
   updateTasks(event: any) {
@@ -79,12 +79,16 @@ export default class Kanban extends Vue {
     this.store.UPDATE_TASK_STATUS(payload);
   }
 
-  beforeMount() {
-    // vxm.myStore.doFirstInit();
-    // this.tasks = this.store.TASKS;
-    this.tasksTodo = utils(this.tasks, Status.todo);
-    this.tasksDone = utils(this.tasks, Status.done);
-    this.tasksInProgress = utils(this.tasks, Status.inprogress);
+  get tasksTodo() {
+    return utils(this.store.TASKS, Status.todo);
+  }
+
+  get tasksDone() {
+    return utils(this.store.TASKS, Status.done);
+  }
+
+  get tasksInProgress() {
+    return utils(this.store.TASKS, Status.inprogress);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

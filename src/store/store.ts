@@ -95,7 +95,7 @@ export class MyStore extends VuexModule {
 
   @action async doFirstInit() {
     if (this.firstInit) {
-      console.log('vuex first init call');
+      // console.log('vuex first init call');
       const tasks = await api.getTasks();
       this.SET_TASKS(tasks);
       // console.log(this.tasks);
