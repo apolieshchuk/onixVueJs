@@ -33,6 +33,8 @@ export class MyStore extends VuexModule {
 
   @action async FETCH_TASKS() {
     this.tasks = await api.getTasks();
+    // It's only bc education and coming deadlines for complete assignment
+    this.taskId = this.tasks.length;
   }
 
   get GET_TASKS(): Task[] {
@@ -97,7 +99,6 @@ export class MyStore extends VuexModule {
     }
     api.pushTasks(this.tasks);
   }
-
 }
 
 export const store = new Vuex.Store({
