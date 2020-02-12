@@ -4,6 +4,7 @@
     TaskDetailsModal(
       v-if="isEditModalVisible"
       @close="isEditModalVisible = false"
+      @closeAndSave="closeAndSave"
       :editedTask="editedTask"
       )
     ModalWindow(v-if="isAddModalVisible"
@@ -38,6 +39,7 @@ import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 import { vxm } from '@/store/store';
 
 import * as closeIco from '@/assets/img/close.svg';
+import * as api from '@/service/tasksApi';
 
 /* Table cols */
 const tableCols: string[] = ['Status', 'Task', 'Description', 'Start', 'Deadline', 'Del'];
@@ -68,6 +70,11 @@ export default class Tasks extends Vue {
   addAndClose() {
     this.animationName = 'tasksAnim';
     this.isAddModalVisible = false;
+  }
+
+  closeAndSave() {
+    this.isEditModalVisible = false;
+    api.pushTasks(this.store.GET_TASKS);
   }
 
   get tasks() {

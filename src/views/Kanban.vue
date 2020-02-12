@@ -4,6 +4,7 @@ import {Status} from "@/interfaces";
     TaskDetailsModal(
       v-if="isEditModalVisible"
       @close="isEditModalVisible = false"
+      @closeAndSave="closeAndSave"
       :editedTask="editedTask"
     )
     .filter.flex
@@ -44,6 +45,7 @@ import { Status, Task } from '@/interfaces';
 import TaskDetailsModal from '@/components/TaskDetailsModal.vue';
 import { vxm } from '@/store/store';
 import utils from '@/service/utils';
+import * as api from '@/service/tasksApi';
 
 @Component({
   components: { TaskDetailsModal, draggable },
@@ -94,6 +96,11 @@ export default class Kanban extends Vue {
   editTask(id: number) {
     this.isEditModalVisible = true;
     this.editedTask = vxm.myStore.TASK_BY_ID(id);
+  }
+
+  closeAndSave() {
+    this.isEditModalVisible = false;
+    api.pushTasks(this.store.GET_TASKS);
   }
 
   cardStyle = (status: Status, date: Date) => {

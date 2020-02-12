@@ -36,6 +36,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Task } from '@/interfaces';
 
+
 @Component
 export default class ModalWindow extends Vue {
   @Prop() editedTask!: Task;
@@ -62,7 +63,7 @@ export default class ModalWindow extends Vue {
   saveChanges() {
     this.editedTask.name = this.taskName; /* I think this is bad idea. replace by mutation */
     this.editedTask.description = this.taskDescription;
-    this.$emit('close');
+    this.$emit('closeAndSave');
   }
 }
 </script>
