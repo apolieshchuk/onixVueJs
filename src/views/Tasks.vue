@@ -6,14 +6,16 @@
       @close="isEditModalVisible = false"
       :editedTask="editedTask"
       )
-    ModalWindow(v-if="isAddModalVisible" @close="isAddModalVisible = false")
+    ModalWindow(v-if="isAddModalVisible"
+      @addAndClose="addAndClose"
+      @close="isAddModalVisible = false")
     hr
     .table-wrapper-over
       .table-wrapper
         table
           thead
             th(scope='col' v-for='(col,index) in tableCols' :key='index') {{col}}
-          transition-group(name="tasksAnim" tag="tbody" )
+          transition-group(:name="animationName" tag="tbody" )
             tr.table-row.test(
               v-for='task in tasks'
               :key="task.id"
@@ -48,7 +50,7 @@ export default class Tasks extends Vue {
 
   isEditModalVisible = false;
 
-  isFirstInit = false;
+  animationName = '';
 
   tableCols: string[] = tableCols;
 
@@ -60,15 +62,12 @@ export default class Tasks extends Vue {
 
   mounted() {
     this.store.FETCH_TASKS();
-    // console.log(`first init -${this.isFirstInit}`);
-    this.startAnimation();
+    setTimeout(() => this.startAnimation(), 500);
   }
 
-  get animationName() {
-    if (this.isFirstInit) {
-      return 'tasksAnim';
-    }
-    return '';
+  addAndClose() {
+    this.animationName = 'tasksAnim';
+    this.isAddModalVisible = false;
   }
 
   get tasks() {

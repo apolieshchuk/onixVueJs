@@ -48,9 +48,7 @@ export default class ModalWindow extends Vue {
     this.formTaskDescription = '';
     this.formTaskName = '';
     vxm.myStore.ADD_TASK(task);
-
-    // close modal window
-    this.$emit('close');
+    this.$emit('addAndClose');
   }
 
   currentDate = () => new Date().toJSON().slice(0, 10)
